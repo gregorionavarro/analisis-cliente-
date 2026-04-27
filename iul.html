@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>TrueMate — Tu Póliza IUL</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#193251;--navy2:#0d1f33;--red:#FF5050;--gold:#c9a84c;--green:#27ae71;--cream:#f0ead8}
+body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size:17px;max-width:580px;margin:0 auto}
+
+/* HEADER */
+.hdr{background:var(--navy);padding:13px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;border-bottom:3px solid var(--red)}
+.hdr-logo{display:flex;align-items:center;gap:8px}
+.hdr-lm{width:32px;height:32px;background:var(--red);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:14px;color:#fff;font-weight:700}
+.hdr-lt{font-size:14px;font-weight:500;color:var(--cream);font-family:'DM Serif Display',serif}
+.hdr-ls{font-size:7px;color:#7a8a9a;letter-spacing:2px;text-transform:uppercase;display:block}
+.hdr-wa{background:#25D366;color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:5px}
+
+/* HERO */
+.hero{background:var(--navy);padding:0}
+.hero-bar{height:4px;background:linear-gradient(90deg,var(--red),var(--gold),var(--green))}
+.hero-body{padding:22px 20px 0}
+.h-badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:10px}
+.h-name{font-family:'DM Serif Display',serif;font-size:clamp(40px,10vw,58px);color:var(--cream);line-height:1;margin-bottom:5px;letter-spacing:-1px}
+.h-name em{color:var(--red);font-style:normal}
+.h-sub{font-size:12px;color:#8899aa;margin-bottom:6px}
+.h-reunion{display:none;align-items:center;gap:9px;background:rgba(39,174,113,.1);border:1px solid rgba(39,174,113,.3);border-radius:9px;padding:10px 14px;margin-bottom:14px}
+.h-reunion-l{font-size:9px;font-weight:700;color:#25D366;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
+.h-reunion-v{font-size:14px;font-weight:700;color:var(--cream)}
+
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.1);margin-top:16px}
+.mc{padding:14px 10px;border-right:1px solid rgba(255,255,255,.08);text-align:center}
+.mc:last-child{border-right:none}
+.ml{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#8899aa;margin-bottom:5px}
+.mv{font-size:clamp(16px,4vw,22px);font-weight:700;color:var(--cream);line-height:1;margin-bottom:2px}
+.mv.r{color:var(--red)}.mv.g{color:var(--gold)}.mv.gr{color:var(--green)}
+.mb{font-size:9px;color:#8899aa}
+
+/* BODY */
+.body{background:#fff;padding:22px 20px}
+.st{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:14px;padding-bottom:7px;border-bottom:2px solid rgba(255,80,80,.2)}
+
+/* GREETING */
+.greet-name{font-size:19px;font-weight:700;color:#1a1a2e;margin-bottom:5px}
+.greet-msg{font-size:14px;color:#3d4d5e;line-height:1.75;padding:13px 16px;background:#f0f4f8;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;margin-bottom:20px}
+.greet-msg strong{color:#1a1a2e}
+
+/* POLICY SUMMARY */
+.poliza{background:var(--navy);border-radius:14px;padding:20px;margin-bottom:20px;position:relative;overflow:hidden}
+.poliza::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.p-eye{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.p-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:11px 13px}
+.p-item.full{grid-column:1/-1}
+.p-label{font-size:9px;color:#8899aa;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.p-val{font-size:clamp(16px,4vw,22px);font-weight:700;color:var(--cream);font-family:'DM Serif Display',serif;line-height:1}
+.p-val.gold{color:var(--gold)}
+.p-val.green{color:#3ddba0}
+.p-val.red{color:var(--red)}
+.p-sub{font-size:10px;color:#7a8a9a;margin-top:3px}
+
+/* BENEFITS EN VIDA */
+.bvs{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.bv{background:#f8f7f4;border-radius:12px;padding:15px 16px;border-left:5px solid var(--navy);display:flex;align-items:flex-start;gap:13px}
+.bv.r{border-left-color:var(--red)}.bv.g{border-left-color:var(--green)}.bv.o{border-left-color:var(--gold)}.bv.tl{border-left-color:#0d9488}
+.bv-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+.bv-t{font-size:15px;font-weight:700;color:#1a1a2e;margin-bottom:4px}
+.bv-d{font-size:13px;color:#5a6a7a;line-height:1.6}
+.bv-d strong{color:#1a1a2e}
+
+/* COSTO DE ESPERAR */
+.esperar{background:var(--navy2);border-radius:14px;padding:20px;margin-bottom:20px;border:2px solid rgba(255,80,80,.2)}
+.esp-eye{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.esp-title{font-family:'DM Serif Display',serif;font-size:clamp(18px,4.5vw,22px);color:var(--cream);line-height:1.3;margin-bottom:14px}
+.esp-title em{color:var(--red);font-style:italic}
+.esp-items{display:flex;flex-direction:column;gap:8px}
+.esp-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 15px}
+.esp-num{font-family:'DM Serif Display',serif;font-size:clamp(22px,5vw,28px);font-weight:700;color:var(--red);min-width:90px;line-height:1}
+.esp-txt{font-size:13px;color:#8899aa;line-height:1.5}
+.esp-txt strong{color:var(--cream)}
+
+/* QUIÉNES SOMOS */
+.qs{background:#f8f7f4;border-radius:12px;overflow:hidden;border:2px solid #e8e0d0;margin-bottom:16px}
+.qs-head{padding:16px 18px;border-bottom:1px solid #e8e0d0;display:flex;gap:12px;align-items:flex-start}
+.qs-eye{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.qs-title{font-family:'DM Serif Display',serif;font-size:clamp(16px,4vw,20px);color:var(--navy);line-height:1.25;margin-bottom:5px}
+.qs-title em{color:var(--red);font-style:normal}
+.qs-body{font-size:13px;color:#5a6a7a;line-height:1.6}
+.qs-img{width:52px;height:52px;object-fit:contain;border-radius:8px;flex-shrink:0}
+.qs-stats{display:grid;grid-template-columns:repeat(3,1fr)}
+.qs-stat{padding:12px 10px;text-align:center;border-right:1px solid #e8e0d0;background:#fff}
+.qs-stat:last-child{border-right:none}
+.qs-n{font-family:'DM Serif Display',serif;font-size:24px;color:var(--gold);line-height:1;margin-bottom:3px}
+.qs-l{font-size:11px;color:#3d4d5e;font-weight:600}
+
+/* CONTACT */
+.contact{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:14px;padding:20px;margin-bottom:10px}
+.ag-n{font-family:'DM Serif Display',serif;font-size:20px;color:var(--cream);margin-bottom:3px}
+.ag-c{font-size:9px;color:var(--red);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.ag-i{font-size:13px;color:#8899aa;line-height:1.8;margin-bottom:16px}
+.ag-i strong{color:#dde4ef}
+.cta-pre{text-align:center;font-size:13px;color:#8899aa;margin-bottom:8px;line-height:1.5}
+.cta-pre strong{color:var(--gold)}
+.wa-cta{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#25D366,#1aab54);color:#fff;border:none;border-radius:12px;padding:15px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;width:100%;cursor:pointer;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,.3)}
+.footer{padding:14px 20px;text-align:center;font-size:10px;color:#9a9a9a;line-height:1.7;border-top:1px solid #e8e0d0;background:#faf9f6}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.fade{opacity:0;animation:fadeUp .5s ease forwards}
+.fade:nth-child(1){animation-delay:.05s}.fade:nth-child(2){animation-delay:.12s}
+.fade:nth-child(3){animation-delay:.19s}.fade:nth-child(4){animation-delay:.26s}
+.fade:nth-child(5){animation-delay:.33s}.fade:nth-child(6){animation-delay:.4s}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-logo">
+    <div class="hdr-lm">T</div>
+    <div class="hdr-lt">Truemate <span class="hdr-ls">Insurance Financial & Services</span></div>
+  </div>
+  <a class="hdr-wa" id="wa-top" href="#">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    ¿Preguntas?
+  </a>
+</div>
+
+<div class="hero">
+  <div class="hero-bar"></div>
+  <div class="hero-body">
+    <div class="h-badge">PROPUESTA PERSONALIZADA · FLEXLIFE IUL · NATIONAL LIFE</div>
+    <div class="h-name" id="h-name">—</div>
+    <div class="h-sub" id="h-sub"></div>
+    <div class="h-reunion" id="h-reunion">
+      <span style="font-size:20px">📆</span>
+      <div>
+        <div class="h-reunion-l">Reunión confirmada</div>
+        <div class="h-reunion-v" id="h-reunion-v">—</div>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="mc"><div class="ml">Cobertura total</div><div class="mv r" id="m-cb">—</div><div class="mb">Opción B creciente</div></div>
+      <div class="mc"><div class="ml">Prima mensual</div><div class="mv g" id="m-pm">—</div><div class="mb" id="m-an">—</div></div>
+      <div class="mc"><div class="ml">Valor a los 65</div><div class="mv gr" id="m-cv">—</div><div class="mb">para usar en vida</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+  <div class="greet-name" id="greet-name">Hola —</div>
+  <div class="greet-msg" id="greet-msg"></div>
+
+  <div class="st">Lo que tienes con esta póliza</div>
+  <div class="poliza">
+    <div class="p-eye">Resumen de tu FlexLife IUL</div>
+    <div class="p-grid">
+      <div class="p-item">
+        <div class="p-label">Cobertura base</div>
+        <div class="p-val red" id="p-cb">—</div>
+        <div class="p-sub">Suma asegurada inicial</div>
+      </div>
+      <div class="p-item">
+        <div class="p-label">Opción B total</div>
+        <div class="p-val gold" id="p-ob">—</div>
+        <div class="p-sub">Cobertura + valor acumulado</div>
+      </div>
+      <div class="p-item">
+        <div class="p-label">Valor en efectivo a los 65</div>
+        <div class="p-val green" id="p-cv">—</div>
+        <div class="p-sub">Para retiro o emergencias</div>
+      </div>
+      <div class="p-item">
+        <div class="p-label">Índice de crecimiento</div>
+        <div class="p-val" style="font-size:13px;margin-top:2px" id="p-ix">—</div>
+        <div class="p-sub">Piso 0% — nunca pierdes</div>
+      </div>
+      <div class="p-item full">
+        <div class="p-label">Prima total comprometida</div>
+        <div class="p-val red" id="p-total">—</div>
+        <div class="p-sub" id="p-total-sub">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="st">Beneficios que tienes en vida</div>
+  <div class="bvs" id="bvs"></div>
+
+  <div class="st">El costo real de esperar</div>
+  <div class="esperar">
+    <div class="esp-eye">⏰ Cada mes que pasa sin protección</div>
+    <div class="esp-title">No es "no tener seguro" — es <em>pagar el costo de no tenerlo</em></div>
+    <div class="esp-items">
+      <div class="esp-item fade">
+        <div class="esp-num" id="esp-mes">—</div>
+        <div class="esp-txt"><strong>más caro por mes</strong> se vuelve la prima cada año que cumples. La edad es el factor más importante en el precio del seguro de vida.</div>
+      </div>
+      <div class="esp-item fade">
+        <div class="esp-num" id="esp-cv">—</div>
+        <div class="esp-txt"><strong>menos valor en efectivo</strong> acumularás si empiezas un año después. El tiempo es el activo más valioso en un IUL.</div>
+      </div>
+      <div class="esp-item fade">
+        <div class="esp-num">$0</div>
+        <div class="esp-txt"><strong>de protección hoy</strong> — mientras decides, tu familia no tiene cobertura. Si algo pasara esta semana, no habría nada.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="st">Quiénes somos</div>
+  <div class="qs">
+    <div class="qs-head">
+      <div style="flex:1">
+        <div class="qs-eye">Truemate Insurance Financial & Services</div>
+        <div class="qs-title">Más de una década protegiendo familias en <em>Estados Unidos</em></div>
+        <div class="qs-body">Especialistas en planificación financiera, seguros de vida permanente, IUL, retiro y patrimonio. Trabajamos con familias que quieren proteger lo que construyeron y dejarle un legado sólido a sus hijos.</div>
+      </div>
+      <img class="qs-img" src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/98741821" alt="FPWMP" onerror="this.style.display='none'">
+    </div>
+    <div class="qs-stats">
+      <div class="qs-stat"><div class="qs-n">+1,000</div><div class="qs-l">familias</div></div>
+      <div class="qs-stat"><div class="qs-n">+40</div><div class="qs-l">estados</div></div>
+      <div class="qs-stat"><div class="qs-n">100%</div><div class="qs-l">personalizado</div></div>
+    </div>
+  </div>
+
+  <div class="contact">
+    <div class="ag-n" id="ag-n">Gregorio Navarro</div>
+    <div class="ag-c">FPWMP® · Planificación Financiera & Gestión Patrimonial · Lic. 2-15 & 2-20</div>
+    <div class="ag-i">
+      <strong>WhatsApp:</strong> +1 (484) 456-9465<br>
+      <strong>Email:</strong> gregorio@truemategroup.com
+    </div>
+    <div class="cta-pre" id="cta-pre"><strong>¿Tienes preguntas antes de confirmar?</strong><br>Escríbeme directamente — con gusto te respondo</div>
+    <a class="wa-cta" id="wa-cta" href="#">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      💬 Tengo una pregunta
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  Documento informativo y confidencial · <strong>Truemate Insurance Financial & Services</strong><br>
+  Lic. 2-15 & 2-20 · FPWMP® · Los valores son proyecciones ilustrativas, no garantías de rendimiento futuro.
+</div>
+
+<script>
+var raw = (location.search.match(/[?&]d=([^&]+)/) || [])[1];
+if(!raw){
+  document.body.innerHTML='<div style="background:#0d1f33;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui;padding:40px;text-align:center"><div><div style="width:64px;height:64px;background:#FF5050;border-radius:14px;font-size:28px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">T</div><div style="font-size:22px;font-weight:700;color:#f0ead8;margin-bottom:10px">Propuesta no disponible</div><div style="font-size:15px;color:#8899aa;margin-bottom:24px">Este link fue generado para un cliente específico.</div><a href="https://wa.me/14844569465" style="background:#25D366;color:#fff;text-decoration:none;padding:14px 28px;border-radius:12px;font-weight:700">WhatsApp TrueMate</a></div></div>';
+} else {
+  var D={};
+  try{ D=JSON.parse(atob(raw.replace(/[.\s]+$/,''))); }catch(e){}
+
+  var nombre=D.n||'Cliente', edad=D.ed||'', prima=D.pm||'', anos=D.an||'';
+  var cb=D.cb||'', ob=D.ob||'', cv=D.cv||'', ix=D.ix||'S&P 500';
+  var bvs=(D.bv||'terminal,critica,cronica,prestamos,retiro,herencia').split(',');
+  var perfil=D.p||'gregorio', fecha=D.f||'';
+  var firstName=nombre.split(' ')[0];
+  var agente=perfil==='gregorio'?'Gregorio Navarro':'TrueMate Financial';
+  var waNum='14844569465';
+
+  function s(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+  function h(id,v){var e=document.getElementById(id);if(e)e.innerHTML=v;}
+  function fmt(v){return v?'$'+v.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-';}
+
+  // Name
+  var parts=nombre.toUpperCase().split(' ');
+  h('h-name', parts.length>1?parts[0]+'<br><em>'+parts.slice(1).join(' ')+'</em>':parts[0]);
+  s('h-sub', edad?'Edad: '+edad+' años · FlexLife IUL · National Life':'FlexLife IUL · National Life');
+
+  // Reunion
+  if(fecha){
+    var r=document.getElementById('h-reunion');r.style.display='flex';
+    s('h-reunion-v', fecha);
+  }
+
+  // Metrics
+  s('m-cb', cb?'$'+cb.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-');
+  s('m-pm', prima?'$'+prima.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-');
+  s('m-an', anos?'por '+anos+' años':'mensuales');
+  s('m-cv', cv?'$'+cv.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-');
+
+  // Policy summary
+  s('p-cb', cb?'$'+cb.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-');
+  s('p-ob', ob?'$'+ob.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-');
+  s('p-cv', cv?'$'+cv.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-');
+  s('p-ix', ix||'S&P 500 Cap 11% · Floor 0%');
+
+  // Total prima
+  if(prima && anos){
+    var pm=parseFloat(prima.replace(/[^0-9.]/g,''))||0;
+    var an=parseFloat(anos.replace(/[^0-9.]/g,''))||0;
+    var total=(pm*12*an).toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+    s('p-total', total);
+    s('p-total-sub', 'Total invertido en '+anos+' años ('+anos+'×12×$'+prima+')');
+  }
+
+  // Greeting
+  s('greet-name', 'Hola, '+firstName+' 👋');
+  if(fecha){
+    h('greet-msg','Tu reunión está confirmada para el <strong>'+fecha+'</strong>. Preparamos este resumen con los beneficios exactos de tu póliza para que llegues con toda la información clara.');
+  } else {
+    h('greet-msg','Preparamos este resumen con todos los beneficios de tu póliza FlexLife IUL — <strong>números reales, tus números</strong>. Tómate unos minutos para revisarlo antes de nuestra reunión.');
+  }
+
+  // Benefits map
+  var BEN_MAP = {
+    terminal: {icon:'🏥',t:'Enfermedad terminal',d:'Si te diagnostican una enfermedad terminal, puedes acceder anticipadamente hasta el <strong>100% del beneficio por muerte</strong> para usarlo en vida — tratamientos, tiempo con tu familia, lo que necesites.',c:'r'},
+    critica:  {icon:'❤️',t:'Enfermedad crítica',d:'En caso de cáncer, infarto, derrame cerebral u otras enfermedades críticas, recibes acceso a una <strong>porción significativa del beneficio</strong> para cubrir gastos médicos o reemplazar ingresos.',c:'r'},
+    cronica:  {icon:'♿',t:'Enfermedad crónica',d:'Si llegas a necesitar ayuda para realizar actividades básicas diarias, tu póliza activa este beneficio que <strong>puede pagar hasta $30,000 al mes</strong> para cubrir cuidados y gastos del hogar.',c:'o'},
+    prestamos:{icon:'💰',t:'Préstamos libres de impuestos',d:'Puedes tomar prestado del valor acumulado de tu póliza <strong>sin pagar impuestos ni penalidades</strong> — para emergencias, inversiones, universidad de tus hijos o cualquier necesidad.',c:'g'},
+    retiro:   {icon:'🏖️',t:'Ingreso de retiro libre de impuestos',d:'Al jubilarte, puedes convertir el valor acumulado en un <strong>ingreso mensual libre de impuestos</strong> — un complemento poderoso al Seguro Social.',c:'tl'},
+    herencia: {icon:'👨‍👩‍👧',t:'Herencia libre de impuestos',d:'El beneficio por muerte pasa directamente a tus beneficiarios <strong>sin pasar por Probate, libre de impuestos federales</strong> — protegiendo el patrimonio que construiste.',c:'g'}
+  };
+
+  var bvsEl=document.getElementById('bvs');
+  bvs.filter(Boolean).forEach(function(b){
+    var ben=BEN_MAP[b];
+    if(!ben)return;
+    var el=document.createElement('div');
+    el.className='bv '+(ben.c||'');
+    el.innerHTML='<div class="bv-icon">'+ben.icon+'</div><div><div class="bv-t">'+ben.t+'</div><div class="bv-d">'+ben.d+'</div></div>';
+    bvsEl.appendChild(el);
+  });
+
+  // Costo de esperar
+  if(prima){
+    var pmNum=parseFloat(prima.replace(/[^0-9.]/g,''))||0;
+    var mesExtra=Math.round(pmNum*0.05);
+    s('esp-mes','$'+mesExtra.toLocaleString());
+  }
+  if(cv){
+    var cvNum=parseFloat(cv.replace(/[^0-9.]/g,''))||0;
+    var cvPerdido=Math.round(cvNum*0.04);
+    s('esp-cv','$'+cvPerdido.toLocaleString());
+  }
+
+  // Agent info
+  s('ag-n', agente);
+
+  // WhatsApp
+  var waMsg=encodeURIComponent('Hola, soy '+firstName+' 👋 Vi mi propuesta IUL de TrueMate y tengo una pregunta.');
+  var waHref='https://wa.me/'+waNum+'?text='+waMsg;
+  ['wa-top','wa-cta'].forEach(function(id){var e=document.getElementById(id);if(e)e.href=waHref;});
+}
+</script>
+</body>
+</html>
