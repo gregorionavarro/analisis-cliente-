@@ -489,6 +489,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a2e;font-si
 </div><!-- end content -->
 
 <script>
+document.addEventListener("DOMContentLoaded", function(){
 (function(){
   var D = {};
   try {
@@ -575,6 +576,7 @@ Revísalo cuando puedas. ¡Cualquier pregunta me escribes!');
   var waHref = 'https://wa.me/'+waNum+'?text='+waMsg;
   ['wa-top','wa-cta'].forEach(function(id){ var e=document.getElementById(id); if(e) e.href=waHref; });
 })();
+});
 </script>
 </body>
 </html>
