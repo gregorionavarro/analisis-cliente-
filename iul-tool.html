@@ -91,8 +91,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy2);color:var(--cream)
     <div class="field"><label>Años de pago</label><input id="años" type="text" placeholder="Ej: 20"></div>
   </div>
   <div class="row">
-    <div class="field"><label>Cobertura base</label><input id="cobertura" type="text" placeholder="Ej: 1,000,000"></div>
-    <div class="field"><label>Opción B (total proyectado)</label><input id="opcionb" type="text" placeholder="Ej: 2,500,000"></div>
+    <div class="field"><label>Beneficio por muerte (hoy)</label><input id="cobertura" type="text" placeholder="Ej: 2,500,000"></div>
+    <div class="field"><label>Proyección a los <span id="er-label">65</span> años</label><input id="opcionb" type="text" placeholder="Ej: 3,120,022"></div>
   </div>
   <div class="row">
     <div class="field"><label>Valor en efectivo a los 65</label><input id="cv65" type="text" placeholder="Ej: 861,554"></div>
@@ -197,6 +197,7 @@ function genLink(){
 
   const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
   const base = 'https://gregorionavarro.github.io/analisis-cliente-/iul.html';
+  const erField=document.getElementById('edret');if(erField){erField.addEventListener('input',function(){const lbl=document.getElementById('er-label');if(lbl)lbl.textContent=this.value||'65';});}
   const url = base + '?d=' + encoded;
 
   document.getElementById('result-url').textContent = url;
