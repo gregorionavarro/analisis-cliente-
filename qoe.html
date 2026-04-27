@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrueMate QOE</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#193251;
+  --navy2:#1e3d62;
+  --navy3:#0d1f33;
+  --red:#FF5050;
+  --red2:#ff7070;
+  --gold:#c9a84c;
+  --gold2:#e8c96a;
+  --cream:#f0ead8;
+  --green:#27ae71;
+  --teal:#0d9488;
+  --tx:#dde4ef;
+  --mt:#8899bb;
+  --card:rgba(255,255,255,0.05);
+  --b1:rgba(255,80,80,0.25);
+  --b2:rgba(255,255,255,0.09);
+  --fs:17px
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--navy3);color:var(--tx);min-height:100vh;font-size:var(--fs)}
+
+/* TOOLBAR */
+.toolbar{position:sticky;top:0;z-index:200;background:var(--navy);border-bottom:2px solid var(--red);display:flex;align-items:center;justify-content:space-between;padding:11px 22px;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px}
+.lm{width:38px;height:38px;background:linear-gradient(135deg,var(--red),var(--red2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:17px;color:#fff;font-weight:700;flex-shrink:0}
+.lt{font-family:'DM Serif Display',serif;font-size:19px;color:var(--cream)}
+.ls{font-size:9px;color:var(--mt);letter-spacing:2px;text-transform:uppercase;display:block}
+.ctrls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+#cb{display:none;font-size:12px;color:var(--red2);background:rgba(255,80,80,.12);border:1px solid var(--b1);padding:4px 12px;border-radius:18px}
+.fs-ctrl{display:flex;align-items:center;gap:6px}
+.fb{width:28px;height:28px;border-radius:50%;border:1px solid var(--b2);background:var(--card);color:var(--tx);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700}
+.fb:hover{border-color:var(--red);color:var(--red)}
+.fv{font-size:12px;color:var(--red2);font-weight:700;min-width:28px;text-align:center}
+.bhr{font-size:12px;color:var(--mt);background:none;border:1px solid var(--b2);padding:6px 13px;border-radius:18px;cursor:pointer}
+.bhr:hover{color:var(--tx)}
+
+/* SCREENS */
+.scr{display:none}
+.scr.on{display:block}
+
+/* ══ S0: INTRO ══ */
+#s0{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 62px);padding:28px 20px}
+.iw{max-width:520px;width:100%;text-align:center}
+.ibg{display:inline-block;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red2);border:1px solid var(--b1);padding:5px 14px;border-radius:18px;margin-bottom:22px}
+.itl{font-family:'DM Serif Display',serif;font-size:2.4em;line-height:1.1;color:var(--cream);margin-bottom:10px}
+.itl em{color:var(--red);font-style:italic}
+.isb{color:var(--mt);font-size:.9em;line-height:1.65;margin-bottom:28px}
+
+/* Profile selector */
+.profile-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mt);margin-bottom:12px}
+.profiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
+.prof-btn{background:rgba(255,255,255,.04);border:2px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 10px;cursor:pointer;transition:border .15s,background .15s,transform .15s,box-shadow .15s;text-align:center;position:relative;font-family:'DM Sans',sans-serif;width:100%;outline:none}
+.prof-btn:hover{border-color:rgba(255,80,80,.6);background:rgba(255,80,80,.07)}
+.prof-btn.active-prof{border:3px solid #FF5050!important;background:rgba(255,80,80,.2)!important;box-shadow:0 0 0 4px rgba(255,80,80,.2)!important;transform:translateY(-3px)!important}
+.prof-btn.active-prof::after{content:'✓';position:absolute;top:8px;right:10px;width:18px;height:18px;background:#FF5050;border-radius:50%;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:18px}
+.prof-icon{font-size:24px;margin-bottom:7px;display:block}
+.prof-name{font-size:14px;font-weight:700;color:var(--cream);margin-bottom:3px;display:block}
+.prof-desc{font-size:11px;color:var(--mt);line-height:1.4;display:block}
+.prof-btn.active-prof .prof-name{color:#fff}
+.prof-btn.active-prof .prof-desc{color:var(--red2)}
+
+.ni{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--b2);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:1em;padding:13px 16px;border-radius:10px;outline:none;margin-bottom:10px}
+.ni:focus{border-color:var(--red)}
+.ni::placeholder{color:var(--mt)}
+.bs{width:100%;background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;font-family:'DM Sans',sans-serif;font-size:1em;font-weight:700;padding:14px;border:none;border-radius:10px;cursor:pointer;transition:all .2s}
+.bs:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,80,80,.35)}
+
+/* ══ S1: GUION ══ */
+#s1{padding:24px 20px 60px;max-width:640px;margin:0 auto}
+.stbg{display:inline-block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red2);border:1px solid var(--b1);padding:4px 13px;border-radius:18px;margin-bottom:14px}
+.stl{font-family:'DM Serif Display',serif;font-size:1.8em;color:var(--cream);margin-bottom:4px}
+.ssb{font-size:.88em;color:var(--mt);margin-bottom:18px}
+.pb{background:var(--navy);border:1px solid var(--b1);border-left:4px solid var(--red);border-radius:10px;padding:14px 18px;margin-bottom:14px;font-size:.88em;color:var(--tx);line-height:1.65}
+.pb strong{color:var(--red2)}
+
+/* Apertura block */
+.apertura-block{background:var(--navy);border:1px solid var(--b2);border-radius:12px;margin-bottom:12px;overflow:hidden}
+.ab-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--b2);cursor:pointer;user-select:none}
+.ab-left{display:flex;align-items:center;gap:9px;font-size:.75em;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red2)}
+.ab-arr{transition:transform .25s;display:inline-block;font-size:14px;color:var(--mt)}
+.ab-body{padding:16px 18px;transition:max-height .3s,padding .3s;overflow:hidden}
+.ab-body.col{max-height:0!important;padding-top:0;padding-bottom:0}
+
+/* Apertura text - the actual script */
+.script-say{font-size:1em;color:var(--cream);font-style:italic;line-height:1.85;padding:14px 18px;background:rgba(255,80,80,.06);border-left:4px solid var(--red);border-radius:0 8px 8px 0;margin-bottom:10px}
+.script-say strong{color:var(--red2);font-style:normal}
+.script-note{font-size:.82em;color:var(--mt);line-height:1.6;padding:9px 13px;background:rgba(255,255,255,.03);border-radius:7px;border:1px solid var(--b2)}
+.script-note strong{color:var(--gold2)}
+.script-branch{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.sbr{display:flex;align-items:flex-start;gap:9px;font-size:.82em;padding:8px 12px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid var(--b2)}
+.sbc{color:var(--red2);font-weight:700;white-space:nowrap;font-size:.8em}
+.sba{color:var(--tx);line-height:1.5}
+
+/* Scale */
+.scl{display:flex;gap:4px;margin:9px 0 7px;flex-wrap:wrap}
+.sn{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:.78em;font-weight:700;border:1px solid}
+.sl{background:rgba(255,80,80,.12);color:var(--red2);border-color:rgba(255,80,80,.3)}
+.sm{background:rgba(201,168,76,.12);color:var(--gold2);border-color:rgba(201,168,76,.3)}
+.sh{background:rgba(39,174,113,.12);color:#5ddfa0;border-color:rgba(39,174,113,.3)}
+.smn{display:flex;gap:14px;flex-wrap:wrap;margin-top:4px}
+.smi{font-size:.78em;line-height:1.4}
+.smi span{display:block;font-weight:700;margin-bottom:1px}
+.rules{display:flex;flex-direction:column;gap:5px}
+.rule{display:flex;align-items:flex-start;gap:10px;font-size:.84em;padding:9px 13px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid var(--b2)}
+.rc{color:var(--red2);font-weight:700;white-space:nowrap;font-size:.8em}
+.ra{color:var(--tx);line-height:1.5}
+
+.btq{width:100%;background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;font-family:'DM Sans',sans-serif;font-size:1em;font-weight:700;padding:14px;border:none;border-radius:10px;cursor:pointer;margin-top:12px;transition:all .2s}
+.btq:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,80,80,.35)}
+.bbk{width:100%;background:transparent;color:var(--mt);font-family:'DM Sans',sans-serif;font-size:.88em;padding:10px;border:1px solid var(--b2);border-radius:9px;cursor:pointer;margin-top:7px}
+.bbk:hover{color:var(--tx)}
+
+/* ══ S2: TARJETAS PREGUNTAS ══ */
+#s2{max-width:700px;margin:0 auto;padding:20px 20px 100px}
+.pgb{margin-bottom:20px}
+.pgt{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.pgl{font-size:.72em;text-transform:uppercase;letter-spacing:2px;color:var(--mt)}
+.pgn{font-size:.8em;color:var(--red2);font-weight:600}
+.pgtr{height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.pgf{height:100%;background:linear-gradient(90deg,var(--red),var(--red2));border-radius:2px;transition:width .4s}
+.gmini{background:rgba(255,80,80,.06);border:1px solid var(--b1);border-radius:10px;margin-bottom:16px;overflow:hidden}
+.gmh{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;cursor:pointer;user-select:none}
+.gml{font-size:.72em;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--red2)}
+.gmhint{font-size:.72em;color:var(--mt)}
+.gmb{padding:0 14px;overflow:hidden;transition:max-height .3s,padding .3s;max-height:0;padding-bottom:0}
+.gmb.open{max-height:200px;padding-bottom:12px}
+.gmsy{font-size:.82em;color:var(--cream);font-style:italic;padding:8px 11px;background:rgba(255,80,80,.06);border-left:3px solid var(--red);border-radius:0 5px 5px 0;margin:8px 0;line-height:1.65}
+.gmr{font-size:.78em;color:var(--mt);padding:3px 0;border-bottom:1px solid var(--b2)}
+.gmr:last-child{border-bottom:none}
+.gmr strong{color:var(--gold2)}
+/* section divider */
+.sec-div{display:flex;align-items:center;gap:10px;margin:20px 0 10px}
+.sec-div span{font-size:.72em;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red2);white-space:nowrap;background:rgba(255,80,80,.08);border:1px solid var(--b1);padding:4px 12px;border-radius:20px}
+.sec-div::before,.sec-div::after{content:'';flex:1;height:1px;background:rgba(255,80,80,.18)}
+/* question cards */
+.qcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:20px 22px;margin-bottom:10px}
+.qbadge{display:inline-block;font-size:.68em;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:9px;margin-bottom:10px;text-transform:uppercase}
+.qbadge.qr{background:rgba(255,80,80,.15);color:var(--red2);border:1px solid rgba(255,80,80,.3)}
+.qbadge.qg{background:rgba(201,168,76,.12);color:var(--gold2);border:1px solid rgba(201,168,76,.3)}
+.qt{font-size:1.18em;color:var(--cream);margin-bottom:14px;line-height:1.5;font-weight:500}
+/* pills — selected = white text white border */
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{padding:11px 22px;border-radius:22px;font-size:1.02em;font-weight:500;border:1px solid rgba(255,255,255,.18);background:transparent;color:var(--mt);cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif}
+.pill:hover{border-color:rgba(255,255,255,.5);color:var(--tx)}
+.pill.sel-w{border-color:#fff;color:#fff;background:rgba(255,255,255,.1)}
+.pill.sel-y{border-color:#fff;color:#fff;background:rgba(255,255,255,.1)}
+.pill.sel-n{border-color:#fff;color:#fff;background:rgba(255,255,255,.1)}
+.pill.sel-m{border-color:#fff;color:#fff;background:rgba(255,255,255,.1)}
+/* text input under pill */
+.qi{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--b2);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:.9em;padding:10px 13px;border-radius:9px;outline:none;margin-top:10px}
+.qi:focus{border-color:var(--red)}
+.qi::placeholder{color:var(--mt)}
+/* impact block */
+.ib{margin-top:14px;background:rgba(255,80,80,.07);border:1px solid rgba(255,80,80,.25);border-left:4px solid var(--red);border-radius:0 11px 11px 0;padding:14px 16px}
+.il{font-size:.68em;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red2);margin-bottom:8px}
+.is{font-size:.95em;color:var(--cream);line-height:1.8;margin-bottom:10px}
+.inn{font-size:.8em;color:var(--mt);line-height:1.5;margin-bottom:10px}
+.inn strong{color:var(--gold2)}
+.irl{font-size:.68em;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);margin-bottom:7px}
+.rps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.rp{padding:7px 14px;border-radius:18px;font-size:.82em;font-weight:600;border:1px solid;background:transparent;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
+.rpy{color:#5ddfa0;border-color:rgba(39,174,113,.4)}.rpy:hover,.rpy.sel{background:rgba(39,174,113,.18);border-color:var(--green);color:#5ddfa0}
+.rpn{color:var(--red2);border-color:rgba(255,80,80,.4)}.rpn:hover,.rpn.sel{background:rgba(255,80,80,.15);border-color:var(--red);color:var(--red2)}
+.note-area{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--b2);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:.88em;padding:9px 12px;border-radius:9px;outline:none;resize:vertical;min-height:52px}
+.note-area:focus{border-color:var(--red)}
+.note-area::placeholder{color:var(--mt)}
+.hidden{display:none!important}
+/* meta multi */
+.meta-grid{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.meta-opt{display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .2s;font-size:.95em;color:var(--mt);font-family:'DM Sans',sans-serif}
+.meta-opt:hover{border-color:rgba(255,255,255,.35);color:var(--tx)}
+.meta-opt.sel{border-color:#fff;color:#fff;background:rgba(255,255,255,.08)}
+.meta-chk{width:18px;height:18px;border-radius:4px;border:2px solid rgba(255,255,255,.2);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s}
+.meta-opt.sel .meta-chk{background:#fff;border-color:#fff;color:var(--navy)}
+.meta-txt{line-height:1.5}
+/* cierre */
+.cierre-bubble{background:rgba(255,80,80,.08);border:2px solid var(--red);border-radius:12px;padding:14px 16px;margin-top:12px}
+.cierre-lbl{font-size:.68em;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red2);margin-bottom:7px}
+.cierre-say{font-size:.95em;color:var(--cream);line-height:1.8;padding:10px 13px;background:rgba(255,80,80,.06);border-left:3px solid var(--red);border-radius:0 6px 6px 0;margin-bottom:8px}
+/* sticky bar */
+.ctab{position:sticky;bottom:0;z-index:50;background:var(--navy2);border-top:1px solid var(--b1);padding:12px 20px;display:flex;justify-content:center}
+.bgo{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;font-family:'DM Sans',sans-serif;font-size:1em;font-weight:700;padding:13px 52px;border:none;border-radius:10px;cursor:pointer;transition:all .2s}
+.bgo:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(255,80,80,.35)}
+
+/* ══ S3: RESULTADOS ══ */
+#s3{max-width:840px;margin:0 auto;padding:28px 20px 56px}
+.rh{text-align:center;margin-bottom:24px}
+.rt{font-family:'DM Serif Display',serif;font-size:2em;color:var(--cream);margin-bottom:4px}
+.rt span{color:var(--red)}
+.rsb{color:var(--mt);font-size:.85em}
+.scb{background:var(--navy);border:1px solid var(--b1);border-radius:14px;padding:18px 22px;margin-bottom:18px;display:flex;align-items:center;gap:18px}
+.srg{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;flex-shrink:0;border:3px solid}
+.sn2{font-family:'DM Serif Display',serif;font-size:28px;line-height:1}
+.sl2{font-size:.6em;letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
+.sg{border-color:var(--green);color:var(--green)}.sa{border-color:var(--gold);color:var(--gold)}.srd{border-color:var(--red);color:var(--red)}
+.sinf{flex:1}
+.sti2{font-size:.95em;font-weight:600;color:var(--cream);margin-bottom:2px}
+.sde{font-size:.82em;color:var(--mt);line-height:1.5;margin-bottom:7px}
+.sbw{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
+.sbf{height:100%;border-radius:3px;transition:width .6s}
+.rdm{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:18px}
+@media(max-width:560px){.rdm,.pgd{grid-template-columns:1fr}}
+.rds{border-radius:10px;padding:13px;text-align:center;border:1px solid}
+.rd1{background:rgba(255,80,80,.07);border-color:var(--b1)}.rd2{background:rgba(39,174,113,.07);border-color:rgba(39,174,113,.25)}.rd3{background:rgba(201,168,76,.07);border-color:rgba(201,168,76,.25)}
+.rdn{font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:2px}
+.rd1 .rdn{color:var(--red)}.rd2 .rdn{color:var(--green)}.rd3 .rdn{color:var(--gold)}
+.rdl{font-size:.8em;font-weight:600;color:var(--tx);margin-bottom:2px}
+.rdd{font-size:.72em;color:var(--mt);line-height:1.4}
+.prb{background:linear-gradient(135deg,rgba(255,80,80,.1),rgba(255,80,80,.04));border:1px solid var(--b1);border-radius:13px;padding:16px 22px;margin-bottom:18px}
+.prl{font-size:.7em;text-transform:uppercase;letter-spacing:2px;color:var(--red2);margin-bottom:4px}
+.prbd{font-size:.95em;color:var(--tx);line-height:1.55}
+.pgd{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:18px}
+.pc{background:var(--navy);border:1px solid var(--b2);border-radius:13px;padding:17px;position:relative}
+.pc.p1{border-color:rgba(255,80,80,.4);border-top:3px solid var(--red)}
+.pc.p2{border-color:rgba(39,174,113,.3);border-top:3px solid var(--green)}
+.prk{position:absolute;top:13px;right:13px;width:24px;height:24px;border-radius:50%;font-size:.72em;font-weight:700;display:flex;align-items:center;justify-content:center}
+.pkg{background:rgba(255,80,80,.15);color:var(--red2);border:1px solid var(--red)}
+.pk2{background:rgba(39,174,113,.15);color:var(--green);border:1px solid var(--green)}
+.pk3{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid var(--gold)}
+.pic{font-size:22px;margin-bottom:8px}
+.pnm{font-family:'DM Serif Display',serif;font-size:15px;color:var(--cream);margin-bottom:2px;padding-right:28px}
+.psu{font-size:.72em;color:var(--mt);margin-bottom:6px}
+.pwy{font-size:.8em;color:var(--mt);line-height:1.5;margin-bottom:8px}
+.phk{font-size:.82em;color:var(--red2);font-style:italic;border-top:1px solid var(--b2);padding-top:8px;line-height:1.45}
+.ntb{background:var(--navy);border:1px solid var(--b1);border-radius:13px;padding:18px;margin-bottom:16px;display:none}
+.ntt{font-family:'DM Serif Display',serif;font-size:17px;color:var(--red2);margin-bottom:12px}
+.nrw{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--b2);font-size:.84em;line-height:1.5}
+.nrw:last-child{border-bottom:none}
+.nq{color:var(--mt);min-width:110px;flex-shrink:0}.na{color:var(--tx)}.nc{color:var(--red2);font-size:.85em;margin-top:1px}
+.akb{background:var(--navy);border:1px solid var(--b1);border-radius:13px;padding:18px;margin-bottom:16px}
+.akt{font-family:'DM Serif Display',serif;font-size:17px;color:var(--red2);margin-bottom:12px}
+.akl{list-style:none}
+.akl li{font-size:.9em;color:var(--tx);padding:7px 0 7px 16px;border-bottom:1px solid var(--b2);position:relative;line-height:1.5}
+.akl li::before{content:'›';position:absolute;left:0;color:var(--red2);font-size:.95em;line-height:1.3}
+.akl li:last-child{border-bottom:none}
+.acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.ba{font-family:'DM Sans',sans-serif;font-size:.84em;font-weight:500;padding:11px 22px;border-radius:9px;cursor:pointer;border:1px solid;transition:all .2s}
+.bag{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;border-color:transparent;font-weight:700}
+.bag:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(255,80,80,.3)}
+.bat{background:rgba(25,50,81,.5);color:var(--tx);border-color:var(--b2);font-weight:600}
+.bat:hover{border-color:var(--red2)}
+.bas{background:transparent;color:var(--mt);border-color:var(--b2)}
+.bas:hover{color:var(--tx)}
+#cok{display:none;text-align:center;margin-top:8px;font-size:.84em;color:var(--green)}
+.hidden{display:none!important}
+
+/* PDF print */
+@media print{
+  .toolbar,.chat-prog,.gmini,.chat-bar,.acts,#s0,#s1,#s2,body::before{display:none!important}
+  #s3{display:block!important;max-width:100%;padding:0}
+  body{background:#fff;color:#111;font-size:11pt}
+  .pc,.akb,.scb,.prb,.rds,.ntb{border:1px solid #ccc!important;background:#fff!important;box-shadow:none!important}
+  .rt,.pnm,.akt,.sti2,.ntt{color:#111!important}
+  .psu,.pwy,.rdd,.akl li,.sde,.prbd,.na,.nq{color:#444!important}
+  .phk,.prk,.prl,.red2{color:#993333!important}
+  .pgd{grid-template-columns:1fr 1fr!important}
+  .rdm{grid-template-columns:1fr 1fr 1fr!important}
+  #s3::before{content:'TrueMate Financial Planning · Análisis de Necesidades del Cliente';display:block;font-size:10px;color:#888;text-align:center;padding-bottom:10px;border-bottom:2px solid #FF5050;margin-bottom:18px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="logo"><div class="lm">T</div><div class="lt">TrueMate <span class="ls">Financial Planning</span></div></div>
+  <div class="ctrls">
+    <div id="cb"></div>
+    <div class="fs-ctrl">
+      <button class="fb" onclick="chF(-1)">−</button>
+      <span class="fv" id="fv">17</span>
+      <button class="fb" onclick="chF(1)">+</button>
+    </div>
+    <button class="bhr" onclick="rst()">↩ Nuevo</button>
+  </div>
+</div>
+
+<!-- ══════════ S0: INICIO ══════════ -->
+<div id="s0" class="scr on">
+  <div class="iw">
+    <div class="ibg">QOE — Evaluación de Necesidades</div>
+    <h1 class="itl">Identifica qué<br><em>necesita</em> tu cliente</h1>
+    <p class="isb">Selecciona tu perfil, ingresa el nombre del cliente<br>y comienza la conversación guiada.</p>
+
+    <div class="profile-label">¿Quién hace la llamada?</div>
+    <div class="profiles">
+      <button class="prof-btn" id="p-greg" onclick="selProf('gregorio')">
+        <span class="prof-icon">👔</span>
+        <span class="prof-name">Gregorio</span>
+        <span class="prof-desc">Director & Fundador TrueMate</span>
+      </button>
+      <button class="prof-btn" id="p-agent" onclick="selProf('agente')">
+        <span class="prof-icon">🤝</span>
+        <span class="prof-name">Agente</span>
+        <span class="prof-desc">Equipo TrueMate Financial</span>
+      </button>
+      <button class="prof-btn" id="p-prod" onclick="selProf('producer')">
+        <span class="prof-icon">⭐</span>
+        <span class="prof-name">Producer</span>
+        <span class="prof-desc">Análisis QOE · Sin intro larga</span>
+      </button>
+    </div>
+
+    <input class="ni" id="cn" type="text" placeholder="Nombre del cliente (ej: Diego Martínez)" autocomplete="off">
+    <input class="ni" id="agentName" type="text" placeholder="Tu nombre (si eres Agente)" style="display:none">
+    <button class="bs" onclick="ini()">Ver Guion de Apertura →</button>
+  </div>
+</div>
+
+<!-- ══════════ S1: GUION ══════════ -->
+<div id="s1" class="scr">
+  <div class="stbg" id="s1-badge">Guion de Apertura</div>
+  <h2 class="stl">Antes de comenzar</h2>
+  <p class="ssb">Lee esto antes de marcar — es tu enganche para que el cliente dé el sí.</p>
+
+  <div class="pb"><strong>Propósito:</strong> Entender la situación real del cliente antes de recomendar nada. <strong>Escuchas 70%, hablas 30%.</strong> No mencionas productos. Solo preguntas.</div>
+
+  <!-- APERTURA PERSONALIZADA -->
+  <div class="apertura-block">
+    <div class="ab-head" onclick="togAb(this)">
+      <div class="ab-left"><span id="ab-icon">🎤</span>&nbsp; Apertura — di esto al llamar</div>
+      <span class="ab-arr">▲</span>
+    </div>
+    <div class="ab-body">
+      <div class="script-say" id="script-apertura">Cargando...</div>
+      <div class="script-note" id="script-nota">—</div>
+    </div>
+  </div>
+
+  <!-- AUTOCALIFICACIÓN -->
+  <div class="apertura-block">
+    <div class="ab-head" onclick="togAb(this)">
+      <div class="ab-left">🎯 Primera pregunta — autocalificación 1 al 10</div>
+      <span class="ab-arr">▲</span>
+    </div>
+    <div class="ab-body">
+      <div class="script-say">"Del 1 al 10, ¿cómo te calificarías en el manejo de tu dinero? Siendo 1 — no llevo ningún control — y 10 — tengo todo organizado y bajo control."</div>
+      <div class="script-note">
+        <div class="scl"><div class="sn sl">1</div><div class="sn sl">2</div><div class="sn sl">3</div><div class="sn sm">4</div><div class="sn sm">5</div><div class="sn sm">6</div><div class="sn sh">7</div><div class="sn sh">8</div><div class="sn sh">9</div><div class="sn sh">10</div></div>
+        <div class="smn">
+          <div class="smi"><span style="color:var(--red2)">1–3</span>Estabilización primero.</div>
+          <div class="smi"><span style="color:var(--gold2)">4–6</span>Revisar brechas.</div>
+          <div class="smi"><span style="color:#5ddfa0">7–10</span>IUL / Anualidad / Optimizar.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGLAS -->
+  <div class="apertura-block">
+    <div class="ab-head" onclick="togAb(this)">
+      <div class="ab-left">📋 Reglas durante la llamada</div>
+      <span class="ab-arr">▲</span>
+    </div>
+    <div class="ab-body">
+      <div class="rules">
+        <div class="rule"><span class="rc">🚫 No mencionar</span><span class="ra">productos ni precios. Solo escuchar y preguntar.</span></div>
+        <div class="rule"><span class="rc">⏱ Máx. 12 min</span><span class="ra">El objetivo es <strong style="color:var(--gold2)">agendar la reunión</strong>, no vender ahora.</span></div>
+        <div class="rule"><span class="rc">📝 Anotar</span><span class="ra">hijos, hipoteca, retiro, salud y meta final — esas 5 arman la reunión.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btq" onclick="goQ()">Comenzar Preguntas →</button>
+  <button class="bbk" onclick="goS('s0')">← Cambiar perfil</button>
+</div>
+
+<!-- ══════════ S2: PREGUNTAS ══════════ -->
+<div id="s2" class="scr">
+<div style="max-width:700px;margin:0 auto;padding:20px 20px 100px">
+  <div class="pgb">
+    <div class="pgt"><span class="pgl">Evaluación en curso</span><span class="pgn" id="pgn">0 / 17</span></div>
+    <div class="pgtr"><div class="pgf" id="pgf" style="width:0%"></div></div>
+  </div>
+  <div class="gmini">
+    <div class="gmh" onclick="togGM()"><span class="gml">📞 Guion de apertura</span><span class="gmhint" id="gmhint">Toca para ver →</span></div>
+    <div class="gmb" id="gmb">
+      <div class="gmsy" id="gmsy-mini"></div>
+      <div class="gmr"><strong>1–3:</strong> Estabilización &nbsp;|&nbsp; <strong>4–6:</strong> Brechas &nbsp;|&nbsp; <strong>7–10:</strong> IUL/Anualidad</div>
+      <div class="gmr" style="margin-top:2px">🚫 No mencionar productos &nbsp;|&nbsp; ⏱ Máx. 12 min &nbsp;|&nbsp; 📝 Anotar: hijos, hipoteca, retiro, meta</div>
+    </div>
+  </div>
+  <div id="q-container"></div>
+  <div class="ctab"><button class="bgo" onclick="goR()">Ver Recomendaciones →</button></div>
+</div>
+</div>
+
+<!-- ══════════ S3: RESULTADOS ══════════ -->
+<div id="s3" class="scr">
+  <div class="rh">
+    <h2 class="rt">Plan para <span id="rname">el cliente</span></h2>
+    <p class="rsb" id="rdate"></p>
+  </div>
+  <div class="scb">
+    <div class="srg" id="sring"><div class="sn2" id="sn2">—</div><div class="sl2">Score</div></div>
+    <div class="sinf"><div class="sti2" id="sti2">—</div><div class="sde" id="sde"></div><div class="sbw"><div class="sbf" id="sbf" style="width:0%"></div></div></div>
+  </div>
+  <div class="rdm">
+    <div class="rds rd1"><div class="rdn">①</div><div class="rdl">Proteger</div><div class="rdd">Vida, salud, hipoteca</div></div>
+    <div class="rds rd2"><div class="rdn">②</div><div class="rdl">Construir</div><div class="rdd">IUL, anualidad, retiro</div></div>
+    <div class="rds rd3"><div class="rdn">③</div><div class="rdl">Patrimonio</div><div class="rdd">Trust, impuestos, herencia</div></div>
+  </div>
+  <div class="prb" id="pribox"></div>
+  <div class="ntb" id="ntb"><div class="ntt">📋 Notas de la conversación</div><div id="nrows"></div></div>
+  <div class="pgd" id="pgd"></div>
+  <div id="asksec"></div>
+  <div class="acts">
+    <button class="ba bag" onclick="genLink()">🔗 Compartir con cliente</button>
+    <button class="ba bat" onclick="window.print()">📄 PDF Agente</button>
+    <button class="ba bas" onclick="copyN()">Copiar Notas</button>
+    <button class="ba bas" onclick="rst()">↩ Nuevo cliente</button>
+  </div>
+  <div id="share-box" style="display:none;margin-top:14px;background:rgba(39,174,113,.1);border:1px solid rgba(39,174,113,.3);border-radius:12px;padding:14px 16px">
+    <div style="font-size:.75em;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:10px">✅ Link generado — agrega la fecha si ya tienes reunión confirmada</div>
+    <div style="margin-bottom:10px">
+      <label style="font-size:.78em;color:var(--mt);display:block;margin-bottom:5px;font-weight:600">📅 Fecha y hora de la reunión (opcional)</label>
+      <input id="share-fecha" type="text" placeholder="Ej: miércoles 30 de abril a las 3:00pm" style="width:100%;background:rgba(255,255,255,.06);border:1px solid var(--b2);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:.88em;padding:9px 12px;border-radius:8px;outline:none" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--b2)'">
+    </div>
+    <div id="share-url" style="font-size:.72em;color:var(--mt);background:rgba(255,255,255,.04);border:1px solid var(--b2);border-radius:7px;padding:8px 11px;word-break:break-all;margin-bottom:10px;cursor:pointer;line-height:1.5" onclick="copyLink()"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a id="wa-share-btn" href="#" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff;border:none;border-radius:8px;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:.9em;font-weight:700;cursor:pointer;text-decoration:none">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Enviar por WhatsApp
+      </a>
+    </div>
+  </div>
+  <div id="cok" style="display:none;text-align:center;margin-top:7px;font-size:.84em;color:var(--green)">✅ ¡Copiado!</div>
+</div>
+
+<script>
+// ══════════════════════════════════
+// STATE
+// ══════════════════════════════════
+let A={},N={},R={},cName='',agentNameVal='',profile='agente',score=0,fsz=17;
+let metaSet=new Set(),gmOpen=false;
+let qIdx=0,questions=[],chatDone=false;
+
+// ══════════════════════════════════
+// PROFILES
+// ══════════════════════════════════
+const SCRIPTS={
+  gregorio:{
+    badge:'Guion — Gregorio Navarro · Director',
+    icon:'👔',
+    apertura:(n)=>`"Hola <strong>${n}</strong>, ¿cómo estás? Habla Gregorio Navarro. Mira, esta llamada no va a ser más de 10 minutos, te lo prometo. La idea es simplemente conocer un poco tu situación y ver en qué te podemos ayudar — sea en seguros, retiro, patrimonio, lo que sea. Y si lo que necesitas no es algo que nosotros manejamos, igual te digo con quién hablar. ¿Me das unos minutos para hacerte unas preguntas rápidas?"`,
+    nota:'⏱ Si dice "estoy ocupado" → <strong>"Son literalmente 10 minutos — puede que valga mucho la pena."</strong><br>Si dice "¿para qué?" → <strong>"Para no hacerte perder el tiempo con algo que no aplica a tu caso."</strong><br>Si dice "¿de dónde tienes mi número?" → explica la referencia.',
+  },
+  agente:{
+    badge:'Guion — Agente TrueMate',
+    icon:'🤝',
+    apertura:(n,ag)=>`"Hola <strong>${n}</strong>, ¿cómo estás? Mi nombre es ${ag||'[tu nombre]'}, soy parte del equipo de TrueMate Financial. Mira, esta llamada es cortita — 10 minutos máximo. Solo quiero conocer un poco tu situación y ver si hay algo en lo que te podemos ayudar. Trabajamos en varias áreas: seguros, retiro, patrimonio, documentos legales. Y si lo que necesitas no lo manejamos nosotros, igual te orientamos a quién sí puede. ¿Me das esos 10 minutos?"`,
+    nota:'⏱ Si pregunta "¿de dónde tienes mi número?" → explica la referencia. Si dice "no tengo tiempo" → <strong>"Entiendo, ¿te queda bien si te llamo [hora alternativa]?"</strong>',
+  },
+  producer:{
+    badge:'Guion — Producer · Análisis Directo',
+    icon:'⭐',
+    apertura:(n)=>`"Hola <strong>${n}</strong>, ¿cómo estás? Mira, antes de que nos reunamos quiero hacerte unas preguntas rápidas — no más de 10 minutos. La idea es conocer bien tu situación para que en la reunión vayamos directo a lo que te sirve, sin hacerte perder el tiempo con cosas que no aplican. ¿Arrancamos?"`,
+    nota:'💡 Este guion va directo al análisis. Objetivo: llegar a la reunión con la información lista y el plan personalizado.',
+  }
+};
+
+// ══════════════════════════════════
+// QUESTIONS (chat conversacional)
+// ══════════════════════════════════
+const QUESTIONS=[
+  // FAMILIA
+  {id:'sec',text:'👨‍👩‍👧 Familia',type:'divider'},
+  {id:'casado',
+   text:'¿Estás casado/a o tienes pareja estable?',
+   opts:[{l:'Sí, casado/a',v:'si',t:'y',pts:1},{l:'Tengo pareja',v:'pareja',t:'m',pts:1},{l:'No',v:'no',t:'n',pts:0}],
+   impact:{
+     si:{
+       say:'Perfecto. Algo importante que muy poca gente sabe: ¿tienen algún poder notarial el uno del otro? Lo digo porque en Estados Unidos, si algo le pasa a uno de los dos, las cuentas que están solo a nombre de esa persona pueden bloquearse — y tu pareja no podría tocar ese dinero de inmediato. Pero tranquilo/a, para eso estoy yo — podemos buscarle una solución a eso.',
+       note:'🎯 No asustes — ofrece la solución. Activa POD, Living Trust y poder notarial.',
+       reactions:['No lo sabíamos 😮','Tenemos poder notarial','Ya tenemos Trust']
+     },
+     pareja:{
+       say:'Entiendo. ¿Saben si tienen algún poder notarial entre ustedes? Lo pregunto porque en EEUU, si algo le pasa a uno, las cuentas individuales pueden bloquearse y el otro no puede acceder de inmediato. Hay formas sencillas de protegerse de eso.',
+       note:'🎯 Mismo concepto. Activa POD y Trust aunque no estén casados.',
+       reactions:['No lo sabíamos 😮','Ya lo tenemos','Vamos a revisarlo']
+     }
+   }
+  },
+  {id:'dep',
+   text:'Otra pregunta — ¿tus padres o algún familiar depende económicamente de ti?',
+   opts:[{l:'Sí',v:'si',t:'y',pts:2},{l:'No',v:'no',t:'n',pts:0}],
+   impact:{si:{
+     say:'Lo digo porque tenemos que pensar en una solución para ellos también. Si Dios no quiera, en un mes no pudieras enviarles dinero — ¿cómo les afectaría eso? ¿Tienen otro ingreso o dependen completamente de ti?',
+     note:'🎯 Que el cliente calcule en voz alta cuánto necesitarían. Ese número se convierte en la cobertura mínima del seguro.',
+     reactions:['Dependen completamente de mí','Tienen algún ingreso propio','Se preocupó 😮']
+   }}
+  },
+  // BIENES
+  {id:'sec2',text:'🏠 Vivienda y Deudas',type:'divider'},
+  {id:'casa',
+   text:'¿Tienes casa propia, hipoteca activa, o vives en renta?',
+   opts:[{l:'Casa propia pagada',v:'propia',t:'y',pts:1},{l:'Hipoteca activa',v:'hipoteca',t:'m',pts:3},{l:'Vivo en renta',v:'renta',t:'n',pts:0}],
+   impact:{
+     hipoteca:{
+       say:'Lo pregunto porque la mayoría de las personas no saben que existe un seguro de protección hipotecaria. Si algo te llegara a pasar — si Dios no quiera — ¿ya sabes cómo seguiría pagándose ese crédito? ¿Tu familia podría mantener esos pagos sola? Es algo en lo que podemos ayudarte.',
+       note:'🎯 Que el silencio haga el trabajo. No llenes el espacio. La mayoría no tiene respuesta y eso crea la necesidad.',
+       reactions:['No lo había pensado 😮','Tengo seguro de vida para eso','Quiero saber más']
+     },
+     propia:{
+       say:'Excelente — es uno de los mejores activos que tienes. La pregunta es: ¿está bien protegida esa propiedad si algo te pasara? Eso es algo que revisamos en la reunión.',
+       note:'🎯 Casa pagada → Living Trust es urgente para evitar Probate.',
+       reactions:['Está protegida','No lo sé','Quiero revisarlo']
+     }
+   }
+  },
+  {id:'deudas',
+   text:'¿Tienes otras deudas importantes activas? Puede ser tarjetas o préstamos.',
+   opts:[{l:'Sí, tengo varias',v:'si',t:'n',pts:2},{l:'Algo pequeño',v:'algo',t:'m',pts:1},{l:'No tengo',v:'no',t:'y',pts:0}]
+  },
+  {id:'auto',
+   text:'¿Tienes seguro de auto actualmente, y tu carro tiene crédito activo o está libre de pagos?',
+   opts:[{l:'Seguro + crédito activo',v:'credito',t:'m',pts:1},{l:'Seguro + libre de pagos',v:'libre',t:'y',pts:0},{l:'Seguro solo, sin carro propio',v:'renta',t:'m',pts:0},{l:'No tengo seguro de auto',v:'no',t:'n',pts:2}],
+   impact:{
+     credito:{
+       say:'Perfecto — y ¿sabes cuánto estás pagando al mes de seguro? Porque hay algo que poca gente sabe: cuando tienes un crédito de auto, el banco te exige una cobertura específica, y muchas veces la gente termina pagando más de lo necesario. En la reunión puedo revisar tu póliza actual y ver si te consigo una cotización más económica con la misma o mejor cobertura.',
+       note:'🎯 Pedir: compañía actual, cuánto paga al mes, año y modelo del carro. Con eso se puede buscar cotización.',
+       reactions:['Le interesa revisar 🔥','Ya intentó cambiarlo','Quiere saber más']
+     },
+     libre:{
+       say:'Buenísimo — carro libre de pagos significa que tienes más flexibilidad en la cobertura que eliges. ¿Sabes qué cobertura tienes exactamente? Porque muchas personas con carro pagado siguen pagando cobertura de colisión completa cuando ya no la necesitan. En la reunión lo revisamos.',
+       note:'🎯 Carro libre → puede bajar cobertura y ahorrar. Oportunidad de ahorro inmediato.',
+       reactions:['No sabía eso 😮','Quiere revisar','Ya lo revisó']
+     },
+     no:{
+       say:'Entiendo — y ¿sabes que manejar sin seguro en Florida puede costar entre $5,000 y $10,000 en multas si tienes un accidente, más la suspensión de licencia? Hay opciones muy económicas que te protegen desde el primer día. Es algo que podemos resolver rápido en la reunión.',
+       note:'🎯 Urgencia real. Florida requiere seguro de auto. Ayuda inmediata posible.',
+       reactions:['No sabía las multas 😮','Quiere una cotización 🔥','Tiene excusa temporal']
+     }
+   }
+  },
+  // SALUD
+  {id:'sec3',text:'💊 Salud y Seguros',type:'divider'},
+  {id:'salud',
+   text:'¿Tienes seguro de salud en este momento?',
+   opts:[{l:'Sí, por el trabajo',v:'employer',t:'m',pts:1},{l:'Obamacare / ACA',v:'aca',t:'m',pts:1},{l:'Medicaid',v:'medicaid',t:'m',pts:1},{l:'No tengo',v:'no',t:'n',pts:4}],
+   impact:{
+     employer:{
+       say:'Bien. Y — ¿cómo te ha ido con esa aseguradora? ¿Has podido ir al médico sin problema? Una cosa importante: ¿sabes cuál es tu deducible anual y tu máximo de bolsillo? Mucha gente tiene seguro pero no sabe cuánto pagaría de su bolsillo en una emergencia seria.',
+       note:'🎯 Si no sabe los números → abre la puerta al complementario. Registrar deducible y máximo en notas.',
+       reactions:['Sé mis números','No los sé 😮','Ha tenido problemas con la aseguradora']
+     },
+     aca:{
+       say:'Perfecto. ¿Y cómo te ha ido? ¿Has podido ir al médico sin problema? ¿Sabes cuál es tu deducible y tu máximo de bolsillo este año?',
+       note:'🎯 Mismo enfoque — muchos tienen ACA pero no conocen sus números.',
+       reactions:['Sé mis números','No los sé','Ha tenido problemas']
+     },
+     medicaid:{
+       say:'Bien. ¿Y puedes ir al médico sin problema con Medicaid? Dependiendo de tu situación, puede haber opciones complementarias que te conviene conocer.',
+       note:'🎯 Explorar si califica para algo complementario o si en algún momento podría perder Medicaid.',
+       reactions:['Funciona bien','Ha tenido problemas','Quiere saber opciones']
+     },
+     no:{
+       say:'Entiendo — es más común de lo que crees. ¿Sabes que una visita a urgencias sin seguro puede costar fácilmente entre $3,000 y $15,000? ¿Cómo has manejado las visitas médicas hasta ahora?',
+       note:'🎯 Prioridad #1 absoluta. Sin salud no hay plan. No juzgar — ofrecer solución.',
+       reactions:['Con urgencias/clínicas','Casi no va al médico','Quiere opciones 🔥']
+     }
+   }
+  },
+  {id:'accidente',
+   text:'Y aprovecho para preguntar algo que muy pocos tienen — ¿tienes alguna protección por accidente? Por ejemplo, si no puedes trabajar 1 a 3 días por un accidente, ¿recibes algún dinero?',
+   opts:[{l:'Sí tengo',v:'si',t:'y',pts:0},{l:'No tengo',v:'no',t:'n',pts:2},{l:'No sé si tengo',v:'ns',t:'m',pts:1}],
+   impact:{
+     no:{
+       say:'Es algo que muy poca gente considera, pero es de las coberturas más importantes. Si mañana tienes un accidente y no puedes trabajar ni un día — ¿quién paga las facturas? Esta cobertura puede ser muy económica y te protege desde el día 1.',
+       note:'🎯 Seguro de accidente es fácil de vender — bajo costo, alta percepción de valor. Activar en reunión.',
+       reactions:['Me interesa mucho 🔥','No lo había pensado','Voy a revisarlo']
+     },
+     ns:{
+       say:'Es importante saberlo — en la reunión lo revisamos juntos. A veces el trabajo lo incluye sin que la persona lo sepa, y otras veces hace falta conseguirlo.',
+       note:'🎯 Revisar en la reunión. Posible oportunidad.',
+       reactions:['Quiero revisarlo','Creo que el trabajo lo tiene']
+     }
+   }
+  },
+  {id:'vida',
+   text:'¿Tienes seguro de vida actualmente — o has tenido alguno antes?',
+   opts:[{l:'Sí, tengo uno',v:'si',t:'y',pts:0},{l:'Solo el del trabajo',v:'employer',t:'m',pts:2},{l:'No tengo',v:'no',t:'n',pts:3}],
+   impact:{
+     si:{
+       say:'¡Súper bien! Y — ¿sabes cuánto es el valor asegurado y cuáles son los beneficios en vida? Por ejemplo, ¿cubre cáncer o incapacidad? ¿Te han explicado cómo hacer un reclamo si lo necesitas? ¿Tienes acceso a la plataforma de la aseguradora? Ok — déjame ver cómo te puedo ayudar a revisar eso.',
+       note:'🎯 El 80% tiene seguro pero no sabe qué cubre. No criticar — ofrecer revisarlo juntos.',
+       reactions:['Sé todo lo que cubre','No sé todos los detalles','Nunca me lo explicaron bien']
+     },
+     employer:{
+       say:'¿Sabes que ese seguro desaparece el día que cambies de trabajo o te despidan? No puedes llevártelo contigo. Si algo te pasa en un período sin empleo, tu familia queda sin protección. Eso es lo primero que hay que resolver.',
+       note:'🎯 Urgencia inmediata. Necesita un seguro propio independiente del empleador.',
+       reactions:['No lo sabía 😮','Ya lo sé pero no he hecho nada','Quiero uno propio']
+     },
+     no:{
+       say:'Entiendo — y si Dios no quiera no pudieras trabajar por una enfermedad grave, o algo te pasara... ¿Has pensado qué pasaría con tu familia? La mayoría de las personas no piensan en eso hasta que es tarde. ¿Cuánto tiempo crees que podrían mantenerse los ingresos del hogar si faltaras tú?',
+       note:'🎯 No responda la pregunta — deje que el cliente calcule en voz alta. Ese número es exactamente lo que necesita de cobertura.',
+       reactions:['Se preocupó 😮','No lo había pensado','Quiere solución urgente 🔥']
+     }
+   }
+  },
+  {id:'salud_h',
+   text:'Una pregunta rápida de salud — ¿has tenido algún problema médico importante en los últimos 2 años? Diabetes, corazón, algo así.',
+   opts:[{l:'Sí',v:'si',t:'n',pts:1},{l:'No, todo bien',v:'no',t:'y',pts:0}]
+  },
+  // RETIRO
+  {id:'sec4',text:'🏖️ Retiro y Ahorros',type:'divider'},
+  {id:'retiro',
+   text:'¿Tienes alguna cuenta de retiro activa? — 401k, IRA, Roth IRA...',
+   opts:[{l:'Sí, tengo una activa',v:'si',t:'y',pts:0},{l:'No tengo nada',v:'no',t:'n',pts:3},{l:'Tuve una antes',v:'tuvo',t:'m',pts:2}],
+   impact:{
+     si:{
+       say:'Bien. ¿Has podido sentarte con un asesor para que te explique la proyección — cuánto tendrías acumulado al llegar a la edad de retiro? Y una pregunta importante: ¿sabes si ese dinero tiene protección si cae el mercado de valores? Porque en el 2008 y en el 2020, mucha gente vio su 401k bajar 30 o 40% en meses.',
+       note:'🎯 El que perdió en una crisis está listo para escuchar sobre una anualidad indexada sin riesgo.',
+       reactions:['Sí perdió dinero en crisis','Tiene protección','Nunca lo había analizado']
+     },
+     no:{
+       say:'¿Has pensado cómo vas a empezar a construir algo para el retiro? No para dentro de 40 años — sino para empezar hoy. Este país te da herramientas increíbles — solo hay que saber usarlas. Eso es exactamente en lo que te podemos ayudar.',
+       note:'🎯 No juzgar — motivar. Abrir la conversación del IUL o Roth IRA como punto de partida.',
+       reactions:['Quiero empezar 🔥','No sé por dónde empezar','No lo había pensado']
+     },
+     tuvo:{
+       say:'¿Y sabes qué pasó con ese dinero? Porque muchas veces cuando la gente cambia de trabajo, ese 401k queda abandonado en la cuenta del empleador anterior — y ese dinero podría estar en riesgo sin que lo sepas. Vale la pena revisarlo.',
+       note:'🎯 Rollover de 401k abandonado → oportunidad real. Activar en reunión.',
+       reactions:['No sé qué pasó con él 😮','Lo dejé ahí abandonado','Ya lo transferí']
+     }
+   }
+  },
+  {id:'ahorros',
+   text:'¿Tienes alguna cuenta de ahorro de emergencia — que no te cobre cuota de manejo?',
+   opts:[{l:'Sí, tengo algo',v:'si',t:'m',pts:1},{l:'No tengo nada',v:'no',t:'n',pts:2},{l:'Tengo en el banco pero pago cuotas',v:'cuotas',t:'m',pts:1}],
+   impact:{
+     no:{
+       say:'Si mañana tuvieras una emergencia de $3,000 — se dañó el carro, hospital, algo en la casa — ¿cómo lo resolverías? ¿Con tarjeta de crédito? Porque existen cuentas que no cobran cuotas de manejo y encima te pagan 4 o 5% de interés anual. Es el primer paso antes de invertir.',
+       note:'🎯 Cuenta APY es la ganancia más fácil y rápida. Muy bajo costo de adquisición.',
+       reactions:['Con tarjeta de crédito','No sabría cómo','Me interesa esa cuenta 🔥']
+     },
+     cuotas:{
+       say:'Eso es muy común — pero ¿sabías que hay cuentas que no cobran absolutamente nada de manejo y te pagan entre 4 y 5% de interés al año? Sin riesgo. Tu dinero crece solo estando ahí. Eso es lo primero que revisamos.',
+       note:'🎯 Si paga cuotas en cuenta corriente → cuenta APY es mejora inmediata visible.',
+       reactions:['No sabía que existían 😮','Me interesa mucho','¿Cuánto tengo que tener?']
+     },
+     si:{
+       say:'¡Perfecto! ¿Y esa cuenta te paga algún interés? ¿Sabes el APY? Porque si está en una cuenta corriente normal, probablemente tu dinero no está creciendo nada.',
+       note:'🎯 Posible mejora si está en cuenta sin rendimiento.',
+       reactions:['Me paga interés','No me paga nada','No sé el porcentaje']
+     }
+   }
+  },
+  {id:'edad_ret',
+   text:'Esta es una de las preguntas más importantes — ¿a qué edad te gustaría retirarte?',
+   opts:[{l:'En menos de 10 años',v:'pronto',t:'y',pts:2},{l:'Entre 10 y 20 años',v:'medio',t:'m',pts:1},{l:'Más de 20 años',v:'lejos',t:'n',pts:0}],
+   impact:{
+     pronto:{
+       say:'Con menos de 10 años el tiempo es tu mayor recurso ahora mismo. Dependiendo de lo que digas — hay que calcular cuánto necesitas acumular. Para eso estoy yo. ¿Tienes algún número en mente de lo que necesitarías para retirarte cómodo?',
+       note:'🎯 Urgencia real. Anualidad o IUL con aporte alto necesita arrancar ya.',
+       reactions:['Tengo un número en mente','No sé cuánto necesito','Quiero calcularlo']
+     },
+     medio:{
+       say:'Bien — tienes tiempo, pero no tanto como para no empezar. ¿Has calculado cuánto necesitarías acumulado para retirarte sin depender de nadie? Eso es exactamente lo que hacemos en la reunión — te doy el número exacto.',
+       note:'🎯 Motivar a empezar ahora. El tiempo compuesto trabaja a su favor.',
+       reactions:['No lo he calculado','Tengo una idea','Quiero saberlo']
+     },
+     lejos:{
+       say:'Cuando uno ve personas mayores trabajando en el Walmart o en el Publix, siempre uno piensa — ¿por qué siguen a esa edad? A veces es porque les gusta. Pero muchas veces es porque no les queda de otra. Lo que hacemos nosotros es ayudarte a que tengas la opción de elegir — que cuando llegues a esa edad, sea porque quieres, no porque tienes que.',
+       note:'🎯 Esta imagen crea motivación emocional profunda. Esperar la reacción del cliente.',
+       reactions:['Le motivó mucho 🔥','Le resonó','No lo había visto así']
+     }
+   }
+  },
+  // PATRIMONIO
+  {id:'sec5',text:'📜 Patrimonio y Herencia',type:'divider'},
+  {id:'trust',
+   text:'Y aprovecho para preguntarte algo muy importante — ¿tienes testamento (Will) o Living Trust?',
+   opts:[{l:'Sí, tengo ambos',v:'ambos',t:'y',pts:0},{l:'Solo uno de ellos',v:'uno',t:'m',pts:1},{l:'No tengo ninguno',v:'no',t:'n',pts:3}],
+   impact:{
+     ambos:{
+       say:'Excelente — eso es algo que muy poca gente tiene en orden. Una pregunta importante: ¿pudiste fondear el fideicomiso? Es decir, ¿lograste transferir el título de tu propiedad al Trust? Porque si no se hizo ese paso, la propiedad igual tendría que pasar por Probate — aunque tengas el Trust.',
+       note:'🎯 La mayoría no sabe que el Trust hay que fondearlo. Si no fondeó → abrir conversación de revisión.',
+       reactions:['Sí, está fondeado','No lo sé 😮','No lo hice todavía']
+     },
+     uno:{
+       say:'En EEUU un testamento solo no evita el Probate — el juicio de sucesión. Necesitas los dos para que tu familia reciba los bienes directamente, sin corte, sin esperar meses. Eso es algo que podemos ayudarte a resolver.',
+       note:'🎯 Muchos tienen uno pero no el otro. La brecha es fácil de cerrar.',
+       reactions:['No sabía la diferencia 😮','Quiero completarlo','¿Qué tan caro es?']
+     },
+     no:{
+       say:'Es muy importante tener al menos un testamento — especialmente si tienes hijos. Si tienes hijos menores y no hay un testamento, es un juez quien decide quién los cuida — no tú, no tu pareja — sino el estado. Y en cuanto a tus activos y cuentas, si no están bien estructurados, todo podría entrar a Probate — que es básicamente un proceso judicial donde el estado supervisa cómo se reparten tus bienes. Puede ser costoso, lento y público. Nosotros te podemos ayudar a revisar todo para evitar ese proceso en la medida de lo posible.',
+       note:'🎯 Este es el discurso más completo — dejar que el cliente procese. Si tiene hijos → énfasis en el guardián.',
+       reactions:['No sabía nada de esto 😮','Quiero resolverlo 🔥','Me preocupa lo de los hijos']
+     }
+   }
+  },
+  // META FINAL
+  {id:'sec6',text:'🎯 Pregunta Clave Final',type:'divider'},
+  {id:'meta',
+   text:'Y la última — si tuvieras que decir cuál es tu mayor meta financiera en los próximos 5 años, ¿cuál o cuáles serían?',
+   type:'multi',
+   opts:[
+     {l:'🏖️ Jubilarme con ingresos garantizados',v:'retiro'},
+     {l:'👨‍👩‍👧 Dejar herencia y patrimonio a mis hijos',v:'herencia'},
+     {l:'🛡️ Proteger a mi familia si me pasa algo',v:'proteger'},
+     {l:'📈 Acumular capital libre de impuestos',v:'capital'},
+     {l:'💳 Salir de deudas y estabilizarme',v:'deudas'},
+     {l:'🎓 Pagar la educación de mis hijos',v:'educacion'},
+   ]
+  },
+];
+
+const META_CIERRES={
+  retiro:{producto:'Anualidad Indexada',say:(n,metas)=>metas.length>1?`"${n}, entiendo — quieres varias cosas a la vez, y eso tiene todo el sentido. Lo que vamos a hacer en la reunión es priorizar juntos y diseñar un plan que las cubra todas de forma ordenada. Lo primero que vamos a ver es cómo garantizar tu retiro, porque todo lo demás se construye sobre esa base. ¿Te queda bien [día/hora]?"`:
+    `"${n}, con lo que me contaste ya veo claramente que lo más importante para ti es garantizar un ingreso para cuando te retires. En nuestra reunión te voy a mostrar cómo una anualidad indexada te garantiza un cheque mensual de por vida — sin importar qué pase con el mercado. ¿Te queda bien [día/hora]?"`,color:'gold'},
+  herencia:{producto:'IUL + Living Trust',say:(n,metas)=>metas.length>1?`"${n}, tienes varias metas y eso es muy bueno — significa que piensas en el futuro de tu familia. En la reunión vamos a armar un plan que las cubra a todas, pero empezando por lo más urgente. Te voy a mostrar cómo en un solo instrumento puedes proteger a tu familia Y dejarles un legado. ¿Cuándo nos reunimos?"`:
+    `"${n}, tu prioridad es clara — quieres que tus hijos reciban lo que construiste. Te voy a mostrar cómo un IUL combinado con un Living Trust garantiza que tu familia recibe en 30 días, sin pasar por un juicio. ¿Cuándo podemos reunirnos?"`,color:'gold'},
+  proteger:{producto:'Seguro de Vida / Término',say:(n,metas)=>metas.length>1?`"${n}, mira — elegiste varias metas y todas son importantes. En la reunión las vamos a revisar todas, pero lo primero que hay que tener en orden es la protección de tu familia. Eso no puede esperar. ¿Te queda bien esta semana?"`:
+    `"${n}, lo más importante para ti es que tu familia esté protegida. En la reunión te voy a mostrar exactamente cuánto necesitarías de cobertura y cuál es la forma más eficiente de tenerla. ¿Te queda bien esta semana?"`,color:'red'},
+  capital:{producto:'IUL — Capital Libre de Impuestos',say:(n,metas)=>metas.length>1?`"${n}, con esas metas veo que quieres crecer Y proteger al mismo tiempo — y eso es exactamente lo que hacemos. Hay un instrumento que hace las dos cosas juntas, libre de impuestos. En la reunión te lo explico paso a paso. ¿Cuándo nos reunimos?"`:
+    `"${n}, quieres que tu dinero crezca sin pagarle impuestos al gobierno. Te voy a mostrar un instrumento que crece indexado al S&P 500 sin riesgo de pérdida y libre de impuestos. ¿Cuándo nos reunimos?"`,color:'green'},
+  deudas:{producto:'Organización Financiera',say:(n,metas)=>metas.length>1?`"${n}, entiendo — primero hay que estabilizarse y luego construir. Lo que vamos a hacer en la reunión es revisar todo juntos: qué hay que organizar primero y luego cómo empezamos a construir el plan. ¿Cuándo tienes 30 minutos?"`:
+    `"${n}, entiendo que primero necesitas estabilizarte. Lo que vamos a hacer en la reunión es crear un plan en dos etapas: primero organizamos tu situación, luego construimos el plan financiero. ¿Cuándo tienes 30 minutos?"`,color:'red'},
+  educacion:{producto:'Póliza Educativa Nova',say:(n,metas)=>metas.length>1?`"${n}, quieres garantizarle la universidad a tus hijos Y también otras metas. Hay formas de hacer las dos cosas al mismo tiempo. En la reunión te voy a mostrar cómo una póliza educativa puede estar conectada con tu plan general. ¿Cuándo nos reunimos?"`:
+    `"${n}, quieres garantizarle la universidad a tus hijos sin deuda. Te voy a mostrar cómo nuestra póliza educativa crece libre de impuestos, está protegida si algo te pasa a ti, y además incluye un seguro de vida desde el primer mes. ¿Cuándo nos reunimos?"`,color:'green'},
+};
+
+// ══════════════════════════════════
+// UTILS
+// ══════════════════════════════════
+function chF(d){fsz=Math.min(22,Math.max(13,fsz+d));document.body.style.setProperty('--fs',fsz+'px');document.getElementById('fv').textContent=fsz;}
+function togAb(hdr){const bd=hdr.nextElementSibling;const ar=hdr.querySelector('.ab-arr');bd.classList.toggle('col');ar.style.transform=bd.classList.contains('col')?'rotate(180deg)':'rotate(0)';}
+function togGM(){gmOpen=!gmOpen;document.getElementById('gmb').classList.toggle('open',gmOpen);document.getElementById('gmhint').textContent=gmOpen?'Cerrar ▲':'Toca para ver →';}
+function goS(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');window.scrollTo(0,0);}
+function selProf(p){
+  profile=p;
+  document.querySelectorAll('.prof-btn').forEach(b=>b.classList.remove('active-prof'));
+  const idMap={gregorio:'p-greg',agente:'p-agent',producer:'p-prod'};
+  const el=document.getElementById(idMap[p]);
+  if(el) el.classList.add('active-prof');
+  document.getElementById('agentName').style.display=p==='agente'?'block':'none';
+}
+function sh(id){const e=document.getElementById(id);if(e)e.classList.remove('hidden')}
+function hd(id){const e=document.getElementById(id);if(e)e.classList.add('hidden')}
+
+// ══════════════════════════════════
+// INIT
+// ══════════════════════════════════
+function ini(){
+  if(!profile){alert('Selecciona un perfil primero');return;}
+  cName=document.getElementById('cn').value.trim()||'el cliente';
+  agentNameVal=document.getElementById('agentName').value.trim()||'[tu nombre]';
+  const cb=document.getElementById('cb');cb.textContent='👤 '+cName;cb.style.display='block';
+  score=0;A={};N={};R={};metaSet=new Set();qIdx=0;chatDone=false;
+
+  // Build script
+  const sc=SCRIPTS[profile];
+  document.getElementById('s1-badge').textContent=sc.badge;
+  document.getElementById('ab-icon').textContent=sc.icon;
+  document.getElementById('script-apertura').innerHTML=sc.apertura(cName.split(' ')[0],agentNameVal);
+  document.getElementById('script-nota').innerHTML=sc.nota;
+  document.getElementById('gmsy-mini').textContent='"'+cName.split(' ')[0]+', antes de hablar de cualquier producto, quiero hacerte unas preguntas rápidas — 10 minutos. Sin venderte nada."';
+  goS('s1');
+}
+
+// ══════════════════════════════════
+// CARD ENGINE — all questions rendered at once
+// ══════════════════════════════════
+function goQ(){
+  goS('s2');
+  const c=document.getElementById('q-container');
+  if(c) c.innerHTML='';
+  gmOpen=false;
+  const gm=document.getElementById('gmb'); if(gm) gm.classList.remove('open');
+  const gh=document.getElementById('gmhint'); if(gh) gh.textContent='Toca para ver →';
+  const sy=document.getElementById('gmsy-mini');
+  if(sy) sy.textContent='"'+cName.split(' ')[0]+', antes de hablar de cualquier producto, quiero hacerte unas preguntas rápidas — 10 minutos. Sin venderte nada."';
+  renderAllQuestions();
+}
+
+function renderAllQuestions(){
+  const c=document.getElementById('q-container');
+  if(!c) return;
+  c.innerHTML='';
+  QUESTIONS.forEach((q,idx)=>{
+    if(q.type==='divider'){
+      const d=document.createElement('div');
+      d.className='sec-div';
+      d.innerHTML=`<span>${q.text}</span>`;
+      c.appendChild(d);
+      return;
+    }
+    const card=document.createElement('div');
+    card.className='qcard';
+    card.id='qcard-'+idx;
+    let html='';
+    if(q.badge) html+=`<div class="qbadge ${q.badgeType||'qr'}">${q.badge}</div>`;
+    html+=`<div class="qt">${q.text}</div>`;
+    if(q.type==='multi'){
+      html+=`<div class="meta-grid" id="meta-grid-${idx}">`;
+      q.opts.forEach(o=>{
+        html+=`<div class="meta-opt" onclick="togMeta('${o.v}',this,${idx})"><div class="meta-chk"></div><div class="meta-txt">${o.l}</div></div>`;
+      });
+      html+=`</div><div id="cierre-box" style="display:none"></div>`;
+    } else {
+      html+=`<div class="pills" id="pills-${idx}">`;
+      q.opts.forEach(o=>{
+        html+=`<button class="pill" onclick="pickPill(${idx},'${o.v}','${o.t||'m'}',${o.pts||0},this)">${o.l}</button>`;
+      });
+      html+=`</div>`;
+      if(q.followup){
+        Object.keys(q.followup).forEach(k=>{
+          const f=q.followup[k];
+          const ph=(f.placeholder||f.text||'').replace(/'/g,'&#39;');
+          html+=`<div id="follow-${idx}-${k}" class="hidden"><input class="qi" placeholder="${ph}" oninput="N['${f.id||k}']=this.value"></div>`;
+        });
+      }
+      html+=`<div id="impact-${idx}" class="hidden"></div>`;
+    }
+    card.innerHTML=html;
+    c.appendChild(card);
+  });
+}
+
+function pickPill(idx,val,type,pts,btn){
+  const q=QUESTIONS[idx];
+  if(!q) return;
+  // Score
+  if(A[q.id]!==undefined) score-=(A[q.id+'_p']||0);
+  A[q.id]=val; A[q.id+'_p']=pts||0; score+=(pts||0);
+  // Style — all white when selected
+  const pills=document.querySelectorAll(`#pills-${idx} .pill`);
+  pills.forEach(p=>{p.classList.remove('sel-y','sel-n','sel-m','sel-w');});
+  btn.classList.add('sel-w');
+  // Followup
+  if(q.followup){
+    Object.keys(q.followup).forEach(k=>{
+      const el=document.getElementById(`follow-${idx}-${k}`);
+      if(el) el.classList.toggle('hidden', k!==val);
+    });
+  }
+  // Impact
+  const impEl=document.getElementById('impact-'+idx);
+  if(q.impact&&q.impact[val]&&impEl){
+    const imp=q.impact[val];
+    let html=`<div class="ib">`;
+    html+=`<div class="il">💬 Di esto — conversacionalmente</div>`;
+    html+=`<div class="is">${imp.say||''}</div>`;
+    if(imp.note) html+=`<div class="inn">${imp.note}</div>`;
+    if(imp.reactions&&imp.reactions.length){
+      html+=`<div class="irl">¿Cómo reaccionó?</div><div class="rps">`;
+      imp.reactions.forEach(r=>{
+        const isNeg=/(😮|No |no |preocupó|olvidado|perdió|tarjeta|Dependen|Casi|sabe|urgente)/i.test(r);
+        const rs=r.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        html+=`<button class="rp ${isNeg?'rpn':'rpy'}" onclick="sr('${q.id}_r','${rs}',this)">${r}</button>`;
+      });
+      html+=`</div>`;
+    }
+    html+=`<textarea class="note-area" placeholder="Notas..." oninput="N['${q.id}_n']=this.value"></textarea>`;
+    html+=`</div>`;
+    impEl.innerHTML=html;
+    impEl.classList.remove('hidden');
+  } else if(impEl){
+    impEl.classList.add('hidden');
+    impEl.innerHTML='';
+  }
+  updC();
+  upP();
+}
+
+function togMeta(val,el,idx){
+  if(!el) return;
+  if(metaSet.has(val)){metaSet.delete(val);el.classList.remove('sel');const chk=el.querySelector('.meta-chk');if(chk)chk.textContent='';}
+  else{metaSet.add(val);el.classList.add('sel');const chk=el.querySelector('.meta-chk');if(chk)chk.textContent='✓';}
+  A.meta=[...metaSet];
+  const metas=[...metaSet];
+  const cierreBox=document.getElementById('cierre-box');
+  if(!cierreBox){upP();return;}
+  if(metas.length>0){
+    const first=META_CIERRES[metas[0]];
+    if(first){
+      const n=cName.split(' ')[0];
+      cierreBox.style.display='block';
+      cierreBox.innerHTML=`<div class="cierre-bubble">
+        <div class="cierre-lbl">✅ Guion de cierre — di esto ahora</div>
+        <div style="font-size:.72em;color:var(--mt);margin-bottom:6px">Producto → <strong style="color:var(--red2)">${first.producto}</strong>${metas.length>1?' · <span style="color:var(--gold2)">'+metas.length+' metas</span>':''}</div>
+        <div class="cierre-say">${first.say(n,metas)}</div>
+      </div>`;
+    }
+  } else {
+    cierreBox.style.display='none';
+    cierreBox.innerHTML='';
+  }
+  upP();
+}
+
+function sr(k,v,btn){
+  R[k]=v;
+  const container=btn.closest('.rps');
+  if(container) container.querySelectorAll('.rp').forEach(p=>p.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+
+function updateBar(){
+  const keys=['hijos','casado','dep','casa','hipoteca','deudas','salud','accidente','vida','salud_h','retiro','ahorros','edad_ret','trust','herencia'];
+  const done=keys.filter(k=>A[k]!==undefined).length+(metaSet.size>0?1:0);
+  const pct=Math.round(done/(keys.length+1)*100);
+  const fill=document.getElementById('pgf'); if(fill) fill.style.width=pct+'%';
+  const num=document.getElementById('pgn'); if(num) num.textContent=done+' / '+(keys.length+1);
+}
+
+function showFinalBar(){}
+function nextQ(){goR();}
+
+// ══════════════════════════════════
+// RESULTS ENGINE
+// ══════════════════════════════════
+const PRODS={
+  salud_no:{p:1,i:'💊',n:'Seguro de Salud',s:'United Health · ProtectGuard',w:'Sin cobertura médica. Prioridad máxima.',h:'"Sin seguro, una emergencia puede destruir todo lo que construyó."',q:['¿Va regularmente al médico?','¿Cuánto paga en visitas al año?']},
+  salud_emp:{p:2,i:'➕',n:'Complementario / Incapacidad',s:'Cubre lo que el trabajo no cubre',w:'No cubre incapacidad ni enfermedades críticas.',h:'"Si no puede trabajar 6 meses, ¿quién paga las facturas?"',q:['¿Cuál es su deducible?','¿Cuál es su máximo de bolsillo?']},
+  vida_no:{p:1,i:'🛡️',n:'Seguro de Vida',s:'Término / IUL básico',w:'Sin seguro de vida con familia o hipoteca dependiente.',h:'"¿Quién cuida económicamente a su familia si algo le pasa?"',q:['¿Cuánto necesitaría su familia para 5 años?']},
+  vida_emp:{p:2,i:'🛡️',n:'Seguro de Vida Propio',s:'El del trabajo se pierde con el empleo',w:'Si cambia o pierde el empleo, esa cobertura desaparece.',h:'"Si mañana lo despiden, ¿qué pasa con ese seguro?"',q:['¿Cuánta cobertura da el trabajo?']},
+  hipoteca:{p:1,i:'🏠',n:'Protección Hipotecaria',s:'Seguro vinculado a la hipoteca',w:'Su familia podría perder la casa si faltan sus ingresos.',h:'"Trabajó años para esa casa. Un seguro la protege pase lo que pase."',q:['¿Cuánto debe?','¿Cuántos años le quedan?']},
+  educacion:{p:2,i:'🎓',n:'Póliza Educativa',s:'Ahorro universitario libre de impuestos',w:'Un año de universidad puede costar $25k–$80k.',h:'"Con una póliza educativa, sus hijos van a la universidad sin deuda."',q:['¿Cuántos años tienen sus hijos?']},
+  pod:{p:2,i:'🔑',n:'Beneficiarios POD',s:'Acceso inmediato para su pareja',w:'Sin POD, las cuentas quedan bloqueadas hasta que un juez lo autorice.',h:'"Si algo le pasa hoy, ¿su pareja puede acceder a su dinero mañana?"',q:['¿Tiene beneficiarios asignados en sus cuentas?']},
+  iul:{p:2,i:'💰',n:'IUL + Plan de Retiro',s:'Protege · Ahorra · Crece libre de impuestos',w:'El IUL construye protección, ahorro y retiro en uno.',h:'"Con $200/mes puede tener seguro de vida, ahorro y retiro juntos."',q:['¿Cuánto puede ahorrar al mes?']},
+  anualidad:{p:3,i:'📈',n:'Anualidad / Optimización Retiro',s:'Ingreso garantizado de por vida',w:'Tiene ahorros. Revisemos si están creciendo o solo guardados.',h:'"¿Sabe cuánto le rinde su 401k? Comparémoslo con una anualidad."',q:['¿Cuánto tiene en retiro?','¿Perdió en alguna crisis?']},
+  apy:{p:3,i:'🏦',n:'Cuenta de Ahorro APY',s:'Sin comisiones · 4–5% · Sin riesgo',w:'Necesita fondo de emergencia antes de invertir.',h:'"Hay cuentas que pagan 4-5% APY sin cobros de manejo."',q:['¿En qué banco tiene su dinero?']},
+  trust:{p:1,i:'📜',n:'Living Trust + Testamento',s:'Evita Probate · Protege la herencia',w:'Sin Trust, Probate: juicio de 6–18 meses.',h:'"Sin Living Trust, el tribunal decide quién hereda — y quién cuida a sus hijos."',q:['¿A quién quiere dejar su casa?']},
+};
+const META_PRODS={
+  retiro:{p:1,i:'🏖️',n:'Anualidad Indexada',s:'Meta: jubilación',w:'Su meta es jubilarse con ingresos seguros.',h:'"Una anualidad garantiza un cheque mensual de por vida."',q:['¿A qué edad quiere retirarse?']},
+  herencia:{p:1,i:'👨‍👩‍👧',n:'IUL + Living Trust',s:'Meta: herencia',w:'Su meta es dejar patrimonio sin probate.',h:'"Con IUL + Trust, su familia recibe en 30 días."',q:['¿A quién quiere dejar sus bienes?']},
+  proteger:{p:1,i:'🛡️',n:'Seguro de Vida / Término',s:'Meta: protección',w:'Su meta es proteger a su familia.',h:'"Si algo le pasara, ¿su familia mantiene el mismo estilo de vida?"',q:['¿Cuánto necesitaría su familia?']},
+  capital:{p:1,i:'📈',n:'IUL — Capital Libre Impuestos',s:'Meta: acumulación',w:'El IUL crece indexado al S&P sin riesgo.',h:'"¿Puede crecer con el mercado sin perder si baja?"',q:['¿Cuánto puede invertir al mes?']},
+  deudas:{p:2,i:'💳',n:'Organización Financiera',s:'Meta: estabilización',w:'Primero organizar, luego construir.',h:'"Primero organizamos tu situación, luego construimos el plan."',q:['¿Cuánto paga en deudas al mes?']},
+  educacion:{p:1,i:'🎓',n:'Póliza Educativa',s:'Meta: educación hijos',w:'Su meta es garantizar la universidad sin deuda.',h:'"Una póliza educativa crece libre de impuestos para la universidad."',q:['¿Edades de los hijos?']},
+};
+
+function goR(){
+  const recs=[];
+  const fam=A.hijos==='si'||A.casado==='si'||A.dep==='si';
+  const metas=[...metaSet];
+
+  if(A.salud==='no') recs.push({...PRODS.salud_no});
+  else if(A.salud==='employer') recs.push({...PRODS.salud_emp});
+  if(A.vida==='no'){const r={...PRODS.vida_no};if(fam||A.hipoteca==='si')r.p=1;else r.p=2;recs.push(r);}
+  else if(A.vida==='employer') recs.push({...PRODS.vida_emp});
+  if(A.hipoteca==='si') recs.push({...PRODS.hipoteca});
+  if(A.hijos==='si') recs.push({...PRODS.educacion});
+  if(A.casado&&A.casado!=='no') recs.push({...PRODS.pod});
+  if(A.retiro==='no'&&A.ahorros!=='alto') recs.push({...PRODS.iul});
+  else if(A.ahorros==='alto'||A.retiro==='si') recs.push({...PRODS.anualidad});
+  if(A.ahorros==='poco') recs.push({...PRODS.apy});
+  if(A.trust==='no'||A.trust==='uno') recs.push({...PRODS.trust,p:A.hijos==='si'||A.hipoteca==='si'?1:3});
+  metas.forEach(m=>{if(META_PRODS[m]&&!recs.find(r=>r.n===META_PRODS[m].n))recs.push({...META_PRODS[m]});});
+  recs.sort((a,b)=>a.p-b.p);
+  const top=recs.slice(0,8);
+  window._recs=top;
+
+  // Score
+  function siI(s){
+    if(s>=15)return{l:'Urgencia Alta',d:'Múltiples áreas sin cobertura. Atención inmediata.',c:'srd',col:'#FF5050',p:Math.min(100,s*3)};
+    if(s>=8)return{l:'Oportunidad Media-Alta',d:'Hay brechas importantes. Buen candidato para plan completo.',c:'sa',col:'var(--gold)',p:Math.min(100,s*4.5)};
+    return{l:'Perfil Organizado',d:'Situación estable. Enfocarse en optimización.',c:'sg',col:'var(--green)',p:Math.min(100,s*7)};
+  }
+  const si=siI(score);
+  document.getElementById('sring').className='srg '+si.c;
+  document.getElementById('sn2').textContent=score;
+  document.getElementById('sti2').textContent=si.l;
+  document.getElementById('sde').textContent=si.d;
+  const bar=document.getElementById('sbf');bar.style.background=si.col;
+  setTimeout(()=>bar.style.width=si.p+'%',80);
+  document.getElementById('rname').textContent=cName.split(' ')[0];
+  document.getElementById('rdate').textContent='Evaluación · '+new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const t3=top.slice(0,3).map(r=>r.n).join(' · ');
+  document.getElementById('pribox').innerHTML=`<div class="prl">🎯 Enfoque principal</div><div class="prbd"><strong>${cName.split(' ')[0]}</strong> necesita: <strong>${t3}</strong>.</div>`;
+
+  // Notes
+  const keys=['hijos','casado','dep','hipoteca','salud','vida','retiro','ahorros','trust','herencia'];
+  const ne=keys.map(k=>({q:k,a:A[k]||'—',n:N[k+'_n'],r:R[k+'_r']})).filter(e=>e.n||e.r);
+  const ntb=document.getElementById('ntb');
+  if(ne.length){ntb.style.display='block';document.getElementById('nrows').innerHTML=ne.map(e=>`<div class="nrw"><div class="nq">${e.q}</div><div><div class="na">${e.a}</div>${e.r?`<div class="nc">Reacción: ${e.r}</div>`:''}${e.n?`<div class="nc">${e.n}</div>`:''}</div></div>`).join('');}
+  else ntb.style.display='none';
+
+  // Grid
+  const grid=document.getElementById('pgd');grid.innerHTML='';
+  top.forEach((r,i)=>{
+    const rc=i===0?'pkg':i<3?'pk2':'pk3';
+    const cc=i===0?'p1':i<3?'p2':'';
+    grid.innerHTML+=`<div class="pc ${cc}"><div class="prk ${rc}">${i+1}</div><div class="pic">${r.i}</div><div class="pnm">${r.n}</div><div class="psu">${r.s}</div><div class="pwy">${r.w}</div><div class="phk">${r.h}</div></div>`;
+  });
+
+  // Questions
+  const qs=[];top.slice(0,4).forEach(r=>r.q.forEach(q=>{if(!qs.includes(q))qs.push(q)}));
+  document.getElementById('asksec').innerHTML=`<div class="akb"><div class="akt">Preguntas para la reunión de seguimiento</div><ul class="akl">${qs.slice(0,10).map(q=>`<li>${q}</li>`).join('')}</ul></div>`;
+  goS('s3');
+}
+
+// ══════════════════════════════════
+// PDF CLIENTE — 2 páginas diseño aprobado
+// ══════════════════════════════════
+function genPDFCliente(){
+  const n=cName.split(' ')[0];
+  const full=cName;
+  const top3=(window._recs||[]).slice(0,3);
+  const metas=[...metaSet];
+  const metaTexto={retiro:'Jubilarse con ingresos garantizados',herencia:'Dejar herencia a sus hijos',proteger:'Proteger a su familia',capital:'Acumular capital libre de impuestos',deudas:'Salir de deudas',educacion:'Pagar la educación de sus hijos'};
+  const scoreLabel=score>=15?'Alta Urgencia':score>=8?'Oportunidad Media-Alta':'Perfil Organizado';
+  const isGregorio=profile==='gregorio';
+  const fecha=new Date().toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Análisis TrueMate — ${full}</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size:11px;line-height:1.45}
+  .no-print{position:fixed;top:0;left:0;right:0;background:#193251;color:#fff;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;z-index:100;gap:12px}
+  .np-t{font-size:13px;font-weight:600}.np-s{font-size:11px;opacity:.7}
+  .np-btn{background:#FF5050;color:#fff;border:none;padding:8px 20px;border-radius:7px;cursor:pointer;font-weight:700;font-size:13px}
+  .page{max-width:780px;margin:52px auto 0;background:#fff;overflow:hidden;page-break-after:always}
+  .page:last-child{page-break-after:auto}
+  /* HERO */
+  .hero{background:#193251;padding:24px 30px;position:relative}
+  .hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FF5050,#c9a84c)}
+  .h-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .h-logo{display:flex;align-items:center;gap:9px}
+  .h-lm{width:32px;height:32px;background:#FF5050;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:14px}
+  .h-lt{font-size:15px;font-weight:500;color:#f0ead8}
+  .h-ls{font-size:8px;color:#7a8a9a;letter-spacing:2px;text-transform:uppercase;display:block}
+  .h-date{font-size:11px;color:#7a8a9a}
+  .h-badge{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#FF5050;font-weight:700;margin-bottom:8px}
+  .h-name{font-size:40px;font-weight:700;color:#f0ead8;line-height:1;margin-bottom:4px;letter-spacing:-1px}
+  .h-name em{color:#FF5050;font-style:normal}
+  .h-sub{font-size:11px;color:#8899aa;line-height:1.5;margin-bottom:14px}
+  .metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.1);border-top:1px solid rgba(255,255,255,.1)}
+  .mc{background:#193251;padding:13px 16px}
+  .ml{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#7a8a9a;margin-bottom:4px}
+  .mv{font-size:22px;font-weight:700;color:#f0ead8;line-height:1;margin-bottom:2px}
+  .mv.r{color:#FF5050}.mv.g{color:#c9a84c}.mv.gr{color:#27ae71}.mv.sm{font-size:12px;margin-top:3px}
+  .mb{font-size:9px;color:#7a8a9a}
+  /* BODY P1 */
+  .body{padding:16px 26px}
+  .st{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF5050;margin-bottom:9px;padding-bottom:5px;border-bottom:1px solid rgba(255,80,80,.18)}
+  /* Bienvenida */
+  .bv{background:#193251;border-radius:11px;padding:18px 22px;margin-bottom:10px;position:relative;overflow:hidden}
+  .bv::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FF5050,#c9a84c)}
+  .bv-eye{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF5050;margin-bottom:8px}
+  .bv-title{font-size:16px;font-weight:700;color:#f0ead8;line-height:1.3;margin-bottom:8px}
+  .bv-title em{color:#FF5050;font-style:normal}
+  .bv-body{font-size:11px;color:#8899aa;line-height:1.75}
+  .bv-body strong{color:#f0ead8}
+  /* Why cards 2x3 */
+  .wg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .wc{background:#f8f7f4;border-radius:9px;padding:12px 13px;border-top:3px solid #193251}
+  .wc.r{border-top-color:#FF5050}.wc.g{border-top-color:#27ae71}.wc.o{border-top-color:#c9a84c}.wc.tl{border-top-color:#0d9488}
+  .wi{font-size:16px;margin-bottom:5px}
+  .wt{font-size:11px;font-weight:600;color:#1a1a2e;margin-bottom:3px}
+  .bstat{font-size:22px;font-weight:700;color:#FF5050;line-height:1;margin:2px 0}
+  .bstat.b{color:#193251}.bstat.g{color:#27ae71}.bstat.o{color:#c9a84c}.bstat.tl{color:#0d9488}
+  .wx{font-size:10px;color:#5a6a7a;line-height:1.5}
+  /* PAGE 2 */
+  /* Score split Opción B */
+  .score-split{border-radius:11px;overflow:hidden;border:1px solid #e8e0d0;display:grid;grid-template-columns:130px 1fr;margin-bottom:10px}
+  .ss-left{background:#193251;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .ss-num{font-size:52px;font-weight:700;color:#FF5050;line-height:1}
+  .ss-score{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#7a8a9a;margin:2px 0 10px}
+  .ss-badge{background:rgba(255,80,80,.15);border:1px solid rgba(255,80,80,.4);border-radius:6px;padding:4px 8px;font-size:9px;font-weight:700;color:#FF5050;letter-spacing:1px;text-transform:uppercase}
+  .ss-right{background:#f8f7f4;padding:16px 18px;display:flex;flex-direction:column;justify-content:center}
+  .ss-eye{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF5050;margin-bottom:5px}
+  .ss-title{font-size:14px;font-weight:700;color:#193251;line-height:1.3;margin-bottom:7px}
+  .ss-body{font-size:11px;color:#5a6a7a;line-height:1.65}
+  .ss-body strong{color:#1a1a2e}
+  .ss-div{height:1px;background:#e8e0d0;margin:9px 0}
+  .ss-chips{display:flex;gap:8px}
+  .ss-chip{background:#fff;border:1px solid #e8e0d0;border-radius:7px;padding:6px 9px;text-align:center;flex:1}
+  .ss-chip-n{font-size:13px;font-weight:700;color:#FF5050;margin-bottom:1px}
+  .ss-chip-l{font-size:8px;color:#7a8a9a}
+  /* Ayuda */
+  .ayuda-intro{font-size:11px;color:#2c3e50;line-height:1.65;padding:9px 13px;background:#f0f4f8;border-left:4px solid #193251;border-radius:0 8px 8px 0;margin-bottom:8px}
+  .ayuda-intro strong{color:#193251}
+  .bloques{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:8px}
+  .blq{background:#f8f7f4;border-radius:8px;padding:10px 11px;text-align:center;border-top:3px solid #193251}
+  .blq.r{border-top-color:#FF5050}.blq.g{border-top-color:#27ae71}
+  .blq-i{font-size:18px;margin-bottom:4px}
+  .blq-t{font-size:10px;font-weight:600;color:#1a1a2e;margin-bottom:2px}
+  .blq-d{font-size:9px;color:#5a6a7a;line-height:1.4}
+  /* Revelaciones */
+  .rev-title{font-size:10px;font-weight:600;color:#193251;margin-bottom:7px}
+  .revs{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+  .rev{display:flex;align-items:flex-start;gap:9px;background:#fff;border:1px solid #e8e0d0;border-radius:8px;padding:6px 10px;font-size:10px;color:#2c3e50;line-height:1.5}
+  .rev-dot{width:7px;height:7px;border-radius:50%;background:#FF5050;flex-shrink:0;margin-top:3px}
+  .rev strong{color:#1a1a2e}
+  /* Quiénes somos premium */
+  .qs{background:#f8f7f4;border-radius:10px;overflow:hidden;border:1px solid #e8e0d0;margin-bottom:8px}
+  .qs-head{padding:11px 16px 10px;border-bottom:1px solid #e8e0d0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .qs-eye{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#FF5050;margin-bottom:5px}
+  .qs-title{font-size:16px;font-weight:700;color:#193251;line-height:1.2;margin-bottom:5px}
+  .qs-title em{color:#FF5050;font-style:normal}
+  .qs-body{font-size:10px;color:#5a6a7a;line-height:1.65}
+  .qs-right{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .qs-img{width:64px;height:64px;object-fit:contain;border-radius:8px}
+  .qs-fallback{width:64px;height:64px;background:#193251;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:6px}
+  .qs-cred{font-size:8px;color:#9a9a9a;text-align:center;line-height:1.4}
+  .qs-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid #e8e0d0;font-size:10px}
+  .qs-stat{padding:11px 14px;text-align:center;border-right:1px solid #e8e0d0;background:#fff}
+  .qs-stat:last-child{border-right:none}
+  .qs-stat-n{font-size:22px;font-weight:700;color:#c9a84c;line-height:1;margin-bottom:2px}
+  .qs-stat-l{font-size:9px;color:#5a6a7a}.qs-stat-sub{font-size:8px;color:#9a9a9a;margin-top:1px}
+  .qs-svcs{padding:11px 18px}
+  .qs-svcs-t{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#193251;margin-bottom:7px}
+  .qs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+  .qs-item{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #e8e0d0;border-radius:6px;padding:7px 9px;border-left:3px solid #193251}
+  .qs-item.r{border-left-color:#FF5050}.qs-item.g{border-left-color:#27ae71}.qs-item.o{border-left-color:#c9a84c}.qs-item.tl{border-left-color:#0d9488}.qs-item.pu{border-left-color:#7c3aed}
+  .qs-icon{font-size:12px;flex-shrink:0}
+  .qs-name{font-size:10px;font-weight:600;color:#1a1a2e;line-height:1.2}
+  .qs-desc{font-size:8px;color:#7a8a9a;margin-top:1px}
+  /* Contact */
+  .cb{background:linear-gradient(135deg,#193251,#0d1f33);border-radius:9px;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .ag-n{font-size:13px;font-weight:500;color:#f0ead8;margin-bottom:2px}
+  .ag-c{font-size:8px;color:#FF5050;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+  .ag-i{font-size:10px;color:#8899aa;line-height:1.8}
+  .ag-i strong{color:#dde4ef}
+  .ctb{text-align:center;flex-shrink:0}
+  .ctl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#7a8a9a;margin-bottom:4px}
+  .ctv{font-size:12px;color:#c9a84c;font-weight:700;margin-bottom:2px}
+  .cts{font-size:9px;color:#7a8a9a;line-height:1.5}
+  .ft{background:#faf9f6;padding:9px 30px;text-align:center;font-size:9px;color:#9a9a9a;line-height:1.7;border-top:0.5px solid #e8e0d0}
+  @media print{
+    .no-print{display:none!important}
+    body{background:#fff}
+    .page{margin:0;max-width:100%}
+    @page{margin:6mm 10mm;size:letter}
+  }
+  </style></head><body>
+  <div class="no-print">
+    <div><div class="np-t">TrueMate — Análisis para ${full}</div><div class="np-s">${fecha}</div></div>
+    <button class="np-btn" onclick="window.print()">Guardar PDF</button>
+  </div>
+
+  <!-- ══ PÁGINA 1 ══ -->
+  <div class="page">
+    <div class="hero">
+      <div class="h-top">
+        <div class="h-logo"><div class="h-lm">T</div><div class="h-lt">Truemate <span class="h-ls">Insurance Financial & Services</span></div></div>
+        <div class="h-date">${fecha}</div>
+      </div>
+      <div class="h-badge">ANÁLISIS PERSONALIZADO DE NECESIDADES FINANCIERAS</div>
+      <div class="h-name">${n.toUpperCase()}</div>
+      <div class="h-sub">${metas.length?'Meta principal: '+metas.map(m=>metaTexto[m]||m).join(' · '):'Análisis integral de situación financiera'}<br>Evaluación realizada por ${isGregorio?'Gregorio Navarro':'equipo TrueMate'} · TrueMate Financial</div>
+      <div class="metrics">
+        <div class="mc"><div class="ml">Índice de necesidad</div><div class="mv r">${score}</div><div class="mb">${scoreLabel}</div></div>
+        <div class="mc"><div class="ml">Áreas identificadas</div><div class="mv g">${top3.length}</div><div class="mb">sin cobertura</div></div>
+        <div class="mc"><div class="ml">Próximo paso</div><div class="mv gr sm">Reunión gratuita</div><div class="mb">30 min · sin costo</div></div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="st">Por qué es importante tener un plan financiero</div>
+      <div class="bv">
+        <div class="bv-eye">Un mensaje para usted</div>
+        <div class="bv-title">Lo que está a punto de ver es información sobre su situación financiera que <em>la mayoría de las familias nunca tiene.</em></div>
+        <div class="bv-body">No porque sea difícil de obtener — sino porque nadie se los había ofrecido antes. <strong>Tomarse el tiempo de revisar su situación con un profesional ya lo pone en una posición diferente.</strong> Lo que sigue es información concreta, sin rodeos, sobre dónde está parado — y qué puede hacer con eso.</div>
+      </div>
+      <div class="wg">
+        <div class="wc r"><div class="wi">🛡️</div><div class="wt">Protección familiar</div><div class="bstat">1 de cada 3</div><div class="wx">familias enfrenta una crisis financiera severa tras la pérdida inesperada de quien sostenía el hogar. ¿Qué pasaría con su familia si usted no estuviera?</div></div>
+        <div class="wc"><div class="wi">🏠</div><div class="wt">Protección hipotecaria</div><div class="bstat b">90 días</div><div class="wx">es lo que puede tardar una familia en perder su casa si el titular fallece o queda incapacitado sin cobertura hipotecaria.</div></div>
+        <div class="wc o"><div class="wi">📜</div><div class="wt">Testamento y Living Trust</div><div class="bstat o">60%</div><div class="wx">de los adultos en EEUU no tiene ningún documento legal de sucesión. Sin Trust sus bienes entran a Probate — 6 meses a 2 años bloqueados.</div></div>
+        <div class="wc r"><div class="wi">💊</div><div class="wt">Cobertura de salud</div><div class="bstat">$15,000</div><div class="wx">puede costar una sola visita a urgencias sin el seguro correcto. Una enfermedad puede llevar a una familia a una crisis financiera seria.</div></div>
+        <div class="wc tl"><div class="wi">🎓</div><div class="wt">Planes educativos</div><div class="bstat tl">$11,950</div><div class="wx">cuesta un año en universidad pública estatal — y hasta $31,880 fuera del estado. Sin plan educativo, la única opción son préstamos con años de deuda.</div></div>
+        <div class="wc g"><div class="wi">📈</div><div class="wt">Retiro y crecimiento</div><div class="bstat g">$1,400</div><div class="wx">es el promedio mensual del Seguro Social — el único ingreso de quienes no planifican su retiro. Con un plan de acumulación ese ingreso puede multiplicarse.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PÁGINA 2 ══ -->
+  <div class="page">
+    <div class="body" style="padding-top:24px">
+      <div class="st">Lo que encontramos en su evaluación</div>
+      <div class="score-split">
+        <div class="ss-left">
+          <div class="ss-num">${score}</div>
+          <div class="ss-score">Score</div>
+          <div class="ss-badge">${scoreLabel}</div>
+        </div>
+        <div class="ss-right">
+          <div class="ss-eye">Su evaluación personalizada</div>
+          <div class="ss-title">Hay oportunidades importantes que podemos revisar juntos</div>
+          <div class="ss-body">No se trata de venderle algo — se trata de que usted sepa <strong>exactamente en qué punto está</strong> y qué opciones tiene disponibles. Muchas familias descubren que tenían soluciones al alcance que no conocían.</div>
+          <div class="ss-div"></div>
+          <div class="ss-chips">
+            <div class="ss-chip"><div class="ss-chip-n">${top3.length}</div><div class="ss-chip-l">áreas identificadas</div></div>
+            <div class="ss-chip"><div class="ss-chip-n">30 min</div><div class="ss-chip-l">reunión gratuita</div></div>
+            <div class="ss-chip"><div class="ss-chip-n">$0</div><div class="ss-chip-l">sin compromiso</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="st">En qué le podemos ayudar</div>
+      <div class="ayuda-intro">Nuestro objetivo en la reunión es simple: <strong>entender su situación completa y mostrarle opciones que quizás no sabía que existían</strong> — sin presión, sin compromiso.</div>
+      <div class="bloques">
+        <div class="blq r"><div class="blq-i">📋</div><div class="blq-t">Documentos legales</div><div class="blq-d">Poder notarial, testamento y Living Trust</div></div>
+        <div class="blq"><div class="blq-i">💰</div><div class="blq-t">Cuentas y ahorros</div><div class="blq-d">Retiro, 401k y fondo de emergencia</div></div>
+        <div class="blq g"><div class="blq-i">🏠</div><div class="blq-t">Costos actuales</div><div class="blq-d">Auto y home — posible ahorro sin perder cobertura</div></div>
+      </div>
+
+      <div class="rev-title">Lo que muchas familias descubren en su primera reunión con nosotros:</div>
+      <div class="revs">
+        <div class="rev"><div class="rev-dot"></div><div>Que tenían un <strong>401k abandonado de un trabajo anterior</strong> — con dinero parado o en riesgo que no sabían que podían recuperar.</div></div>
+        <div class="rev"><div class="rev-dot"></div><div>Que podían <strong>reducir el costo de su seguro de auto o home</strong> sin perder cobertura — simplemente revisando las condiciones actuales.</div></div>
+        <div class="rev"><div class="rev-dot"></div><div>Que sin un <strong>poder notarial</strong>, su pareja no podría tomar decisiones médicas o financieras por ellos en caso de emergencia.</div></div>
+        <div class="rev"><div class="rev-dot"></div><div>Que su <strong>cuenta bancaria individual quedaría bloqueada</strong> al fallecer, dejando a su familia sin acceso al dinero por meses.</div></div>
+      </div>
+
+      <div class="st">Quiénes somos</div>
+      <div class="qs">
+        <div class="qs-head">
+          <div style="flex:1">
+            <div class="qs-eye">Truemate Insurance Financial & Services</div>
+            <div class="qs-title">Más de una década protegiendo<br>familias en <em>Estados Unidos</em></div>
+            <div class="qs-body">Contamos con un equipo de profesionales en planificación financiera, gestión patrimonial, seguros de vida, auto, retiro, pequeños negocios y home. Trabajamos con familias y dueños de negocio que buscan proteger lo que han construido, crecer su patrimonio y dejarle un legado sólido a sus hijos.</div>
+          </div>
+          <div class="qs-right">
+            <img class="qs-img" src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/98741821" alt="FPWMP" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+            <div class="qs-fallback" style="display:none"><div style="font-size:11px;font-weight:700;color:#c9a84c">FPWMP®</div><div style="font-size:8px;color:#8899aa;margin-top:3px">Certified</div></div>
+            <div class="qs-cred">FPWMP®<br>Lic. 2-15 & 2-20</div>
+          </div>
+        </div>
+        <div class="qs-stats">
+          <div class="qs-stat"><div class="qs-stat-n">+1,000</div><div class="qs-stat-l">familias ayudadas</div><div class="qs-stat-sub">en todo el país</div></div>
+          <div class="qs-stat"><div class="qs-stat-n">+40</div><div class="qs-stat-l">estados en EEUU</div><div class="qs-stat-sub">presencia nacional</div></div>
+          <div class="qs-stat"><div class="qs-stat-n">100%</div><div class="qs-stat-l">planes personalizados</div><div class="qs-stat-sub">sin soluciones genéricas</div></div>
+        </div>
+        </div>
+      </div>
+
+      <div class="cb">
+        <div>
+          <div class="ag-n">${isGregorio?'Gregorio Navarro':'TrueMate Financial Planning'}</div>
+          <div class="ag-c">FPWMP® · Planificación Financiera & Gestión Patrimonial · Lic. 2-15 & 2-20</div>
+          <div class="ag-i"><strong>WhatsApp:</strong> +1 (484) 456-9465 &nbsp;|&nbsp; <strong>Email:</strong> gregorio@truemategroup.com<br><strong>Dirección:</strong> 2250 Lucien Way Suite 270, FL</div>
+          <div style="margin-top:7px;font-size:8px;color:rgba(255,255,255,.35);line-height:1.5">Documento informativo y confidencial · Truemate Insurance Financial & Services · Lic. 2-15 & 2-20 · FPWMP® · Los valores son estimados. No constituyen contrato ni garantía de resultados futuros.</div>
+        </div>
+        <div class="ctb">
+          <div class="ctl">Próximo paso</div>
+          <div class="ctv">Reunión gratuita</div>
+          <div class="cts">30 min · sin compromiso<br>Escríbeme por WhatsApp</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body></html>`);
+  w.document.close();
+}
+// ══════════════════════════════════
+// SHARE LINK
+// ══════════════════════════════════
+function genLink(){
+  // ← Cambia esta URL cuando sepas el nombre del proyecto en Cloudflare
+  const base='https://gregorionavarro.github.io/analisis-cliente-/';
+  const areas=(window._recs||[]).slice(0,3).length;
+  const fechaEl=document.getElementById('share-fecha');
+  const fecha=fechaEl?fechaEl.value:'';
+
+  // Encode all data as Base64 JSON — client can't read or edit params
+  const data={
+    n:cName,
+    s:score,
+    a:areas,
+    m:[...metaSet].join(','),
+    p:profile,
+    f:fecha
+  };
+  const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  const url=base+'?d='+encoded;
+  window._shareUrl=url;
+  document.getElementById('share-url').textContent=url;
+  document.getElementById('share-box').style.display='block';
+
+  // WhatsApp message — tono de cita ya confirmada
+  const firstName=cName.split(' ')[0];
+  let waMsg;
+  if(fecha){
+    waMsg=encodeURIComponent(
+      'Hola '+firstName+' 👋\n\n'+
+      'Listo — quedamos confirmados para el *'+fecha+'*.\n\n'+
+      'Te comparto este análisis personalizado que preparé para ti antes de nuestra reunión:\n\n'+
+      '🔗 '+url+'\n\n'+
+      'Tómate unos minutos para revisarlo — lo vamos a usar como base en nuestra conversación. ¡Nos vemos pronto!'
+    );
+  } else {
+    waMsg=encodeURIComponent(
+      'Hola '+firstName+' 👋\n\n'+
+      'Te comparto el análisis personalizado que preparé para ti:\n\n'+
+      '🔗 '+url+'\n\n'+
+      'Revisalo cuando puedas — lo vamos a usar de base en nuestra reunión. ¡Cualquier pregunta me escribes!'
+    );
+  }
+  // Set WhatsApp link directly — button is a clean <a> that navigates normally
+  const waBtn=document.getElementById('wa-share-btn');
+  if(waBtn) waBtn.href='https://wa.me/?text='+waMsg;
+  document.getElementById('share-box').scrollIntoView({behavior:'smooth',block:'center'});
+
+  const urlEl=document.getElementById('share-url');
+  if(urlEl) urlEl.textContent=url;
+}
+function copyLink(){
+  const url=window._shareUrl||document.getElementById('share-url').textContent;
+  try {
+    if(navigator.clipboard && location.protocol==='https:'){
+      navigator.clipboard.writeText(url).then(()=>{
+        const el=document.getElementById('cok');el.textContent='✅ Link copiado';el.style.display='block';
+        setTimeout(()=>el.style.display='none',3000);
+      });
+    } else {
+      // Fallback para archivo local
+      const ta=document.createElement('textarea');ta.value=url;
+      document.body.appendChild(ta);ta.select();document.execCommand('copy');
+      document.body.removeChild(ta);
+      const el=document.getElementById('cok');el.textContent='✅ Link copiado';el.style.display='block';
+      setTimeout(()=>el.style.display='none',3000);
+    }
+  } catch(e){ prompt('Copia este link:',url); }
+}
+// ══════════════════════════════════
+// COPY & RESET
+// ══════════════════════════════════
+function copyN(){
+  const metas=[...metaSet];
+  let t=`RESUMEN QOE — TRUEMATE FINANCIAL\nCliente: ${cName}\nPerfil agente: ${profile}\nFecha: ${new Date().toLocaleDateString('es-ES')}\nScore: ${score}\nMetas: ${metas.length?metas.join(', '):'—'}\n\nNOTAS:\n`;
+  Object.keys(N).forEach(k=>{if(N[k])t+=`• ${k}: ${N[k]}\n`;});
+  Object.keys(R).forEach(k=>{if(R[k])t+=`• ${k}: ${R[k]}\n`;});
+  t+=`\nPRODUCTOS:\n`;
+  (window._recs||[]).forEach((r,i)=>t+=`${i+1}. ${r.i} ${r.n} — ${r.h}\n`);
+  try {
+    if(navigator.clipboard && location.protocol==='https:'){
+      navigator.clipboard.writeText(t).then(()=>{
+        const el=document.getElementById('cok');el.style.display='block';
+        setTimeout(()=>el.style.display='none',3000);
+      });
+    } else {
+      const ta=document.createElement('textarea');ta.value=t;
+      document.body.appendChild(ta);ta.select();document.execCommand('copy');
+      document.body.removeChild(ta);
+      const el=document.getElementById('cok');el.style.display='block';
+      setTimeout(()=>el.style.display='none',3000);
+    }
+  } catch(e){ alert(t); }
+}
+
+function rst(){
+  A={};N={};R={};cName='';agentNameVal='';profile='agente';score=0;metaSet=new Set();qIdx=0;chatDone=false;
+  document.getElementById('cn').value='';
+  document.getElementById('cb').style.display='none';
+  document.querySelectorAll('.prof-btn').forEach(b=>b.classList.remove('sel'));
+  document.getElementById('agentName').style.display='none';
+  document.getElementById('agentName').value='';
+  const qc=document.getElementById('q-container'); if(qc) qc.innerHTML='';
+  goS('s0');
+}
+
+// Default profile select
+// Default profile — fire after DOM ready
+document.addEventListener('DOMContentLoaded',()=>selProf('gregorio'));
+selProf('gregorio');
+</script>
+</body>
+</html>
