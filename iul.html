@@ -221,9 +221,6 @@ body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size
     </div>
   </div>
 
-  <div class="st">Beneficios que tienes en vida</div>
-  <div class="bvs" id="bvs"></div>
-
   <div class="st">El costo real de esperar</div>
   <div class="esperar">
     <div class="esp-eye">⏰ Cada mes que pasa sin protección</div>
@@ -372,8 +369,7 @@ if(!raw){
   var D={};
   try{ D=JSON.parse(atob(raw.replace(/[.\s]+$/,''))); }catch(e){}
 
-  var nombre=D.n||'Cliente', edad=D.ed||'', prima=D.pm||'', anos=D.an||'';
-  var cb=D.cb||'', ob=D.ob||'', cv=D.cv||'', ix=D.ix||'S&P 500';
+  var nombre=D.n||'Cliente', edad=D.ed||'', prima=D.pm||'', anos=D.an||'', cb=D.cb||'', ob=D.ob||'', cv=D.cv||'', ix=D.ix||'S&P 500';
   var bvs=(D.bv||'terminal,critica,cronica,prestamos,retiro,herencia').split(',');
   var perfil=D.p||'gregorio', fecha=D.f||'';
   var firstName=nombre.split(' ')[0];
@@ -427,24 +423,7 @@ if(!raw){
   }
 
   // Benefits map
-  var BEN_MAP = {
-    terminal: {icon:'🏥',t:'Enfermedad terminal',d:'Si te diagnostican una enfermedad terminal, puedes acceder anticipadamente hasta el <strong>100% del beneficio por muerte</strong> para usarlo en vida — tratamientos, tiempo con tu familia, lo que necesites.',c:'r'},
-    critica:  {icon:'❤️',t:'Enfermedad crítica',d:'En caso de cáncer, infarto, derrame cerebral u otras enfermedades críticas, recibes acceso a una <strong>porción significativa del beneficio</strong> para cubrir gastos médicos o reemplazar ingresos.',c:'r'},
-    cronica:  {icon:'♿',t:'Enfermedad crónica',d:'Si llegas a necesitar ayuda para realizar actividades básicas diarias, tu póliza activa este beneficio que <strong>puede pagar hasta $30,000 al mes</strong> para cubrir cuidados y gastos del hogar.',c:'o'},
-    prestamos:{icon:'💰',t:'Préstamos libres de impuestos',d:'Puedes tomar prestado del valor acumulado de tu póliza <strong>sin pagar impuestos ni penalidades</strong> — para emergencias, inversiones, universidad de tus hijos o cualquier necesidad.',c:'g'},
-    retiro:   {icon:'🏖️',t:'Ingreso de retiro libre de impuestos',d:'Al jubilarte, puedes convertir el valor acumulado en un <strong>ingreso mensual libre de impuestos</strong> — un complemento poderoso al Seguro Social.',c:'tl'},
-    herencia: {icon:'👨‍👩‍👧',t:'Herencia libre de impuestos',d:'El beneficio por muerte pasa directamente a tus beneficiarios <strong>sin pasar por Probate, libre de impuestos federales</strong> — protegiendo el patrimonio que construiste.',c:'g'}
-  };
 
-  var bvsEl=document.getElementById('bvs');
-  bvs.filter(Boolean).forEach(function(b){
-    var ben=BEN_MAP[b];
-    if(!ben)return;
-    var el=document.createElement('div');
-    el.className='bv '+(ben.c||'');
-    el.innerHTML='<div class="bv-icon">'+ben.icon+'</div><div><div class="bv-t">'+ben.t+'</div><div class="bv-d">'+ben.d+'</div></div>';
-    bvsEl.appendChild(el);
-  });
 
   // Costo de esperar
   if(prima){
