@@ -530,7 +530,7 @@ const QUESTIONS=[
        note:'🎯 Urgencia real. Florida requiere seguro. Solución inmediata posible.',
        reactions:['No sabía las multas 😮','Quiere cotización 🔥','Tiene excusa']
      }
-   },
+   }
   },
   // SALUD
   {id:'sec3',text:'💊 Salud y Seguros',type:'divider'},
@@ -599,7 +599,20 @@ const QUESTIONS=[
   },
   {id:'salud_h',
    text:'Una pregunta rápida de salud — ¿has tenido algún problema médico importante en los últimos 2 años? Diabetes, corazón, algo así.',
-   opts:[{l:'Sí',v:'si',t:'n',pts:1},{l:'No, todo bien',v:'no',t:'y',pts:0}]
+   opts:[{l:'Sí',v:'si',t:'n',pts:1},{l:'No, todo bien',v:'no',t:'y',pts:0}],
+   followup:{si:{placeholder:'¿Cuál fue el diagnóstico? (opcional)',note:'Para buscar la mejor opción de cobertura según su historial'}},
+   impact:{
+     si:{
+       say:'Entiendo — gracias por compartirlo. Eso es importante saberlo porque afecta las opciones de cobertura disponibles. No significa que no haya soluciones — significa que hay que buscar las correctas. En la reunión revisamos qué productos aplican a tu situación específica.',
+       note:'🎯 Anotar la condición. Algunos productos tienen periodos de espera o exclusiones. Pero siempre hay opciones — accidente, hospitalización, guaranteed issue.',
+       reactions:['Condición controlada','Fue hace tiempo','Preocupado por cobertura 😮']
+     },
+     no:{
+       say:'Excelente — eso es una ventaja enorme. Significa que tienes acceso a las mejores tasas y coberturas disponibles. Hay que aprovecharlo ahora, porque entre más joven y sano estés, más económica y completa es la protección.',
+       note:'🎯 Urgencia positiva — la salud actual es el mejor momento para asegurarse.',
+       reactions:['Nunca lo había pensado','Quiere aprovecharlo 🔥','Ya tiene algo']
+     }
+   }
   },
   // RETIRO
   {id:'sec4',text:'🏖️ Retiro y Ahorros',type:'divider'},
