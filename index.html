@@ -493,6 +493,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a2e;font-si
   var D = {};
   try {
     var raw = new URLSearchParams(location.search).get('d');
+  if(raw) raw = raw.replace(/[.\s]+$/, ''); // strip trailing dot/space
     if (raw) D = JSON.parse(decodeURIComponent(escape(atob(raw))));
   } catch(e){}
 
