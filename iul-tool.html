@@ -96,7 +96,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy2);color:var(--cream)
   </div>
   <div class="row">
     <div class="field"><label>Valor en efectivo a los 65</label><input id="cv65" type="text" placeholder="Ej: 861,554"></div>
+    <div class="field"><label>Edad al retiro / proyección</label><input id="edret" type="text" placeholder="Ej: 65"></div>
+  </div>
+  <div class="row">
     <div class="field"><label>Índice</label><input id="indice" type="text" placeholder="Ej: S&P 500 · Cap 11%"></div>
+    <div class="field"><label>Beneficio por muerte</label><input id="bm" type="text" placeholder="Ej: 2,500,000"></div>
+  </div>
+  <div class="row">
+    <div class="field"><label>Prima mínima MMP (anual)</label><input id="mmp" type="text" placeholder="Ej: 11,344"></div>
+    <div class="field"><label>Prima máxima Non-MEC (anual)</label><input id="nonmec" type="text" placeholder="Ej: 173,899"></div>
   </div>
 </div>
 
@@ -170,7 +178,7 @@ function genLink(){
   const bens = [...document.querySelectorAll('#benefits input:checked')].map(i=>i.value);
 
   const data = {
-    n: nombre,
+    n:  nombre,
     ed: v('edad'),
     pm: v('prima'),
     an: v('años'),
@@ -178,6 +186,10 @@ function genLink(){
     ob: v('opcionb'),
     cv: v('cv65'),
     ix: v('indice'),
+    bm: v('bm'),
+    mmp: v('mmp'),
+    nm: v('nonmec'),
+    er: v('edret'),
     bv: bens.join(','),
     p:  v('perfil'),
     f:  v('fecha')
