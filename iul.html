@@ -2,6 +2,16 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta property="og:type" content="website">
+<meta property="og:title" content="TrueMate — Tu Propuesta FlexLife IUL">
+<meta property="og:description" content="Beneficios exactos de tu póliza · Cobertura, valor en efectivo y beneficios en vida · TrueMate Financial">
+<meta property="og:image" content="https://gregorionavarro.github.io/analisis-cliente-/og-image.png">
+<meta property="og:url" content="https://gregorionavarro.github.io/analisis-cliente-/iul.html">
+<meta property="og:site_name" content="TrueMate Financial">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TrueMate — Tu Propuesta FlexLife IUL">
+<meta name="twitter:description" content="Beneficios exactos de tu póliza · TrueMate Insurance Financial & Services">
+<meta name="twitter:image" content="https://gregorionavarro.github.io/analisis-cliente-/og-image.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>TrueMate — Tu Póliza IUL</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -149,6 +159,48 @@ body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size
 .est-body{font-size:13px;color:#a0b0c0;line-height:1.65}
 .bvs-edu{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
 
+
+/* FLEX SECTION */
+.flex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+@media(max-width:480px){.flex-grid{grid-template-columns:1fr}}
+.flex-col{border-radius:12px;padding:16px 14px;text-align:center;border:2px solid transparent}
+.flex-col.light{background:#f8f7f4;border-color:#e8e0d0}
+.flex-col.dark{background:var(--navy);border-color:var(--gold)}
+.flex-col.blue{background:#f0f4ff;border-color:#c0ceff}
+.flex-eye{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#9a9a9a;margin-bottom:8px}
+.flex-col.dark .flex-eye{color:var(--gold)}
+.flex-val{font-family:'DM Serif Display',serif;font-size:clamp(20px,5vw,26px);font-weight:700;color:var(--red);line-height:1;margin-bottom:6px}
+.flex-val.gold{color:var(--gold)}
+.flex-col.blue .flex-val{color:#3060cc}
+.flex-sub{font-size:11px;color:#7a8a9a;line-height:1.4}
+.flex-col.dark .flex-sub{color:#8899aa}
+
+
+/* CHART */
+.chart-box{background:var(--navy);border-radius:14px;padding:18px 18px 14px;margin-bottom:20px}
+.chart-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+@media(max-width:480px){.chart-header{flex-direction:column}}
+.chart-title{font-size:16px;font-weight:700;color:var(--cream);margin-bottom:5px}
+.chart-sub{font-size:12px;color:#8899aa;line-height:1.55;max-width:380px}
+.chart-badges{display:flex;gap:8px;flex-shrink:0}
+.chart-badge{background:rgba(255,255,255,.07);border-radius:9px;padding:10px 14px;text-align:center;min-width:70px}
+.cb-n{font-family:'DM Serif Display',serif;font-size:24px;font-weight:700;color:var(--red);line-height:1;margin-bottom:3px}
+.chart-badge.gold .cb-n{color:var(--gold)}
+.chart-badge.dark .cb-n{color:#a0b8c8}
+.cb-l{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#7a8a9a}
+.chart-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7a8a9a;margin-bottom:6px}
+.chart-legend{display:flex;gap:16px;font-size:11px;color:#8899aa;margin-bottom:10px}
+.leg-r{color:#FF8080}.leg-g{color:#27ae71}
+.chart-wrap{background:rgba(255,255,255,.04);border-radius:8px;padding:10px;overflow:hidden}
+.chart-note{font-size:11px;color:#5a6a7a;margin-top:10px;font-style:italic;line-height:1.5}
+/* ANUAL GRID */
+.anual-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px}
+@media(max-width:480px){.anual-grid{grid-template-columns:1fr}}
+.anual-item{background:#fff;border:1px solid #e8e0d0;border-radius:10px;padding:14px 14px}
+.anual-n{font-family:'DM Serif Display',serif;font-size:20px;color:var(--green);margin-bottom:5px}
+.anual-t{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:4px}
+.anual-d{font-size:12px;color:#5a6a7a;line-height:1.5}
+
 </style>
 </head>
 <body>
@@ -177,10 +229,11 @@ body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size
         <div class="h-reunion-v" id="h-reunion-v">—</div>
       </div>
     </div>
-    <div class="metrics">
-      <div class="mc"><div class="ml">Cobertura total</div><div class="mv r" id="m-cb">—</div><div class="mb">Opción B creciente</div></div>
+    <div class="metrics" style="grid-template-columns:repeat(4,1fr)">
+      <div class="mc"><div class="ml">Cobertura total</div><div class="mv r" id="m-cb">—</div><div class="mb">Opción B</div></div>
+      <div class="mc"><div class="ml">Beneficio muerte</div><div class="mv r" id="m-bm">—</div><div class="mb">desde hoy</div></div>
       <div class="mc"><div class="ml">Prima mensual</div><div class="mv g" id="m-pm">—</div><div class="mb" id="m-an">—</div></div>
-      <div class="mc"><div class="ml">Valor a los 65</div><div class="mv gr" id="m-cv">—</div><div class="mb">para usar en vida</div></div>
+      <div class="mc"><div class="ml">Capital a los <span id="m-edret">65</span></div><div class="mv gr" id="m-cv">—</div><div class="mb">libre impuestos</div></div>
     </div>
   </div>
 </div>
@@ -213,10 +266,38 @@ body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size
         <div class="p-val" style="font-size:13px;margin-top:2px" id="p-ix">—</div>
         <div class="p-sub">Piso 0% — nunca pierdes</div>
       </div>
+      <div class="p-item">
+        <div class="p-label">Beneficio por muerte</div>
+        <div class="p-val red" id="p-bm">—</div>
+        <div class="p-sub">Desde el primer día</div>
+      </div>
       <div class="p-item full">
         <div class="p-label">Prima total comprometida</div>
         <div class="p-val red" id="p-total">—</div>
         <div class="p-sub" id="p-total-sub">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLEXIBILIDAD DEL PLAN -->
+  <div id="flex-section" style="display:none">
+    <div class="st">Flexibilidad de tu plan</div>
+    <div class="edu-intro">Una de las grandes ventajas es que puedes ajustar cuánto aportas. Tienes tres rangos posibles según tu situación.</div>
+    <div class="flex-grid">
+      <div class="flex-col light">
+        <div class="flex-eye">PRIMA MÍNIMA (MMP)</div>
+        <div class="flex-val" id="f-mmp">—</div>
+        <div class="flex-sub">El mínimo para mantener la póliza activa</div>
+      </div>
+      <div class="flex-col dark">
+        <div class="flex-eye">⭐ PRIMA ILUSTRADA</div>
+        <div class="flex-val gold" id="f-pm">—</div>
+        <div class="flex-sub">La que aparece en esta ilustración — la que acordamos.</div>
+      </div>
+      <div class="flex-col blue">
+        <div class="flex-eye">PRIMA MÁXIMA (NON-MEC)</div>
+        <div class="flex-val" id="f-nm">—</div>
+        <div class="flex-sub">El máximo sin perder los beneficios fiscales</div>
       </div>
     </div>
   </div>
@@ -324,6 +405,39 @@ body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size
   <div class="edu-intro">Si te da Alzheimer, un infarto, cáncer, o necesitas cuidados — <strong>puedes acceder al dinero mientras estás vivo/a.</strong> Sin costo adicional.</div>
   <div class="bvs-edu" id="bvs-edu"></div>
 
+
+  <!-- S&P 500 VS IUL CHART -->
+  <div class="st" style="margin-top:22px">Cómo funciona el crecimiento</div>
+  <div class="chart-box">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">Participas de las ganancias sin el riesgo</div>
+        <div class="chart-sub">El S&P 500 ha crecido ~10% anual históricamente. Con IUL participas hasta el techo, pero cuando baja, tu cuenta = 0% — nunca pierdes lo acumulado.</div>
+      </div>
+      <div class="chart-badges">
+        <div class="chart-badge gold"><div class="cb-n" id="ch-cap">11%</div><div class="cb-l">TECHO MÁXIMO</div></div>
+        <div class="chart-badge dark"><div class="cb-n">0%</div><div class="cb-l">PISO GARANTIZADO</div></div>
+      </div>
+    </div>
+    <div class="chart-label">RENDIMIENTO ANUAL — S&P 500 DIRECTO VS IUL (2015–2024)</div>
+    <div class="chart-legend"><span class="leg-r">■ S&P 500 directo</span><span class="leg-g">■ IUL (piso 0%, techo 11%)</span></div>
+    <div class="chart-wrap">
+      <canvas id="spChart" height="220"></canvas>
+    </div>
+    <div class="chart-note">Las barras rojas hacia abajo = pérdidas reales en la bolsa. Con IUL, esos años tu cuenta marca 0% — nunca pierdes lo acumulado.</div>
+  </div>
+
+  <!-- NOS SENTAREMOS CADA AÑO -->
+  <div class="st" style="margin-top:22px">Tu plan es vivo — nos reuniremos cada año</div>
+  <div class="edu-intro">Una póliza IUL no es "comprar y olvidar". <strong>Cada año nos reuniremos para asegurarnos de que tu plan sigue alineado con tu vida y tus metas.</strong></div>
+  <div class="anual-grid">
+    <div class="anual-item"><div class="anual-n">01</div><div class="anual-t">Revisamos el cash value</div><div class="anual-d">Cómo creció tu valor ese año, si el índice fue positivo o se aplicó el piso 0%.</div></div>
+    <div class="anual-item"><div class="anual-n">02</div><div class="anual-t">Ajustamos la prima</div><div class="anual-d">¿Buen año o necesitas bajar? El IUL permite ajustar dentro del rango MMP–Non-MEC sin penalización.</div></div>
+    <div class="anual-item"><div class="anual-n">03</div><div class="anual-t">Actualizamos beneficiarios</div><div class="anual-d">Nuevo hijo, divorcio, cambio familiar — beneficiarios de póliza, banco y trust al día.</div></div>
+    <div class="anual-item"><div class="anual-n">04</div><div class="anual-t">Evaluamos nuevas necesidades</div><div class="anual-d">Casa, negocio, ascenso — tu cobertura debe crecer con tu vida.</div></div>
+    <div class="anual-item"><div class="anual-n">05</div><div class="anual-t">Revisamos la estrategia fiscal</div><div class="anual-d">¿Cambiaron las leyes? ¿Nuevo bracket? Optimizamos tu estrategia de cubos.</div></div>
+    <div class="anual-item"><div class="anual-n">06</div><div class="anual-t">Planificamos el retiro</div><div class="anual-d">Estructuramos los retiros como préstamos de póliza para maximizar el ingreso libre de impuestos.</div></div>
+  </div>
   <div class="st">Quiénes somos</div>
   <div class="qs">
     <div class="qs-head">
@@ -369,7 +483,7 @@ if(!raw){
   var D={};
   try{ D=JSON.parse(atob(raw.replace(/[.\s]+$/,''))); }catch(e){}
 
-  var nombre=D.n||'Cliente', edad=D.ed||'', prima=D.pm||'', anos=D.an||'', cb=D.cb||'', ob=D.ob||'', cv=D.cv||'', ix=D.ix||'S&P 500';
+  var nombre=D.n||'Cliente', edad=D.ed||'', prima=D.pm||'', anos=D.an||'', cb=D.cb||'', ob=D.ob||'', cv=D.cv||'', ix=D.ix||'S&P 500', bm=D.bm||'', mmp=D.mmp||'', nonmec=D.nm||'', edret=D.er||'65';
   var bvs=(D.bv||'terminal,critica,cronica,prestamos,retiro,herencia').split(',');
   var perfil=D.p||'gregorio', fecha=D.f||'';
   var firstName=nombre.split(' ')[0];
@@ -397,6 +511,7 @@ if(!raw){
   s('m-cb', cb?'$'+cb.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-');
   s('m-pm', prima?'$'+prima.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-');
   s('m-an', anos?'por '+anos+' años':'mensuales');
+  s('m-edret', edret||'65');
   s('m-cv', cv?'$'+cv.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-');
 
   // Policy summary
@@ -452,6 +567,70 @@ if(!raw){
       el.className='bv '+(b.c||'');
       el.innerHTML='<div class="bv-icon">'+b.icon+'</div><div><div class="bv-t">'+b.t+'</div><div style="font-family:\'DM Serif Display\',serif;font-size:clamp(22px,5vw,28px);font-weight:700;color:var(--red);margin:4px 0 6px">'+b.amt+'</div><div class="bv-d">'+b.desc+'</div></div>';
       bvsEduEl.appendChild(el);
+    });
+  }
+
+  // New fields
+  var fmt2=function(v,pre){if(!v)return '-';var n=parseFloat(v.replace(/[^0-9.]/g,''));if(isNaN(n))return v;return (pre||'$')+n.toLocaleString('en-US',{maximumFractionDigits:0});};
+  s('m-bm', bm?fmt2(bm):'—');
+  s('m-edret', edret||'65');
+  s('p-bm', bm?fmt2(bm):'—');
+  // Flex section
+  if(mmp||nonmec){
+    var fs=document.getElementById('flex-section');if(fs)fs.style.display='block';
+    s('f-mmp', mmp?'$'+mmp+'/año':'—');
+    s('f-pm', prima?'$'+(parseFloat(prima.replace(/[^0-9.]/g,''))*12).toLocaleString()+'/año':'—');
+    s('f-nm', nonmec?'$'+nonmec+'/año':'—');
+  }
+
+  // S&P 500 vs IUL Chart
+  var spData = {
+    years:['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'],
+    sp:[1.4,12.0,21.8,-4.4,31.5,18.4,28.7,-18.1,26.3,25.0],
+    iul:[1.4,11.0,11.0,0,11.0,11.0,11.0,0,11.0,11.0]
+  };
+  // Update cap display
+  var capEl=document.getElementById('ch-cap');
+  if(capEl && ix){
+    var capMatch=ix.match(/(\d+)%/);
+    if(capMatch)capEl.textContent=capMatch[1]+'%';
+  }
+  var ctx=document.getElementById('spChart');
+  if(ctx){
+    var cw=ctx.parentElement.offsetWidth-20;
+    ctx.width=cw;
+    var c=ctx.getContext('2d');
+    var bw=Math.floor(cw/spData.years.length*0.35);
+    var gap=Math.floor(cw/spData.years.length);
+    var h=220,pad=30,zeroY=h/2+20;
+    var scale=function(v){return zeroY - v*(h-60)/80;};
+    c.clearRect(0,0,cw,h);
+    // Zero line
+    c.strokeStyle='rgba(255,255,255,0.2)';c.lineWidth=1;
+    c.beginPath();c.moveTo(0,zeroY);c.lineTo(cw,zeroY);c.stroke();
+    // Grid lines
+    [-40,-20,0,20,40].forEach(function(v){
+      var y=scale(v);
+      c.strokeStyle='rgba(255,255,255,0.06)';c.lineWidth=1;
+      c.beginPath();c.moveTo(pad,y);c.lineTo(cw,y);c.stroke();
+      c.fillStyle='rgba(255,255,255,0.3)';c.font='9px sans-serif';c.textAlign='right';
+      c.fillText(v+'%',pad-3,y+3);
+    });
+    spData.years.forEach(function(yr,i){
+      var x=pad+i*gap+gap/2;
+      var sp=spData.sp[i], iu=spData.iul[i];
+      // S&P bar
+      var sy=scale(sp),ey=zeroY;
+      if(sp<0){sy=zeroY;ey=scale(sp);}
+      c.fillStyle=sp>=0?'rgba(255,120,120,0.85)':'rgba(255,80,80,0.9)';
+      c.fillRect(x-bw-2,Math.min(sy,ey),bw,Math.abs(sy-ey)||1);
+      // IUL bar
+      c.fillStyle='rgba(39,174,113,0.85)';
+      var iy=scale(iu);
+      c.fillRect(x+2,Math.min(iy,zeroY),bw,Math.abs(iy-zeroY)||1);
+      // Year label
+      c.fillStyle='rgba(255,255,255,0.4)';c.font='9px sans-serif';c.textAlign='center';
+      c.fillText(yr,x,h-2);
     });
   }
 
