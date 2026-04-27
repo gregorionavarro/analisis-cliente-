@@ -539,7 +539,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a2e;font-si
   s('p2-badge',scoreLabel.toUpperCase());
   s('c-areas',areas); s('c-agente',agente);
 
-  var waMsg=encodeURIComponent('Hola '+firstName+' Te comparto tu analisis: '+location.href);
+  var waMsg=encodeURIComponent(
+    'Hola '+firstName+' 👋\n\n'+
+    'Te comparto el análisis personalizado que preparamos para ti. '+
+    'Tómate unos minutos para revisarlo — lo vamos a usar de base en nuestra reunión:\n\n'+
+    '🔗 '+location.href+'\n\n'+
+    '¡Cualquier pregunta antes de la reunión, con gusto te respondo!'
+  );
   var waHref='https://wa.me/'+waNum+'?text='+waMsg;
   var wt=document.getElementById('wa-top');if(wt)wt.href=waHref;
   var wc=document.getElementById('wa-cta');if(wc)wc.href=waHref;
