@@ -112,6 +112,43 @@ body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size
 .fade:nth-child(1){animation-delay:.05s}.fade:nth-child(2){animation-delay:.12s}
 .fade:nth-child(3){animation-delay:.19s}.fade:nth-child(4){animation-delay:.26s}
 .fade:nth-child(5){animation-delay:.33s}.fade:nth-child(6){animation-delay:.4s}
+
+/* EDUCATIONAL SECTIONS */
+.edu-intro{font-size:15px;color:#3d4d5e;line-height:1.75;padding:13px 16px;background:#f0f4f8;border-left:4px solid var(--navy);border-radius:0 10px 10px 0;margin-bottom:16px}
+.edu-intro strong{color:#1a1a2e}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+@media(max-width:480px){.compare-grid{grid-template-columns:1fr}}
+.compare-col{border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,.1)}
+.compare-col.good{background:var(--navy)}
+.compare-col.bad{background:#fff;border-color:#e8e0d0}
+.compare-eye{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:10px}
+.compare-col.bad .compare-eye{color:#e74c3c}
+.ci{font-size:12px;color:#a0b0c0;line-height:1.6;padding:3px 0}
+.ci strong{color:var(--cream)}
+.ci.bad{color:#5a6a7a}
+.cubos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+@media(max-width:480px){.cubos-grid{grid-template-columns:1fr}}
+.cubo{border-radius:12px;padding:14px 13px;border:2px solid transparent}
+.cubo.yellow{background:#fffbf0;border-color:#f0c040}
+.cubo.red{background:#fff5f5;border-color:#ffb3b3}
+.cubo.green{background:#f0fff8;border-color:#27ae71}
+.cubo-icon{font-size:24px;margin-bottom:6px}
+.cubo-title{font-size:14px;font-weight:700;color:#1a1a2e;margin-bottom:2px}
+.cubo.green .cubo-title{color:#1a6b40}
+.cubo.red .cubo-title{color:#c0392b}
+.cubo.yellow .cubo-title{color:#8b6914}
+.cubo-sub{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9a9a9a;margin-bottom:8px}
+.cubo-items{font-size:11px;color:#5a6a7a;line-height:1.8;margin-bottom:10px}
+.cubo-tag{font-size:11px;font-weight:600;border-radius:6px;padding:5px 9px;text-align:center}
+.yellow-t{background:#fef3c7;color:#92400e}
+.red-t{background:#fee2e2;color:#991b1b}
+.green-t{background:#d1fae5;color:#065f46}
+.estrategia-box{background:var(--navy);border-radius:12px;padding:16px;display:flex;gap:12px;align-items:flex-start;margin-bottom:6px}
+.est-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.est-title{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:5px}
+.est-body{font-size:13px;color:#a0b0c0;line-height:1.65}
+.bvs-edu{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+
 </style>
 </head>
 <body>
@@ -207,6 +244,89 @@ body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size
     </div>
   </div>
 
+
+  <!-- IUL vs 401K -->
+  <div class="st">No es solo seguro — es una herramienta de acumulación</div>
+  <div class="edu-intro">Una póliza que funciona como estrategia de retiro libre de impuestos. <strong>Participas de las ganancias del mercado sin arriesgar tu capital.</strong></div>
+  <div class="compare-grid">
+    <div class="compare-col good">
+      <div class="compare-eye">🔑 Lo que el IUL hace por ti</div>
+      <div class="compare-items">
+        <div class="ci">✓ Prima crece vinculada al S&P 500 — participas en las ganancias</div>
+        <div class="ci">✓ Piso 0% — cuando el mercado cae, tú no pierdes nada</div>
+        <div class="ci">✓ Retiros al jubilarte = <strong>$0 al IRS</strong> (se estructuran como préstamos)</div>
+        <div class="ci">✓ Sin límite de aportación (Roth IRA solo $7K/año)</div>
+        <div class="ci">✓ Cash value disponible para emergencias, educación o negocio</div>
+        <div class="ci">✓ No afecta la tributación de tu Seguro Social</div>
+      </div>
+    </div>
+    <div class="compare-col bad">
+      <div class="compare-eye">⚠️ Lo que el 401K solo no hace</div>
+      <div class="compare-items">
+        <div class="ci bad">✗ Pagas impuestos sobre todo lo que retires</div>
+        <div class="ci bad">✗ RMD obligatorio a los 73 — retiras quieras o no</div>
+        <div class="ci bad">✗ Multa del 50% si no retiras a tiempo</div>
+        <div class="ci bad">✗ El 85% de tu Seguro Social puede ser gravado</div>
+        <div class="ci bad">✗ Si el mercado cae el año que te jubilas, pierdes</div>
+        <div class="ci bad">✗ Sin protección familiar ni beneficios en vida</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 CUBOS -->
+  <div class="st" style="margin-top:22px">¿En qué cubo está tu dinero?</div>
+  <div class="edu-intro">Para una jubilación libre de impuestos, necesitas distribuir correctamente en estos 3 cubos. <strong>El error más común: todo en el cubo equivocado.</strong></div>
+  <div class="cubos-grid">
+    <div class="cubo yellow">
+      <div class="cubo-icon">🪣</div>
+      <div class="cubo-title">Cubo Imponible</div>
+      <div class="cubo-sub">PAGAS IMPUESTOS SIEMPRE</div>
+      <div class="cubo-items">
+        <div>· Cuentas bancarias</div>
+        <div>· CDs / Certificados</div>
+        <div>· Acciones, bonos, fondos</div>
+        <div>· Recibes 1099 cada año</div>
+      </div>
+      <div class="cubo-tag yellow-t">✓ Solo 6 meses emergencia</div>
+    </div>
+    <div class="cubo red">
+      <div class="cubo-icon">🪣</div>
+      <div class="cubo-title">Cubo Diferido</div>
+      <div class="cubo-sub">PAGAS IMPUESTOS DESPUÉS</div>
+      <div class="cubo-items">
+        <div>· 401(k) / IRA tradicional</div>
+        <div>· RMD obligatorio a los 73</div>
+        <div>· Multa 50% si no retiras</div>
+        <div>· 85% del SS puede ser gravado</div>
+      </div>
+      <div class="cubo-tag red-t">✓ Solo hasta el match</div>
+    </div>
+    <div class="cubo green">
+      <div class="cubo-icon">🪣</div>
+      <div class="cubo-title">Cubo Libre ⭐</div>
+      <div class="cubo-sub">NUNCA PAGAS IMPUESTOS</div>
+      <div class="cubo-items">
+        <div>· Roth IRA (tope $7K/año)</div>
+        <div>· IUL — sin límite</div>
+        <div>· Retiros = $0 al IRS</div>
+        <div>· No afecta tu Seguro Social</div>
+      </div>
+      <div class="cubo-tag green-t">✓ Meta: maximizar este</div>
+    </div>
+  </div>
+
+  <div class="estrategia-box">
+    <div class="est-icon">🎯</div>
+    <div>
+      <div class="est-title">Estrategia: maximiza el Cubo Libre</div>
+      <div class="est-body">Contribuye al 401K solo hasta el match de tu empleador. El resto — ponlo en el IUL. Creas ingresos que el IRS nunca puede tocar y proteges el 85% de tu Seguro Social de ser gravado.</div>
+    </div>
+  </div>
+
+  <div class="st" style="margin-top:22px">Un seguro que <em style="color:var(--red);font-style:italic">no necesitas morir</em> para usar</div>
+  <div class="edu-intro">Si te da Alzheimer, un infarto, cáncer, o necesitas cuidados — <strong>puedes acceder al dinero mientras estás vivo/a.</strong> Sin costo adicional.</div>
+  <div class="bvs-edu" id="bvs-edu"></div>
+
   <div class="st">Quiénes somos</div>
   <div class="qs">
     <div class="qs-head">
@@ -265,8 +385,10 @@ if(!raw){
   function fmt(v){return v?'$'+v.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','):'-';}
 
   // Name
-  var parts=nombre.toUpperCase().split(' ');
-  h('h-name', parts.length>1?parts[0]+'<br><em>'+parts.slice(1).join(' ')+'</em>':parts[0]);
+  // Title case — not all caps
+  function toTitle(s){return s.toLowerCase().split(' ').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1);}).join(' ');}
+  var tc=toTitle(nombre).split(' ');
+  h('h-name', tc.length>1?'<span style="color:var(--cream)">'+tc[0]+'</span><br><em>'+tc.slice(1).join(' ')+'</em>':tc[0]);
   s('h-sub', edad?'Edad: '+edad+' años · FlexLife IUL · National Life':'FlexLife IUL · National Life');
 
   // Reunion
@@ -334,6 +456,24 @@ if(!raw){
     var cvNum=parseFloat(cv.replace(/[^0-9.]/g,''))||0;
     var cvPerdido=Math.round(cvNum*0.04);
     s('esp-cv','$'+cvPerdido.toLocaleString());
+  }
+
+
+  // Living benefits with dollar amounts for educational section
+  var BVS_EDU = [
+    {icon:'🏥',t:'Enfermedad Terminal',amt:ob,desc:'Si un médico certifica que tienes 12 meses o menos de vida, recibes este dinero ahora — sin esperar. Cubre tratamientos de última esperanza, viajes para ver a tu familia, o deja todo arreglado para los tuyos.',c:'r'},
+    {icon:'❤️',t:'Enfermedad Crítica',amt:'Hasta el 87.5% de la cobertura',desc:'Cáncer, infarto, ALS, insuficiencia renal, trasplante, ACV. El dinero llega directo a ti — no al hospital.',c:'r'},
+    {icon:'♿',t:'Enfermedad Crónica',amt:'Hasta $30,000/mes',desc:'2 de 6 actividades diarias. Paga enfermera en casa, cubre la renta si no puedes trabajar.',c:'o'},
+    {icon:'🧠',t:'Alzheimer y Demencia',amt:'Hasta el 82.5% de la cobertura',desc:'Con diagnóstico definitivo, accedes al beneficio mientras estás vivo/a. Cuidado $5,000–$10,000/mes. Protege a toda la familia.',c:'g'}
+  ];
+  var bvsEduEl=document.getElementById('bvs-edu');
+  if(bvsEduEl){
+    BVS_EDU.forEach(function(b){
+      var el=document.createElement('div');
+      el.className='bv '+(b.c||'');
+      el.innerHTML='<div class="bv-icon">'+b.icon+'</div><div><div class="bv-t">'+b.t+'</div><div style="font-family:\'DM Serif Display\',serif;font-size:clamp(22px,5vw,28px);font-weight:700;color:var(--red);margin:4px 0 6px">'+b.amt+'</div><div class="bv-d">'+b.desc+'</div></div>';
+      bvsEduEl.appendChild(el);
+    });
   }
 
   // Agent info
