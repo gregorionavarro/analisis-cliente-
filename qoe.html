@@ -517,37 +517,20 @@ const QUESTIONS=[
    }
   },
   {id:'auto',
-   text:'¿Tienes seguro de auto actualmente? ¿Cuánto pagas al mes?',
+   text:'¿Tienes seguro de auto actualmente?',
    opts:[{l:'Sí, lo tengo',v:'si',t:'y',pts:0},{l:'No tengo',v:'no',t:'n',pts:2}],
    impact:{
      si:{
-       say:'Bien — y ¿sabes exactamente qué cubre tu póliza? Porque hay algo que poca gente sabe: muchos clientes están pagando por coberturas que no necesitan, o tienen gaps que solo descubren cuando tienen un accidente. En la reunión revisamos tu póliza actual y buscamos si podemos conseguirte la misma cobertura o mejor por menos dinero.',
-       note:'🎯 Pedir: compañía, cuánto paga al mes, año y modelo del carro. Con eso buscamos cotización.',
-       reactions:['Quiere revisar su póliza 🔥','No sabía que pagaba de más','Ya intentó cambiarlo']
+       say:'Bien — ¿y sabes exactamente qué cubre tu póliza? ¿Tienes full cover o solo liability? Porque mucha gente lleva años pagando sin saber si tienen la cobertura correcta. Hay clientes que están pagando de más por coberturas que no necesitan, y otros que tienen gaps que solo descubren cuando tienen un accidente. En la reunión revisamos tu póliza línea por línea y buscamos si podemos conseguirte la misma o mejor cobertura por menos dinero.',
+       note:'🎯 Pedir: compañía, cuánto paga al mes, año y modelo. Mencionar: full cover vs liability, deducible, uninsured motorist.',
+       reactions:['Quiere revisar su póliza 🔥','No sabía la diferencia','Cree que paga de más']
      },
      no:{
-       say:'Entiendo — ¿sabes que en Florida manejar sin seguro puede costar entre $5,000 y $10,000 en multas si tienes un accidente, más la suspensión de licencia? Hay opciones muy económicas. Es algo que podemos resolver rápido.',
+       say:'Entiendo — ¿sabes que en Florida manejar sin seguro puede costar entre $5,000 y $10,000 en multas si tienes un accidente, más la suspensión de licencia? Hay opciones económicas que te protegen desde el primer día. Es algo que podemos resolver muy rápido.',
        note:'🎯 Urgencia real. Florida requiere seguro. Solución inmediata posible.',
        reactions:['No sabía las multas 😮','Quiere cotización 🔥','Tiene excusa']
      }
    },
-   impact:{
-     credito:{
-       say:'Perfecto — y ¿sabes cuánto estás pagando al mes de seguro? Porque hay algo que poca gente sabe: cuando tienes un crédito de auto, el banco te exige una cobertura específica, y muchas veces la gente termina pagando más de lo necesario. En la reunión puedo revisar tu póliza actual y ver si te consigo una cotización más económica con la misma o mejor cobertura.',
-       note:'🎯 Pedir: compañía actual, cuánto paga al mes, año y modelo del carro. Con eso se puede buscar cotización.',
-       reactions:['Le interesa revisar 🔥','Ya intentó cambiarlo','Quiere saber más']
-     },
-     libre:{
-       say:'Buenísimo — carro libre de pagos significa que tienes más flexibilidad en la cobertura que eliges. ¿Sabes qué cobertura tienes exactamente? Porque muchas personas con carro pagado siguen pagando cobertura de colisión completa cuando ya no la necesitan. En la reunión lo revisamos.',
-       note:'🎯 Carro libre → puede bajar cobertura y ahorrar. Oportunidad de ahorro inmediato.',
-       reactions:['No sabía eso 😮','Quiere revisar','Ya lo revisó']
-     },
-     no:{
-       say:'Entiendo — y ¿sabes que manejar sin seguro en Florida puede costar entre $5,000 y $10,000 en multas si tienes un accidente, más la suspensión de licencia? Hay opciones muy económicas que te protegen desde el primer día. Es algo que podemos resolver rápido en la reunión.',
-       note:'🎯 Urgencia real. Florida requiere seguro de auto. Ayuda inmediata posible.',
-       reactions:['No sabía las multas 😮','Quiere una cotización 🔥','Tiene excusa temporal']
-     }
-   }
   },
   // SALUD
   {id:'sec3',text:'💊 Salud y Seguros',type:'divider'},
