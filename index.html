@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>TrueMate — Análisis Personalizado</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#193251;--navy2:#0d1f33;--red:#FF5050;--gold:#c9a84c;--green:#27ae71;--cream:#f0ead8;--bg:#f5f2eb;--fs:18px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a2e;font-size:var(--fs);line-height:1.65;max-width:580px;margin:0 auto}
+
+
+/* STICKY HEADER */
+.hdr{position:sticky;top:0;z-index:100;background:var(--navy);border-bottom:3px solid var(--red);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.hdr-logo{display:flex;align-items:center;gap:9px}
+.hdr-lm{width:36px;height:36px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:16px;color:#fff;font-weight:700;flex-shrink:0}
+.hdr-lt{font-size:15px;font-weight:500;color:var(--cream);font-family:'DM Serif Display',serif}
+.hdr-ls{font-size:8px;color:#7a8a9a;letter-spacing:2px;text-transform:uppercase;display:block}
+.hdr-btn{background:#25D366;color:#fff;border:none;border-radius:9px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap;flex-shrink:0}
+
+/* HERO */
+.hero{background:var(--navy);padding:0 0 0}
+.hero-bar{height:4px;background:linear-gradient(90deg,var(--red),var(--gold),var(--green));display:block}
+
+/* Gratitud personalizada */
+.gr-wrap{padding:0 0 20px}
+.gr-fecha{display:inline-block;font-size:11px;color:var(--red);font-weight:700;letter-spacing:1px;background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.25);padding:5px 14px;border-radius:20px;margin-bottom:14px}
+.gr-msg{font-size:15px;color:#4a5a6a;line-height:1.75;padding:16px 18px;background:#f0f4f8;border-left:5px solid var(--gold);border-radius:0 12px 12px 0}
+.gr-msg strong{color:#1a1a2e}
+
+.h-badge{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:10px;padding:0 22px}
+.h-name{font-family:'DM Serif Display',serif;font-size:clamp(46px,12vw,68px);color:var(--cream);line-height:1;margin-bottom:6px;letter-spacing:-1px;padding:0 22px}
+.h-name em{color:var(--red);font-style:normal}
+.h-sub{font-size:13px;color:#8899aa;line-height:1.6;margin-bottom:20px;padding:0 22px}
+
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.1)}
+.mc{padding:18px 10px;border-right:1px solid rgba(255,255,255,.08);text-align:center}
+.mc:last-child{border-right:none}
+.ml{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#8899aa;margin-bottom:6px}
+.mv{font-size:clamp(26px,7vw,36px);font-weight:700;color:var(--cream);line-height:1;margin-bottom:3px}
+.mv.r{color:var(--red)}.mv.g{color:var(--gold)}.mv.gr{color:#3ddba0}.mv.sm{font-size:15px;margin-top:4px}
+.mb{font-size:10px;color:#8899aa}
+
+/* BODY */
+.body{background:#fff;padding:26px 22px}
+.st{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid rgba(255,80,80,.2)}
+
+/* BIENVENIDA */
+.bv{background:var(--navy);border-radius:16px;padding:24px 22px;margin-bottom:26px;position:relative;overflow:hidden}
+.bv::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.bv-eye{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.bv-title{font-family:'DM Serif Display',serif;font-size:clamp(22px,5.5vw,28px);color:var(--cream);line-height:1.25;margin-bottom:12px}
+.bv-title em{color:var(--red);font-style:italic}
+.bv-body{font-size:16px;color:#a0aabb;line-height:1.8}
+.bv-body strong{color:var(--cream)}
+
+/* PRODUCT CARDS — 1 col, big text */
+.wg{display:flex;flex-direction:column;gap:14px;margin-bottom:10px}
+.wc{background:#f8f7f4;border-radius:14px;padding:0;border-left:5px solid var(--navy);overflow:hidden}
+.wc.r{border-left-color:var(--red)}.wc.g{border-left-color:var(--green)}.wc.o{border-left-color:var(--gold)}.wc.tl{border-left-color:#0d9488}.wc.pu{border-left-color:#7c3aed}
+.wc-top{display:flex;align-items:flex-start;gap:16px;padding:20px 20px 16px}
+.wi{font-size:30px;flex-shrink:0;margin-top:2px}
+.wc-right{flex:1}
+.wt{font-size:16px;font-weight:700;color:#1a1a2e;margin-bottom:5px}
+.bstat{font-size:clamp(36px,9vw,52px);font-weight:700;color:var(--red);line-height:1;margin:4px 0 8px;font-family:'DM Serif Display',serif}
+.bstat.b{color:var(--navy)}.bstat.g{color:var(--green)}.bstat.o{color:var(--gold)}.bstat.tl{color:#0d9488}.bstat.pu{color:#7c3aed}
+.wx{font-size:15px;color:#3d4d5e;line-height:1.65}
+.wx b{color:#1a1a2e}
+
+/* HOOK */
+.hook{margin:0;background:#fff;border-top:1px solid #e8e0d0;padding:16px 20px}
+.hook-q{font-size:16px;font-weight:700;color:#1a1a2e;line-height:1.5;margin-bottom:8px}
+.hook-a{font-size:14px;color:#4a5a6a;line-height:1.7;margin-bottom:10px}
+.hook-a b{color:#1a1a2e}
+.hook-a .hi{color:var(--red);font-weight:700}
+.hook-cta{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--red);border:2px solid var(--red);padding:8px 16px;border-radius:30px}
+
+/* SECRET */
+.secret{margin:0;background:var(--navy);padding:16px 20px;border-top:1px solid rgba(255,255,255,.08)}
+.secret-eye{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.secret-txt{font-size:15px;color:#d0d8e8;line-height:1.75}
+.secret-txt b{color:#fff}
+.secret-txt .hi{color:var(--gold);font-weight:700}
+
+/* ERRORES section */
+.errores-wrap{background:var(--navy2);border-radius:16px;padding:24px 22px;margin-bottom:26px;border:2px solid rgba(255,80,80,.25)}
+.errores-eye{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.errores-title{font-family:'DM Serif Display',serif;font-size:clamp(20px,5vw,26px);color:var(--cream);line-height:1.3;margin-bottom:6px}
+.errores-title em{color:var(--red);font-style:italic}
+.errores-sub{font-size:14px;color:#8899aa;line-height:1.65;margin-bottom:18px}
+.errores-sub b{color:var(--cream)}
+.error-item{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:8px}
+.error-item:last-child{margin-bottom:0}
+.error-num{width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.error-txt{flex:1}
+.error-title{font-size:15px;font-weight:700;color:var(--cream);margin-bottom:3px}
+.error-desc{font-size:13px;color:#8899aa;line-height:1.55}
+.error-desc b{color:#dde4ef}
+
+/* DIVIDER */
+.pg-div{background:var(--navy2);padding:14px 22px;display:flex;align-items:center;gap:10px}
+.pd-line{flex:1;height:1px;background:rgba(255,80,80,.25)}
+.pd-txt{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);font-weight:700;white-space:nowrap}
+
+/* SCORE SPLIT */
+.score-split{border-radius:14px;overflow:hidden;border:2px solid #e8e0d0;display:grid;grid-template-columns:110px 1fr;margin-bottom:22px}
+.ss-left{background:var(--navy);padding:20px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ss-num{font-family:'DM Serif Display',serif;font-size:clamp(52px,13vw,72px);color:var(--red);line-height:1}
+.ss-score{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8899aa;margin:4px 0 10px}
+.ss-badge{background:rgba(255,80,80,.15);border:1px solid rgba(255,80,80,.45);border-radius:7px;padding:5px 8px;font-size:10px;font-weight:700;color:var(--red);letter-spacing:.5px;text-transform:uppercase;line-height:1.4}
+.ss-right{background:#f8f7f4;padding:18px 18px;display:flex;flex-direction:column;justify-content:center}
+.ss-eye{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:7px}
+.ss-title{font-family:'DM Serif Display',serif;font-size:clamp(16px,4.5vw,21px);color:var(--navy);line-height:1.3;margin-bottom:8px}
+.ss-body{font-size:14px;color:#3d4d5e;line-height:1.7;margin-bottom:12px}
+.ss-body b{color:#1a1a2e}
+.ss-chips{display:flex;gap:6px}
+.ss-chip{background:#fff;border:2px solid #e8e0d0;border-radius:9px;padding:8px 8px;text-align:center;flex:1}
+.ss-chip-n{font-size:17px;font-weight:700;color:var(--red);margin-bottom:2px}
+.ss-chip-l{font-size:9px;color:#5a6a7a;font-weight:600}
+
+/* AYUDA */
+.ayuda-intro{font-size:16px;color:#2c3e50;line-height:1.75;padding:16px 18px;background:#eef2f8;border-left:5px solid var(--navy);border-radius:0 12px 12px 0;margin-bottom:16px}
+.ayuda-intro b{color:var(--navy)}
+.bloques{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.blq{background:#f8f7f4;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:16px;border-left:5px solid var(--navy)}
+.blq.r{border-left-color:var(--red)}.blq.g{border-left-color:var(--green)}
+.blq-i{font-size:26px;flex-shrink:0}
+.blq-t{font-size:16px;font-weight:700;color:#1a1a2e;margin-bottom:3px}
+.blq-d{font-size:13px;color:#4a5a6a;line-height:1.5}
+
+/* REVELACIONES */
+.rev-title{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:12px}
+.revs{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
+.rev{display:flex;align-items:flex-start;gap:14px;background:#fff;border:2px solid #e8e0d0;border-radius:12px;padding:14px 16px;font-size:15px;color:#2c3e50;line-height:1.65}
+.rev-dot{width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:5px}
+.rev b{color:#1a1a2e}
+
+/* QUIÉNES SOMOS */
+.qs{background:#f8f7f4;border-radius:16px;overflow:hidden;border:2px solid #e8e0d0;margin-bottom:18px}
+.qs-head{padding:20px 20px 18px;border-bottom:1px solid #e8e0d0;display:flex;gap:16px;align-items:flex-start}
+.qs-eye{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.qs-title{font-family:'DM Serif Display',serif;font-size:clamp(20px,5vw,24px);color:var(--navy);line-height:1.25;margin-bottom:8px}
+.qs-title em{color:var(--red);font-style:normal}
+.qs-body{font-size:14px;color:#3d4d5e;line-height:1.7}
+.qs-img{width:60px;height:60px;object-fit:contain;border-radius:10px;flex-shrink:0}
+.qs-stats{display:grid;grid-template-columns:repeat(3,1fr)}
+.qs-stat{padding:16px 10px;text-align:center;border-right:1px solid #e8e0d0;background:#fff}
+.qs-stat:last-child{border-right:none}
+.qs-stat-n{font-family:'DM Serif Display',serif;font-size:30px;color:var(--gold);line-height:1;margin-bottom:4px}
+.qs-stat-l{font-size:12px;color:#3d4d5e;font-weight:600}
+.qs-stat-sub{font-size:10px;color:#9a9a9a;margin-top:2px}
+
+/* CONTACT */
+.contact{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:16px;padding:24px 22px;margin-bottom:12px}
+.ag-n{font-family:'DM Serif Display',serif;font-size:24px;color:var(--cream);margin-bottom:4px}
+.ag-c{font-size:10px;color:var(--red);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.ag-i{font-size:15px;color:#8899aa;line-height:1.85;margin-bottom:22px}
+.ag-i b{color:#dde4ef}
+
+/* CTA PRINCIPAL — máximo impacto */
+.cta-wrap{margin-bottom:14px}
+.cta-pre{text-align:center;font-size:13px;color:#8899aa;margin-bottom:8px;line-height:1.5}
+.cta-pre b{color:var(--gold)}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,#25D366,#1aab54);color:#fff;border:none;border-radius:14px;padding:18px 20px;font-family:'DM Sans',sans-serif;font-size:18px;font-weight:700;width:100%;cursor:pointer;text-decoration:none;box-shadow:0 6px 24px rgba(37,211,102,.35);transition:all .2s}
+.wa-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(37,211,102,.4)}
+.wa-btn-sub{text-align:center;font-size:12px;color:#8899aa;margin-top:8px}
+
+/* FOOTER */
+.footer{padding:16px 22px;text-align:center;font-size:11px;color:#9a9a9a;line-height:1.7;border-top:1px solid #e8e0d0;background:#faf9f6}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.fade{animation:fadeUp .55s ease forwards;opacity:0}
+.fade:nth-child(1){animation-delay:.05s}.fade:nth-child(2){animation-delay:.12s}
+.fade:nth-child(3){animation-delay:.19s}.fade:nth-child(4){animation-delay:.26s}
+.fade:nth-child(5){animation-delay:.33s}.fade:nth-child(6){animation-delay:.4s}
+.fade:nth-child(7){animation-delay:.47s}
+
+/* MID CTA */
+.mid-cta-wrap{background:linear-gradient(135deg,#0d1f33,#193251);border-radius:14px;padding:20px 20px;margin-bottom:4px;text-align:center;border:2px solid rgba(37,211,102,.25)}
+.mid-cta-txt{font-size:15px;color:#8899aa;margin-bottom:14px;line-height:1.6}
+.mid-cta-txt strong{color:var(--cream)}
+
+/* PREGUNTAS INCÓMODAS */
+.preguntas-wrap{background:var(--navy2);border-radius:16px;padding:22px 20px;margin-bottom:24px;border:2px solid rgba(255,80,80,.2)}
+.pq-eye{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.pq-title{font-family:'DM Serif Display',serif;font-size:clamp(18px,4.5vw,22px);color:var(--cream);line-height:1.3;margin-bottom:18px}
+.pq-title em{color:var(--red);font-style:italic}
+.pq-item{display:flex;align-items:flex-start;gap:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 16px;margin-bottom:10px}
+.pq-item:last-child{margin-bottom:0}
+.pq-icon{font-size:26px;flex-shrink:0;margin-top:2px}
+.pq-q{font-size:15px;font-weight:700;color:var(--cream);line-height:1.5;margin-bottom:8px}
+.pq-a{font-size:14px;color:#8899aa;line-height:1.65}
+.pq-a b{color:#dde4ef}
+</style>
+</head>
+<body>
+<div id="content">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-logo">
+    <div class="hdr-lm">T</div>
+    <div class="hdr-lt">Truemate <span class="hdr-ls">Insurance Financial & Services</span></div>
+  </div>
+  <a class="hdr-btn" id="wa-top" href="#">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Preguntas
+  </a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bar"></div>
+  <div class="h-badge">ANÁLISIS PERSONALIZADO DE NECESIDADES FINANCIERAS</div>
+  <div class="h-name" id="h-name">—</div>
+  <div class="h-sub" id="h-sub"></div>
+  <div class="metrics">
+    <div class="mc"><div class="ml">Índice</div><div class="mv r" id="m-score">—</div><div class="mb" id="m-label">—</div></div>
+    <div class="mc"><div class="ml">Áreas</div><div class="mv g" id="m-areas">—</div><div class="mb">sin cobertura</div></div>
+    <div class="mc"><div class="ml">Reunión</div><div class="mv gr sm">Gratis</div><div class="mb">30 min · $0</div></div>
+  </div>
+</div>
+
+<!-- Gratitud — debajo del hero -->
+<div class="body" style="padding-bottom:0">
+  <div class="gr-wrap">
+    <div class="gr-fecha" id="gr-fecha">📅 Análisis realizado el —</div>
+    <div id="reunion-badge" style="display:none;align-items:center;gap:12px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);border-radius:10px;padding:12px 16px;margin-bottom:14px"></div>
+    <div class="gr-msg">
+      <strong id="gr-saludo">Hola —</strong> <span id="gr-msg-body">gracias por tomarte el tiempo de hablar con nosotros hoy.</span>
+    </div>
+  </div>
+</div>
+
+<!-- BODY P1 -->
+<div class="body">
+  <div class="st">Por qué es importante tener un plan financiero</div>
+  <div class="bv">
+    <div class="bv-eye">Un mensaje para usted</div>
+    <div class="bv-title">Lo que está a punto de leer es información que <em>la mayoría de las familias nunca recibe.</em></div>
+    <div class="bv-body">No porque sea difícil de conseguir — sino porque <strong>nadie se los había ofrecido antes.</strong> En los próximos minutos va a descubrir áreas de su vida financiera que probablemente nunca ha revisado — y que pueden estar costándole más de lo que imagina.</div>
+  </div>
+
+  <div class="wg">
+
+    <!-- SEGURO DE VIDA — Espejo emocional -->
+    <div class="wc r fade">
+      <div class="wc-top">
+        <div class="wi">🛡️</div>
+        <div class="wc-right">
+          <div class="wt">Protección familiar</div>
+          <div class="bstat">1 de cada 3</div>
+          <div class="wx">familias en EEUU enfrenta una crisis financiera severa tras perder inesperadamente a quien sostenía el hogar.</div>
+        </div>
+      </div>
+      <div class="hook">
+        <div class="hook-q">Si mañana faltaras, ¿tu familia podría pagar la renta el próximo mes? ¿Y el siguiente?</div>
+        <div class="hook-a">La mayoría dice <span class="hi">"algo se arreglará"</span> — pero los números no esperan. <b>En la reunión calculamos exactamente cuánto necesitaría tu familia y qué opciones existen hoy.</b></div>
+      </div>
+    </div>
+
+    <!-- HIPOTECA -->
+    <div class="wc fade">
+      <div class="wc-top">
+        <div class="wi">🏠</div>
+        <div class="wc-right">
+          <div class="wt">Protección hipotecaria</div>
+          <div class="bstat b">90 días</div>
+          <div class="wx">es lo que puede tardar una familia en perder su casa si el titular fallece o queda incapacitado sin protección hipotecaria.</div>
+        </div>
+      </div>
+      <div class="hook">
+        <div class="hook-q">¿Sabe quién pagaría su hipoteca si algo le pasara hoy?</div>
+        <div class="hook-a"><b>Trabajó años para esa propiedad.</b> En la reunión revisamos si tiene protección real o si su familia quedaría expuesta.</div>
+      </div>
+    </div>
+
+    <!-- DEUDAS MÉDICAS — NUEVA SECCIÓN -->
+    <div class="wc r fade">
+      <div class="wc-top">
+        <div class="wi">🏥</div>
+        <div class="wc-right">
+          <div class="wt">Bancarrota por deudas médicas</div>
+          <div class="bstat">66%</div>
+          <div class="wx">de las bancarrotas en EEUU son causadas por deudas médicas. No por mal manejo del dinero — sino por <b>no tener la cobertura correcta.</b></div>
+        </div>
+      </div>
+      <div class="hook">
+        <div class="hook-q">¿Sabe exactamente qué cubre su seguro si le diagnostican cáncer o sufre un accidente grave?</div>
+        <div class="hook-a">Una hospitalización seria puede costar <span class="hi">$50,000 — $300,000</span>. Muchas personas descubren los límites de su seguro <b>cuando ya es demasiado tarde.</b> En la reunión revisamos su cobertura real.</div>
+      </div>
+    </div>
+
+    <!-- LIVING TRUST — El secreto -->
+    <div class="wc o fade">
+      <div class="wc-top">
+        <div class="wi">📜</div>
+        <div class="wc-right">
+          <div class="wt">Testamento y Living Trust</div>
+          <div class="bstat o">60%</div>
+          <div class="wx">de los adultos en EEUU no tiene ningún documento legal. Sin Living Trust, sus bienes entran a Probate — un proceso judicial que puede durar hasta 2 años.</div>
+        </div>
+      </div>
+      <div class="secret">
+        <div class="secret-eye"><span>🤫</span> Lo que muy poca gente sabe</div>
+        <div class="secret-txt">En Estados Unidos, si usted fallece sin un Living Trust, <b>un juez que nunca lo conoció decide quién cuida a sus hijos.</b> No usted. No su pareja. Un juez. Y sus cuentas bancarias individuales quedan <span class="hi">bloqueadas</span> — su familia no puede tocar ese dinero hasta que la corte lo autorice. Eso puede tomar meses.</div>
+      </div>
+      <div class="hook">
+        <div class="hook-q">¿Tiene ya su testamento y Living Trust en orden?</div>
+        <div class="hook-a"><b>En la reunión le explicamos exactamente qué necesita</b> según su situación — sin complicaciones legales ni costos ocultos.</div>
+      </div>
+    </div>
+
+    <!-- SEGURO DE AUTO — NUEVA SECCIÓN -->
+    <div class="wc pu fade">
+      <div class="wc-top">
+        <div class="wi">🚗</div>
+        <div class="wc-right">
+          <div class="wt">Revisión de seguro de auto y home</div>
+          <div class="bstat pu">$847</div>
+          <div class="wx">es el promedio anual que los conductores <b>pagan de más</b> por su seguro de auto sin saberlo — por coberturas que no necesitan o montos mal configurados.</div>
+        </div>
+      </div>
+      <div class="hook">
+        <div class="hook-q">¿Sabe exactamente qué cubre su seguro de auto hoy — y qué NO cubre?</div>
+        <div class="hook-a">Muchas personas tienen <span class="hi">brechas de cobertura</span> que solo descubren cuando tienen un accidente. Y al mismo tiempo, están <b>pagando por coberturas que no necesitan.</b> En la reunión revisamos su póliza actual y buscamos si puede pagar menos sin perder protección.</div>
+      </div>
+    </div>
+
+    <!-- EDUCACIÓN — Números que asustan -->
+    <div class="wc tl fade">
+      <div class="wc-top">
+        <div class="wi">🎓</div>
+        <div class="wc-right">
+          <div class="wt">Planes educativos</div>
+          <div class="bstat tl">$11,950</div>
+          <div class="wx">por año en universidad pública estatal hoy. <b>$31,880 fuera del estado.</b> Con inflación del 5.4% anual, en 10 años esos números serán un 70% mayores.</div>
+        </div>
+      </div>
+      <div class="hook">
+        <div class="hook-q">¿Ya tiene un plan para la universidad de sus hijos?</div>
+        <div class="hook-a">Sin un plan educativo, la única opción para su hijo será endeudarse. <b>La deuda estudiantil promedio al graduarse supera los $37,000</b> — y puede tardar 10 años en pagarse. Hay una forma de evitar eso completamente.</div>
+      </div>
+    </div>
+
+    <!-- RETIRO -->
+    <div class="wc g fade">
+      <div class="wc-top">
+        <div class="wi">📈</div>
+        <div class="wc-right">
+          <div class="wt">Retiro y crecimiento</div>
+          <div class="bstat g">$1,400</div>
+          <div class="wx">es el promedio mensual del Seguro Social. Sin un plan, ese es el único ingreso al retirarse. ¿Es suficiente para el estilo de vida que quiere?</div>
+        </div>
+      </div>
+      <div class="hook">
+        <div class="hook-q">¿Ha calculado cuánto necesita acumulado para retirarse sin depender de nadie?</div>
+        <div class="hook-a"><b>En la reunión hacemos ese cálculo juntos</b> — gratis, sin compromiso — y le mostramos las opciones reales según su edad y situación actual.</div>
+      </div>
+    </div>
+
+  </div><!-- end wg -->
+
+
+
+
+</div><!-- end body p1 -->
+
+<!-- DIVIDER -->
+<div class="pg-div">
+  <div class="pd-line"></div>
+  <div class="pd-txt">Su evaluación personalizada</div>
+  <div class="pd-line"></div>
+</div>
+
+<!-- BODY P2 -->
+<div class="body">
+  <div class="score-split">
+    <div class="ss-left">
+      <div class="ss-num" id="p2-score">—</div>
+      <div class="ss-score">Score</div>
+      <div class="ss-badge" id="p2-badge">—</div>
+    </div>
+    <div class="ss-right">
+      <div class="ss-eye">Su evaluación personalizada</div>
+      <div class="ss-title">Hay oportunidades importantes que podemos revisar juntos</div>
+      <div class="ss-body">No se trata de venderle algo — se trata de que sepa <b>exactamente en qué punto está</b> y qué opciones tiene. Muchas personas descubren que tenían soluciones al alcance que nadie les había explicado.</div>
+      <div class="ss-chips">
+        <div class="ss-chip"><div class="ss-chip-n" id="c-areas">—</div><div class="ss-chip-l">áreas</div></div>
+        <div class="ss-chip"><div class="ss-chip-n">30m</div><div class="ss-chip-l">reunión</div></div>
+        <div class="ss-chip"><div class="ss-chip-n">$0</div><div class="ss-chip-l">costo</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="st">Preguntas que incomodan — pero hay que hacerse</div>
+  <div class="ayuda-intro">Son preguntas que la mayoría evita. Pero si la respuesta es <b>"no sé"</b> o <b>"no tengo"</b> — significa que hay trabajo por hacer. Y para eso está esta reunión.</div>
+
+  <div class="preguntas-wrap">
+    <div class="pq-item">
+      <div class="pq-icon">🤕</div>
+      <div class="pq-content">
+        <div class="pq-q">Si mañana tienes un accidente y no puedes trabajar por 3 días, ¿recibirías dinero?</div>
+        <div class="pq-a">La mayoría dice que no. Existe una cobertura de accidente que <b>paga efectivo directo a tu cuenta desde el primer día</b> — sin importar si tienes otros seguros. Es una de las coberturas más económicas y menos conocidas.</div>
+      </div>
+    </div>
+
+    <div class="pq-item">
+      <div class="pq-icon">🏥</div>
+      <div class="pq-content">
+        <div class="pq-q">Si te hospitalizan una semana, ¿quién paga la renta, la comida y los gastos del hogar mientras estás adentro?</div>
+        <div class="pq-a">Tu seguro de salud paga el hospital — pero los gastos de tu hogar no se detienen. <b>Existen planes que depositan dinero en tu cuenta bancaria cada día que estás hospitalizado.</b> La mayoría no sabe que existen.</div>
+      </div>
+    </div>
+
+    <div class="pq-item">
+      <div class="pq-icon">💳</div>
+      <div class="pq-content">
+        <div class="pq-q">Si mañana necesitas $5,000 de emergencia, ¿los tienes disponibles sin usar tarjeta de crédito?</div>
+        <div class="pq-a">El 60% de adultos en EEUU no podría cubrir una emergencia de $1,000 sin endeudarse. <b>Existen cuentas sin cuotas de manejo que pagan entre 4% y 5% anual</b> — y que además sirven como fondo de emergencia real.</div>
+      </div>
+    </div>
+
+    <div class="pq-item">
+      <div class="pq-icon">👫</div>
+      <div class="pq-content">
+        <div class="pq-q">Si mañana quedas incapacitado, ¿puede tu pareja tomar decisiones médicas y financieras por ti?</div>
+        <div class="pq-a">Sin un poder notarial, la respuesta legal es: <b>no puede</b>. Ni en el banco, ni en el hospital. Este documento se puede tener en orden rápido — y es algo que revisamos juntos en la reunión.</div>
+      </div>
+    </div>
+
+    <div class="pq-item">
+      <div class="pq-icon">📊</div>
+      <div class="pq-content">
+        <div class="pq-q">¿Sabes a qué tasa está creciendo tu plan de retiro — y si ese ritmo es suficiente para cuando lo necesites?</div>
+        <div class="pq-a">Muchas personas tienen un 401k activo pero nunca han revisado si la tasa de crecimiento alcanza para su meta de retiro. <b>En la reunión hacemos ese cálculo juntos</b> — y si tienes un 401k de un trabajo anterior, también lo revisamos.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="st">Quiénes somos</div>
+  <div class="qs">
+    <div class="qs-head">
+      <div style="flex:1">
+        <div class="qs-eye">Truemate Insurance Financial & Services</div>
+        <div class="qs-title">Más de una década protegiendo familias en <em>Estados Unidos</em></div>
+        <div class="qs-body">Contamos con un equipo de profesionales en planificación financiera, gestión patrimonial, seguros de vida, auto, retiro, pequeños negocios y home. Trabajamos con familias y dueños de negocio que buscan proteger lo que han construido, crecer su patrimonio y dejarle un legado sólido a sus hijos.</div>
+      </div>
+      <img class="qs-img" src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/98741821" alt="FPWMP" onerror="this.style.background='#193251';this.style.borderRadius='10px'">
+    </div>
+    <div class="qs-stats">
+      <div class="qs-stat"><div class="qs-stat-n">+1,000</div><div class="qs-stat-l">familias</div><div class="qs-stat-sub">en todo el país</div></div>
+      <div class="qs-stat"><div class="qs-stat-n">+40</div><div class="qs-stat-l">estados</div><div class="qs-stat-sub">presencia nacional</div></div>
+      <div class="qs-stat"><div class="qs-stat-n">100%</div><div class="qs-stat-l">personalizado</div><div class="qs-stat-sub">sin soluciones genéricas</div></div>
+    </div>
+  </div>
+
+  <!-- CONTACT + CTA -->
+  <div class="contact" id="contact-section">
+    <div class="ag-n" id="c-agente">Gregorio Navarro</div>
+    <div class="ag-c">FPWMP® · Planificación Financiera & Gestión Patrimonial · Lic. 2-15 & 2-20</div>
+    <div class="ag-i">
+      <b>WhatsApp:</b> +1 (484) 456-9465<br>
+      <b>Email:</b> gregorio@truemategroup.com<br>
+      <b>Dirección:</b> 2250 Lucien Way Suite 270, FL
+    </div>
+    <div class="cta-wrap">
+      <div class="cta-pre">
+        <b>¿Tiene alguna pregunta antes de la reunión?</b><br>
+        Escríbame directamente por WhatsApp — con gusto le respondo
+      </div>
+      <a class="wa-btn" id="wa-cta" href="#" target="_blank">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        💬 Escríbeme por WhatsApp
+      </a>
+      <div class="wa-btn-sub">Al tocar el botón se abre WhatsApp — sin descargas ni registros</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Documento informativo y confidencial · <b>Truemate Insurance Financial & Services</b><br>
+  2250 Lucien Way Suite 270, FL · Lic. 2-15 & 2-20 · FPWMP®<br>
+  Los valores son estimados. No constituyen contrato ni garantía de resultados futuros.
+</div>
+
+</div><!-- end content -->
+
+<script>
+(function(){
+  var D = {};
+  try {
+    var raw = new URLSearchParams(location.search).get('d');
+    if (raw) D = JSON.parse(decodeURIComponent(escape(atob(raw))));
+  } catch(e){}
+
+  // NO DATA — show error
+  if (!D || !D.n) {
+    document.body.style.cssText = 'margin:0;background:#0d1f33;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif';
+    document.body.innerHTML =
+      '<div style="text-align:center;padding:40px;max-width:340px">'
+      + '<div style="width:64px;height:64px;background:#FF5050;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff;margin:0 auto 20px">T</div>'
+      + '<div style="font-size:22px;font-weight:700;color:#f0ead8;margin-bottom:10px">Análisis no disponible</div>'
+      + '<div style="font-size:15px;color:#8899aa;line-height:1.65;margin-bottom:24px">Este link fue generado para un cliente específico. Contáctanos si crees que hay un error.</div>'
+      + '<a href="https://wa.me/14844569465" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;padding:14px 28px;border-radius:12px;font-weight:700;font-size:16px">WhatsApp TrueMate</a>'
+      + '</div>';
+    return;
+  }
+
+  // HAS DATA — fill content
+  var nombre = String(D.n || 'Cliente');
+  var score  = parseInt(D.s) || 0;
+  var areas  = parseInt(D.a) || 3;
+  var metas  = String(D.m || '');
+  var perfil = String(D.p || 'gregorio');
+  var fecha  = String(D.f || '');
+  var waNum  = '14844569465';
+
+  var metaTxt = {retiro:'Jubilarse con ingresos garantizados',herencia:'Dejar herencia a sus hijos',proteger:'Proteger a su familia',capital:'Acumular capital libre de impuestos',deudas:'Salir de deudas',educacion:'Pagar la educación de sus hijos'};
+  var scoreLabel = score >= 15 ? 'Alta Urgencia' : score >= 8 ? 'Oportunidad Media' : 'Perfil Organizado';
+  var agenteName = perfil === 'gregorio' ? 'Gregorio Navarro' : 'TrueMate Financial';
+  var firstName  = nombre.split(' ')[0];
+
+  function set(id, val){ var e=document.getElementById(id); if(e) e.textContent=val; }
+  function html(id, val){ var e=document.getElementById(id); if(e) e.innerHTML=val; }
+
+  // Date
+  var fechaAnalisis = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  set('gr-fecha','📅 Análisis realizado el ' + fechaAnalisis);
+
+  // Greeting
+  if (fecha) {
+    set('gr-saludo','Hola, ' + firstName + ' — ¡ya diste el primer paso!');
+    html('gr-msg-body','Tu reunión está confirmada para el <strong style="color:#1a1a2e">' + fecha + '</strong>. Preparamos este análisis para que llegues con una visión clara de tu situación financiera.');
+  } else {
+    set('gr-saludo','Hola, ' + firstName);
+    html('gr-msg-body','Gracias por tomarte el tiempo de hablar con nosotros. Preparamos este análisis personalizado pensado específicamente para ti.');
+  }
+
+  // Reunion badge
+  var badgeEl = document.getElementById('reunion-badge');
+  if (badgeEl && fecha) {
+    badgeEl.style.display = 'flex';
+    badgeEl.innerHTML = '<span style="font-size:18px">📆</span><div><div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#25D366;margin-bottom:2px">Reunión confirmada</div><div style="font-size:15px;font-weight:700;color:#f0ead8">'+fecha+'</div></div>';
+  } else if (badgeEl) {
+    badgeEl.style.display = 'none';
+  }
+
+  // Name
+  var parts = nombre.toUpperCase().split(' ');
+  html('h-name', parts.length > 1 ? parts[0]+'<br><em>'+parts.slice(1).join(' ')+'</em>' : parts[0]);
+
+  // Sub
+  var sub = 'Análisis integral de situación financiera';
+  if (metas) { var arr=metas.split(',').map(function(m){return metaTxt[m.trim()]||m.trim();}).filter(Boolean); if(arr.length) sub='Meta: '+arr.join(' · '); }
+  set('h-sub', sub);
+
+  // Metrics & others
+  set('m-score', score||'—'); set('m-label', scoreLabel); set('m-areas', areas||'—');
+  set('p2-score', score||'—'); set('p2-badge', scoreLabel.toUpperCase());
+  set('c-areas', areas||'—'); set('c-agente', agenteName);
+
+  // WhatsApp
+  var pageUrl = location.href.indexOf('about:') > -1 ? 'https://gregorionavarro.github.io/analisis-cliente-/' : location.href;
+  var waMsg = encodeURIComponent('Hola '+firstName+' 👋
+
+Te comparto tu análisis personalizado:
+
+🔗 '+pageUrl+'
+
+Revísalo cuando puedas. ¡Cualquier pregunta me escribes!');
+  var waHref = 'https://wa.me/'+waNum+'?text='+waMsg;
+  ['wa-top','wa-cta'].forEach(function(id){ var e=document.getElementById(id); if(e) e.href=waHref; });
+})();
+</script>
+</body>
+</html>
