@@ -489,94 +489,75 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a2e;font-si
 </div><!-- end content -->
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-(function(){
-  var D = {};
-  try {
-    var raw = new URLSearchParams(location.search).get('d');
-  if(raw) raw = raw.replace(/[.\s]+$/, ''); // strip trailing dot/space
-    if (raw) D = JSON.parse(decodeURIComponent(escape(atob(raw))));
-  } catch(e){}
+var raw = new URLSearchParams(location.search).get('d');
+if(raw) raw = raw.replace(/[.\s]+$/, '');
 
-  // NO DATA — show error
-  if (!D || !D.n) {
-    document.body.style.cssText = 'margin:0;background:#0d1f33;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif';
-    document.body.innerHTML =
-      '<div style="text-align:center;padding:40px;max-width:340px">'
-      + '<div style="width:64px;height:64px;background:#FF5050;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff;margin:0 auto 20px">T</div>'
-      + '<div style="font-size:22px;font-weight:700;color:#f0ead8;margin-bottom:10px">Análisis no disponible</div>'
-      + '<div style="font-size:15px;color:#8899aa;line-height:1.65;margin-bottom:24px">Este link fue generado para un cliente específico. Contáctanos si crees que hay un error.</div>'
-      + '<a href="https://wa.me/14844569465" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;padding:14px 28px;border-radius:12px;font-weight:700;font-size:16px">WhatsApp TrueMate</a>'
-      + '</div>';
-    return;
-  }
+if(!raw){
+  document.body.style.cssText='margin:0;background:#0d1f33;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui';
+  document.body.innerHTML='<div style="text-align:center;padding:40px"><div style="width:64px;height:64px;background:#FF5050;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff;margin:0 auto 20px">T</div><div style="font-size:22px;font-weight:700;color:#f0ead8;margin-bottom:10px">Análisis no disponible</div><div style="font-size:15px;color:#8899aa;margin-bottom:24px">Este link fue generado para un cliente específico.</div><a href="https://wa.me/14844569465" style="background:#25D366;color:#fff;text-decoration:none;padding:14px 28px;border-radius:12px;font-weight:700;font-size:16px">WhatsApp TrueMate</a></div>';
+} else {
+  var D={};
+  try{ D=JSON.parse(decodeURIComponent(escape(atob(raw)))); }catch(e){ D={}; }
 
-  // HAS DATA — fill content
-  var nombre = String(D.n || 'Cliente');
-  var score  = parseInt(D.s) || 0;
-  var areas  = parseInt(D.a) || 3;
-  var metas  = String(D.m || '');
-  var perfil = String(D.p || 'gregorio');
-  var fecha  = String(D.f || '');
+  var nombre = D.n||'Cliente';
+  var score  = parseInt(D.s)||0;
+  var areas  = parseInt(D.a)||3;
+  var metas  = D.m||'';
+  var perfil = D.p||'gregorio';
+  var fecha  = D.f||'';
   var waNum  = '14844569465';
-
+  var firstName = nombre.split(' ')[0];
+  var agente = perfil==='gregorio'?'Gregorio Navarro':'TrueMate Financial';
+  var scoreLabel = score>=15?'Alta Urgencia':score>=8?'Oportunidad Media':'Perfil Organizado';
   var metaTxt = {retiro:'Jubilarse con ingresos garantizados',herencia:'Dejar herencia a sus hijos',proteger:'Proteger a su familia',capital:'Acumular capital libre de impuestos',deudas:'Salir de deudas',educacion:'Pagar la educación de sus hijos'};
-  var scoreLabel = score >= 15 ? 'Alta Urgencia' : score >= 8 ? 'Oportunidad Media' : 'Perfil Organizado';
-  var agenteName = perfil === 'gregorio' ? 'Gregorio Navarro' : 'TrueMate Financial';
-  var firstName  = nombre.split(' ')[0];
 
-  function set(id, val){ var e=document.getElementById(id); if(e) e.textContent=val; }
-  function html(id, val){ var e=document.getElementById(id); if(e) e.innerHTML=val; }
+  function s(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+  function h(id,v){var e=document.getElementById(id);if(e)e.innerHTML=v;}
 
-  // Date
-  var fechaAnalisis = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  set('gr-fecha','📅 Análisis realizado el ' + fechaAnalisis);
+  window.onload = function(){
+    // Name
+    var parts=nombre.toUpperCase().split(' ');
+    h('h-name', parts.length>1 ? parts[0]+'<br><em>'+parts.slice(1).join(' ')+'</em>' : parts[0]);
 
-  // Greeting
-  if (fecha) {
-    set('gr-saludo','Hola, ' + firstName + ' — ¡ya diste el primer paso!');
-    html('gr-msg-body','Tu reunión está confirmada para el <strong style="color:#1a1a2e">' + fecha + '</strong>. Preparamos este análisis para que llegues con una visión clara de tu situación financiera.');
-  } else {
-    set('gr-saludo','Hola, ' + firstName);
-    html('gr-msg-body','Gracias por tomarte el tiempo de hablar con nosotros. Preparamos este análisis personalizado pensado específicamente para ti.');
-  }
+    // Sub
+    var sub='Análisis integral de situación financiera';
+    if(metas){var arr=metas.split(',').map(function(m){return metaTxt[m.trim()]||m.trim();}).filter(Boolean);if(arr.length)sub='Meta: '+arr.join(' · ');}
+    s('h-sub', sub);
 
-  // Reunion badge
-  var badgeEl = document.getElementById('reunion-badge');
-  if (badgeEl && fecha) {
-    badgeEl.style.display = 'flex';
-    badgeEl.innerHTML = '<span style="font-size:18px">📆</span><div><div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#25D366;margin-bottom:2px">Reunión confirmada</div><div style="font-size:15px;font-weight:700;color:#f0ead8">'+fecha+'</div></div>';
-  } else if (badgeEl) {
-    badgeEl.style.display = 'none';
-  }
+    // Date
+    s('gr-fecha','📅 Análisis realizado el '+new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'}));
 
-  // Name
-  var parts = nombre.toUpperCase().split(' ');
-  html('h-name', parts.length > 1 ? parts[0]+'<br><em>'+parts.slice(1).join(' ')+'</em>' : parts[0]);
+    // Greeting
+    if(fecha){
+      s('gr-saludo','Hola, '+firstName+' — ¡ya diste el primer paso!');
+      h('gr-msg-body','Tu reunión está confirmada para el <strong style="color:#1a1a2e">'+fecha+'</strong>.');
+      var b=document.getElementById('reunion-badge');
+      if(b){b.style.display='flex';b.innerHTML='<span style="font-size:18px">📆</span><div><div style="font-size:11px;font-weight:700;color:#25D366;margin-bottom:2px">REUNIÓN CONFIRMADA</div><div style="font-size:15px;font-weight:700;color:#f0ead8">'+fecha+'</div></div>';}
+    }else{
+      s('gr-saludo','Hola, '+firstName);
+      h('gr-msg-body','Gracias por tomarte el tiempo. Preparamos este análisis pensado específicamente para ti.');
+      var b2=document.getElementById('reunion-badge');if(b2)b2.style.display='none';
+    }
 
-  // Sub
-  var sub = 'Análisis integral de situación financiera';
-  if (metas) { var arr=metas.split(',').map(function(m){return metaTxt[m.trim()]||m.trim();}).filter(Boolean); if(arr.length) sub='Meta: '+arr.join(' · '); }
-  set('h-sub', sub);
+    // Metrics
+    s('m-score',score||'0'); s('m-label',scoreLabel);
+    s('m-areas',areas); s('p2-score',score||'0');
+    s('p2-badge',scoreLabel.toUpperCase());
+    s('c-areas',areas); s('c-agente',agente);
 
-  // Metrics & others
-  set('m-score', score||'—'); set('m-label', scoreLabel); set('m-areas', areas||'—');
-  set('p2-score', score||'—'); set('p2-badge', scoreLabel.toUpperCase());
-  set('c-areas', areas||'—'); set('c-agente', agenteName);
-
-  // WhatsApp
-  var pageUrl = location.href.indexOf('about:') > -1 ? 'https://gregorionavarro.github.io/analisis-cliente-/' : location.href;
-  var waMsg = encodeURIComponent('Hola '+firstName+' 👋
+    // WhatsApp
+    var waMsg=encodeURIComponent('Hola '+firstName+' 👋
 
 Te comparto tu análisis personalizado:
 
-🔗 '+pageUrl+'
+🔗 '+location.href+'
 
 Revísalo cuando puedas. ¡Cualquier pregunta me escribes!');
-  var waHref = 'https://wa.me/'+waNum+'?text='+waMsg;
-  ['wa-top','wa-cta'].forEach(function(id){ var e=document.getElementById(id); if(e) e.href=waHref; });
-})();
-});
+    var waHref='https://wa.me/'+waNum+'?text='+waMsg;
+    var wt=document.getElementById('wa-top'); if(wt)wt.href=waHref;
+    var wc=document.getElementById('wa-cta'); if(wc)wc.href=waHref;
+  };
+}
 </script>
 </body>
 </html>
