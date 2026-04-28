@@ -433,8 +433,7 @@ if(!raw){
   }
 
   // Cap from index
-  var capMatch=(ix||'').match(/(\d+)%/);
-  var cap=capMatch?capMatch[1]+'%':'11%';
+  var cap=(D.cap?D.cap+'%':null)||(ix?(ix.match(/(\d+)%/)||[])[1]+'%':null)||'11%';
   set('ch-cap',cap); set('v-cap',cap);
 
   // Cash value hitos
