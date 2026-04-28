@@ -1278,11 +1278,44 @@ function genLink(){
     p:profile,
     f:fecha
   };
-  const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  // Trim data — only essential fields, shorten index to cap number
+  const capMatch=(data.ix||'').match(/(\d+)%/);
+  const slim={
+    n:data.n, ed:data.ed, pm:data.pm, an:data.an,
+    bm:data.bm, cv:data.cv, er:data.er,
+    mmp:data.mmp, nm:data.nm,
+    cap:capMatch?capMatch[1]:'11',
+    p:data.p, f:data.f,
+    cv10:data.cv10||'', cv20:data.cv20||''
+  };
+  // Remove empty keys to save space
+  Object.keys(slim).forEach(k=>{ if(slim[k]==='')delete slim[k]; });
+  const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(slim))));
   const url=base+'?d='+encoded;
   window._shareUrl=url;
-  document.getElementById('share-url').textContent=url;
+  document.getElementById('share-url').textContent='⏳ Acortando link...';
   document.getElementById('share-box').style.display='block';
+
+  // Auto-shorten with TinyURL
+  fetch('https://tinyurl.com/api-create.php?url='+encodeURIComponent(url))
+    .then(r=>r.text())
+    .then(short=>{
+      if(short && short.startsWith('http')){
+        window._shareUrl=short;
+        document.getElementById('share-url').textContent=short;
+        // Update WA button with short URL
+        const fn=firstName;
+        const f2=fecha;
+        const sMsg=f2?
+          encodeURIComponent('Hola '+fn+' 👋\n\nQuedamos confirmados para el *'+f2+'*.\n\nTe comparto los beneficios exactos de tu poliza antes de nuestra reunion:\n\n🔗 '+short+'\n\nRevisalo cuando puedas. Cualquier pregunta me escribes!'):
+          encodeURIComponent('Hola '+fn+' 👋\n\nTe comparto los beneficios exactos de tu poliza IUL:\n\n🔗 '+short+'\n\nTomate unos minutos para revisarlo antes de nuestra conversacion.');
+        const waBtn=document.getElementById('wa-share-btn');
+        if(waBtn) waBtn.href='https://wa.me/?text='+sMsg;
+      } else {
+        document.getElementById('share-url').textContent=url;
+      }
+    })
+    .catch(()=>{ document.getElementById('share-url').textContent=url; });
 
   // WhatsApp message — tono de cita ya confirmada
   const firstName=cName.split(' ')[0];
