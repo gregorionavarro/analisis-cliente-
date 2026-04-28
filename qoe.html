@@ -1263,86 +1263,47 @@ function genPDFCliente(){
 // SHARE LINK
 // ══════════════════════════════════
 function genLink(){
-  // ← Cambia esta URL cuando sepas el nombre del proyecto en Cloudflare
   const base='https://gregorionavarro.github.io/analisis-cliente-/';
   const areas=(window._recs||[]).slice(0,3).length;
   const fechaEl=document.getElementById('share-fecha');
   const fecha=fechaEl?fechaEl.value:'';
+  const firstName=cName.split(' ')[0];
 
-  // Encode all data as Base64 JSON — client can't read or edit params
-  const data={
-    n:cName,
-    s:score,
-    a:areas,
-    m:[...metaSet].join(','),
-    p:profile,
-    f:fecha
-  };
-  // Trim data — only essential fields, shorten index to cap number
-  const capMatch=(data.ix||'').match(/(\d+)%/);
-  const slim={
-    n:data.n, ed:data.ed, pm:data.pm, an:data.an,
-    bm:data.bm, cv:data.cv, er:data.er,
-    mmp:data.mmp, nm:data.nm,
-    cap:capMatch?capMatch[1]:'11',
-    p:data.p, f:data.f,
-    cv10:data.cv10||'', cv20:data.cv20||''
-  };
-  // Remove empty keys to save space
-  Object.keys(slim).forEach(k=>{ if(slim[k]==='')delete slim[k]; });
-  const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(slim))));
+  // QOE data — encode as Base64
+  const data={n:cName,s:score,a:areas,m:[...metaSet].join(','),p:profile,f:fecha};
+  const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
   const url=base+'?d='+encoded;
   window._shareUrl=url;
+
+  // Build WhatsApp message
+  function buildWaMsg(link){
+    if(fecha){
+      return encodeURIComponent('Hola '+firstName+' 👋\n\nQuedamos confirmados para el *'+fecha+'*.\n\nTe comparto tu análisis personalizado antes de nuestra reunión:\n\n🔗 '+link+'\n\nRevísalo cuando puedas. ¡Nos vemos pronto!');
+    } else {
+      return encodeURIComponent('Hola '+firstName+' 👋\n\nTe comparto el análisis personalizado que preparé para ti:\n\n🔗 '+link+'\n\nRevísalo cuando puedas. ¡Cualquier pregunta me escribes!');
+    }
+  }
+
+  // Show box immediately with long URL
   document.getElementById('share-url').textContent='⏳ Acortando link...';
   document.getElementById('share-box').style.display='block';
+  const waBtn=document.getElementById('wa-share-btn');
+  if(waBtn) waBtn.href='https://wa.me/?text='+buildWaMsg(url);
+  document.getElementById('share-box').scrollIntoView({behavior:'smooth',block:'center'});
 
-  // Auto-shorten with TinyURL
+  // Try to shorten with TinyURL (works from https, not from file://)
   fetch('https://tinyurl.com/api-create.php?url='+encodeURIComponent(url))
-    .then(r=>r.text())
-    .then(short=>{
+    .then(function(r){return r.text();})
+    .then(function(short){
       if(short && short.startsWith('http')){
         window._shareUrl=short;
         document.getElementById('share-url').textContent=short;
-        // Update WA button with short URL
-        const fn=firstName;
-        const f2=fecha;
-        const sMsg=f2?
-          encodeURIComponent('Hola '+fn+' 👋\n\nQuedamos confirmados para el *'+f2+'*.\n\nTe comparto los beneficios exactos de tu poliza antes de nuestra reunion:\n\n🔗 '+short+'\n\nRevisalo cuando puedas. Cualquier pregunta me escribes!'):
-          encodeURIComponent('Hola '+fn+' 👋\n\nTe comparto los beneficios exactos de tu poliza IUL:\n\n🔗 '+short+'\n\nTomate unos minutos para revisarlo antes de nuestra conversacion.');
-        const waBtn=document.getElementById('wa-share-btn');
-        if(waBtn) waBtn.href='https://wa.me/?text='+sMsg;
+        if(waBtn) waBtn.href='https://wa.me/?text='+buildWaMsg(short);
       } else {
         document.getElementById('share-url').textContent=url;
       }
     })
-    .catch(()=>{ document.getElementById('share-url').textContent=url; });
-
-  // WhatsApp message — tono de cita ya confirmada
-  const firstName=cName.split(' ')[0];
-  let waMsg;
-  if(fecha){
-    waMsg=encodeURIComponent(
-      'Hola '+firstName+' 👋\n\n'+
-      'Listo — quedamos confirmados para el *'+fecha+'*.\n\n'+
-      'Te comparto este análisis personalizado que preparé para ti antes de nuestra reunión:\n\n'+
-      '🔗 '+url+'\n\n'+
-      'Tómate unos minutos para revisarlo — lo vamos a usar como base en nuestra conversación. ¡Nos vemos pronto!'
-    );
-  } else {
-    waMsg=encodeURIComponent(
-      'Hola '+firstName+' 👋\n\n'+
-      'Te comparto el análisis personalizado que preparé para ti:\n\n'+
-      '🔗 '+url+'\n\n'+
-      'Revisalo cuando puedas — lo vamos a usar de base en nuestra reunión. ¡Cualquier pregunta me escribes!'
-    );
-  }
-  // Set WhatsApp link directly — button is a clean <a> that navigates normally
-  const waBtn=document.getElementById('wa-share-btn');
-  if(waBtn) waBtn.href='https://wa.me/?text='+waMsg;
-  document.getElementById('share-box').scrollIntoView({behavior:'smooth',block:'center'});
-
-  const urlEl=document.getElementById('share-url');
-  if(urlEl) urlEl.textContent=url;
+    .catch(function(){ document.getElementById('share-url').textContent=url; });
 }
 function copyLink(){
   const url=window._shareUrl||document.getElementById('share-url').textContent;
