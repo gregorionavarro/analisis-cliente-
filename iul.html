@@ -162,6 +162,30 @@ body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size
 .cta-pre strong{color:var(--gold)}
 .wa-cta{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#25D366,#1aab54);color:#fff;border:none;border-radius:12px;padding:15px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;width:100%;cursor:pointer;text-decoration:none}
 .footer{padding:14px 20px;text-align:center;font-size:10px;color:#9a9a9a;line-height:1.7;border-top:1px solid #e8e0d0;background:#faf9f6}
+
+/* COMPARE SECTION */
+.compare-wrap{margin-bottom:6px}
+.cmp-intro{font-size:14px;color:#3d4d5e;line-height:1.65;padding:12px 16px;background:#f0f4f8;border-left:4px solid var(--navy);border-radius:0 10px 10px 0;margin-bottom:14px}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.cmp-col{border-radius:12px;padding:14px;border:2px solid transparent}
+.cmp-col.good{background:var(--navy);border-color:rgba(39,174,113,.3)}
+.cmp-col.bad{background:#fff5f5;border-color:rgba(231,76,60,.2)}
+.cmp-eye{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.cmp-col.good .cmp-eye{color:#3ddba0}
+.cmp-col.bad .cmp-eye{color:#e74c3c}
+.cmp-items{display:flex;flex-direction:column;gap:10px}
+.ci-item{border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:10px}
+.cmp-col.bad .ci-item{border-bottom-color:rgba(0,0,0,.08)}
+.ci-item:last-child{border-bottom:none;padding-bottom:0}
+.ci-val{font-family:'DM Serif Display',serif;font-size:clamp(18px,4.5vw,24px);color:var(--red);line-height:1;margin-bottom:3px;font-weight:700}
+.ci-val.r{color:#3ddba0}
+.ci-lbl{font-size:11px;color:#8899aa;line-height:1.4}
+.cmp-col.bad .ci-lbl{color:#7a5a5a}
+.cmp-pregunta{background:var(--navy2);border-radius:12px;padding:16px;display:flex;align-items:flex-start;gap:12px;border:2px solid rgba(201,168,76,.25)}
+.cmp-q-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+.cmp-q-text{font-size:15px;color:#a0b0c0;line-height:1.65}
+.cmp-q-text strong{color:var(--gold)}
+
 </style>
 </head>
 <body>
@@ -261,13 +285,33 @@ body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;font-size
     <div class="bvc-tip">💡 Cuidado de $5K–$10K por mes. Protege a toda la familia.</div>
   </div>
 
-  <div class="st">El costo real de esperar</div>
-  <div class="esp">
-    <div class="esp-eye">Cada mes que pasa sin proteccion</div>
-    <div class="esp-title">No es "no tener seguro" — es <em>pagar el costo de no tenerlo</em></div>
-    <div class="ei"><div class="en" id="esp-prima">+$100/mes</div><div class="et"><strong>mas cara la prima</strong> cada ano que cumples. La edad es el factor mas importante en el precio.</div></div>
-    <div class="ei"><div class="en" id="esp-cv">-$34K</div><div class="et"><strong>menos cash value</strong> si empiezas un ano despues. El tiempo es el activo mas valioso en un IUL.</div></div>
-    <div class="ei"><div class="en">$0</div><div class="et"><strong>de proteccion hoy</strong> — si algo pasara esta semana, tu familia no tiene nada.</div></div>
+  <div class="st">Y si no haces nada... que pasa a los <span id="er-compare">65</span></div>
+  <div class="compare-wrap">
+    <div class="cmp-intro">Esta es la diferencia entre tomar una decision hoy y dejar las cosas como estan. No es presion — es informacion.</div>
+    <div class="cmp-grid">
+      <div class="cmp-col good">
+        <div class="cmp-eye">✅ Con tu poliza</div>
+        <div class="cmp-items">
+          <div class="ci-item"><div class="ci-val r" id="cmp-cv">$861K</div><div class="ci-lbl">disponibles libre de impuestos para retiro</div></div>
+          <div class="ci-item"><div class="ci-val r" id="cmp-bm">$3.12M</div><div class="ci-lbl">proteccion para tu familia desde hoy</div></div>
+          <div class="ci-item"><div class="ci-val" style="font-size:15px;color:#27ae71">5 coberturas</div><div class="ci-lbl">en vida si te enfermas — sin necesitar morir</div></div>
+          <div class="ci-item"><div class="ci-val" style="font-size:15px;color:#27ae71">$0 al IRS</div><div class="ci-lbl">en retiro, en herencia, en todo</div></div>
+        </div>
+      </div>
+      <div class="cmp-col bad">
+        <div class="cmp-eye">❌ Sin un plan</div>
+        <div class="cmp-items">
+          <div class="ci-item"><div class="ci-val" style="font-size:15px;color:#e74c3c">$1,400/mes</div><div class="ci-lbl">promedio del Seguro Social — el unico ingreso sin plan</div></div>
+          <div class="ci-item"><div class="ci-val" style="font-size:15px;color:#e74c3c">Probate</div><div class="ci-lbl">tu familia espera meses para acceder a tu dinero</div></div>
+          <div class="ci-item"><div class="ci-val" style="font-size:15px;color:#e74c3c">$0</div><div class="ci-lbl">proteccion si te diagnostican una enfermedad grave</div></div>
+          <div class="ci-item"><div class="ci-val" style="font-size:15px;color:#e74c3c">Impuestos</div><div class="ci-lbl">sobre todo lo que retires del 401K</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cmp-pregunta">
+      <div class="cmp-q-icon">💭</div>
+      <div class="cmp-q-text">La pregunta no es si puedes permitirte esta poliza — <strong>es si puedes permitirte no tenerla.</strong></div>
+    </div>
   </div>
 
   <div class="st">Como funciona el crecimiento</div>
@@ -364,7 +408,7 @@ if(!raw){
 
   // Greet
   set('greet-name','Hola, '+firstName);
-  if(fecha){htm('greet-msg','Tu reunion esta confirmada para el <strong>'+fecha+'</strong>. Preparamos este resumen con los beneficios exactos de tu poliza.');}
+  if(fecha){htm('greet-msg','Tu reunion esta confirmada para el <strong>'+fecha+'</strong>. Preparamos este resumen con los beneficios exactos de tu poliza — para que llegues con toda la informacion clara y aprovechemos al maximo nuestro tiempo juntos.');}
   else{htm('greet-msg','Preparamos este resumen con todos los beneficios de tu poliza FlexLife IUL — <strong>numeros reales, tus numeros.</strong>');}
 
   // Policy
@@ -413,6 +457,11 @@ if(!raw){
     set('esp-cv','-$'+Math.round(cvN*0.04).toLocaleString());
   }
 
+
+  // Compare section
+  set('er-compare', edret||'65');
+  if(cv){var e=document.getElementById('cmp-cv');if(e)e.textContent=fmt(cv);}
+  if(bm){var e2=document.getElementById('cmp-bm');if(e2)e2.textContent=fmt(bm);}
   set('ag-n',agente);
 
   // WhatsApp
