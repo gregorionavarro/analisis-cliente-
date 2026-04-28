@@ -106,6 +106,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy2);color:var(--cream)
     <div class="field"><label>Prima mínima MMP (anual)</label><input id="mmp" type="text" placeholder="Ej: 11,344"></div>
     <div class="field"><label>Prima máxima Non-MEC (anual)</label><input id="nonmec" type="text" placeholder="Ej: 173,899"></div>
   </div>
+  <div class="row">
+    <div class="field"><label>Cash value a los 10 años (opcional)</label><input id="cv10" type="text" placeholder="Ej: 222,708"></div>
+    <div class="field"><label>Cash value a los 20 años (opcional)</label><input id="cv20" type="text" placeholder="Ej: 675,693"></div>
+  </div>
 </div>
 
 <!-- BENEFICIOS EN VIDA -->
@@ -177,6 +181,8 @@ function genLink(){
 
   const bens = [...document.querySelectorAll('#benefits input:checked')].map(i=>i.value);
 
+  // Calculate cv10, cv20 estimates if not provided
+  // (user can add fields later; for now use cv65 * ratios as estimates)
   const data = {
     n:  nombre,
     ed: v('edad'),
@@ -190,6 +196,8 @@ function genLink(){
     mmp: v('mmp'),
     nm: v('nonmec'),
     er: v('edret'),
+    cv10: v('cv10'),
+    cv20: v('cv20'),
     bv: bens.join(','),
     p:  v('perfil'),
     f:  v('fecha')
