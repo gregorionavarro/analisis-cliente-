@@ -181,8 +181,8 @@ function genLink(){
   var firstName = nombre.split(' ')[0];
   var fecha = data.f || '';
   var msg = fecha
-    ? 'Hola ' + firstName + ' 👋\n\nQuedamos confirmados para el *' + fecha + '*.\n\nTe comparto los beneficios exactos de tu póliza antes de nuestra reunión:\n\n🔗 ' + url + '\n\nRevísalo cuando puedas. ¡Nos vemos pronto!'
-    : 'Hola ' + firstName + ' 👋\n\nTe comparto los beneficios exactos de tu póliza IUL:\n\n🔗 ' + url + '\n\nTómate unos minutos para revisarlo antes de nuestra conversación.';
+    ? url + '\n\nHola ' + firstName + ' 👋 Quedamos confirmados para el *' + fecha + '*. Te comparto los beneficios exactos de tu póliza antes de nuestra reunión. ¡Nos vemos pronto!'
+    : url + '\n\nHola ' + firstName + ' 👋 Te comparto los beneficios exactos de tu póliza IUL. Tómate unos minutos para revisarlo antes de nuestra conversación.';
 
   document.getElementById('result-url').textContent = url;
   document.getElementById('result-box').style.display = 'block';
