@@ -1287,9 +1287,9 @@ function genLink(){
   // Build WhatsApp message
   function buildWaMsg(link){
     if(fecha){
-      return encodeURIComponent('Hola '+firstName+' 👋\n\nQuedamos confirmados para el *'+fecha+'*.\n\nTe comparto tu análisis personalizado antes de nuestra reunión:\n\n'+link+'\n\nRevísalo cuando puedas. ¡Nos vemos pronto!');
+      return encodeURIComponent(link+'\n\nHola '+firstName+' 👋 Quedamos confirmados para el *'+fecha+'*. Te comparto tu análisis antes de nuestra reunión. ¡Nos vemos pronto!');
     } else {
-      return encodeURIComponent('Hola '+firstName+' 👋\n\nTe comparto el análisis personalizado que preparé para ti:\n\n'+link+'\n\nRevísalo cuando puedas. ¡Cualquier pregunta me escribes!');
+      return encodeURIComponent(link+'\n\nHola '+firstName+' 👋 Te comparto el análisis personalizado que preparé para ti. Revísalo cuando puedas. ¡Cualquier pregunta me escribes!');
     }
   }
 
