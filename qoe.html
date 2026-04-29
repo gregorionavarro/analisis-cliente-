@@ -310,7 +310,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy3);color:var(--tx);mi
     </div>
 
     <input class="ni" id="cn" type="text" placeholder="Nombre del cliente (ej: Diego Martínez)" autocomplete="off">
-    <input class="ni" id="agentName" type="text" placeholder="Tu nombre (si eres Agente)" style="display:none">
+    <div id="agent-fields" style="display:none;width:100%">
+      <input class="ni" id="agentName" type="text" placeholder="Tu nombre" autocomplete="off" style="margin-bottom:10px">
+      <input class="ni" id="agentPhone" type="tel" placeholder="Tu teléfono (ej: 407-555-1234)" autocomplete="off" style="margin-bottom:10px">
+      <input class="ni" id="agentEmail" type="email" placeholder="Tu email" autocomplete="off">
+    </div>
     <button class="bs" onclick="ini()">Ver Guion de Apertura →</button>
   </div>
 </div>
@@ -746,7 +750,7 @@ function selProf(p){
   const idMap={gregorio:'p-greg',agente:'p-agent',producer:'p-prod'};
   const el=document.getElementById(idMap[p]);
   if(el) el.classList.add('active-prof');
-  document.getElementById('agentName').style.display=p==='agente'?'block':'none';
+  document.getElementById('agent-fields').style.display=(p==='agente'||p==='producer')?'block':'none';
 }
 function sh(id){const e=document.getElementById(id);if(e)e.classList.remove('hidden')}
 function hd(id){const e=document.getElementById(id);if(e)e.classList.add('hidden')}
@@ -758,6 +762,8 @@ function ini(){
   if(!profile){alert('Selecciona un perfil primero');return;}
   cName=document.getElementById('cn').value.trim()||'el cliente';
   agentNameVal=document.getElementById('agentName').value.trim()||'[tu nombre]';
+  window.agentPhone=document.getElementById('agentPhone').value.trim()||'';
+  window.agentEmail=document.getElementById('agentEmail').value.trim()||'';
   const cb=document.getElementById('cb');cb.textContent='👤 '+cName;cb.style.display='block';
   score=0;A={};N={};R={};metaSet=new Set();qIdx=0;chatDone=false;
 
@@ -1270,7 +1276,10 @@ function genLink(){
   const firstName=cName.split(' ')[0];
 
   // QOE data — encode as Base64
-  const data={n:cName,s:score,a:areas,m:[...metaSet].join(','),p:profile,f:fecha};
+  const agPhone=window.agentPhone||'';
+  const agEmail=window.agentEmail||'';
+  const data={n:cName,s:score,a:areas,m:[...metaSet].join(','),p:profile,f:fecha,
+    ap:agPhone,ae:agEmail};
   const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
   const url=base+'?d='+encoded;
   window._shareUrl=url;
